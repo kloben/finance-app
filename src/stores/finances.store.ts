@@ -6,6 +6,7 @@ import { toMonthId } from '@/helpers/date.helper'
 
 interface StoreState {
   savings: number | null
+  monthIds: string[]
   months: Map<string, IMonth>
   payments: Map<number, IPayment>
 }
@@ -13,30 +14,33 @@ interface StoreState {
 export const useFinancesStore = defineStore('finances', {
   state: (): StoreState => ({
     savings: null,
+    monthIds: [],
     months: new Map<string, IMonth>(),
     payments: new Map<number, IPayment>()
   }),
   getters: {
     lastMonths: (state): IMonth[] => {
-      return Array.from(state.months.keys()).sort().slice(-5).map(id => state.months.get(id) as IMonth)
+      return state.monthIds
+        .map((monthId) => state.months.get(monthId) ?? { monthId, income: 0, outcome: 0 })
     },
     lastPayments: (state): IPayment[] => {
       // eslint-disable-next-line @typescript-eslint/require-array-sort-compare
-      return Array.from(state.payments.keys()).sort().slice(-5).map(id => state.payments.get(id) as IPayment)
+      return Array.from(state.payments.values()).slice(-5)
     }
   },
   actions: {
     async init (): Promise<void> {
       const { monthIds } = new Array(5).fill('').reduce(({ date, monthIds }) => {
         date.setDate(15) // TODO: Review if necessary
-        monthIds.push(toMonthId(date))
+        monthIds.unshift(toMonthId(date))
         date.setMonth(date.getMonth() - 1)
         return { date, monthIds }
       }, { date: new Date(), monthIds: [] })
       const months = await fetchMonths(monthIds)
-      for (const monthId of monthIds) {
-        this.months.set(monthId, months.find(month => month.monthId === monthId) ?? { monthId, income: 0, outcome: 0 })
+      for (const month of months) {
+        this.months.set(month.monthId, month)
       }
+      this.monthIds = monthIds
       this.savings = fetchSavings()
     },
     updateSavings (newValue: number): void {
