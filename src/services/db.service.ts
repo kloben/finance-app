@@ -6,8 +6,8 @@ let DB!: Dexie
 export async function initDB (): Promise<void> {
   DB = new Dexie('FinanceDB')
   DB.version(1).stores({
-    transactions: 'day',
-    months: 'month',
+    months: 'monthId',
+    payments: 'dayId, monthId',
     categories: '++id',
     subCategories: '++id, category'
   })

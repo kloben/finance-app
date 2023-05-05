@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, type RouteLocationNormalized, START_LOCATION } from 'vue-router'
 import BasePage from '@/pages/BasePage.vue'
 import HomePage from '@/pages/HomePage.vue'
-import NewExpensePage from '@/pages/NewTransactionPage.vue'
+import NewPaymentPage from '@/pages/NewPaymentPage.vue'
 import InitPage from '@/pages/InitPage.vue'
 import { useFinancesStore } from '@/stores/finances.store'
 import { initDB } from '@/services/db.service'
@@ -30,7 +30,7 @@ export const router = createRouter({
       children: [
         {
           path: 'new',
-          component: NewExpensePage
+          component: NewPaymentPage
         },
         {
           path: '',

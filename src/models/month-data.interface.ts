@@ -1,6 +1,6 @@
 export interface IMonthData {
-  month: string // YYYY-MM
-  profit: number
-  loss: number
-  savings: number
+  monthId: string // YYYY-MM
+  income: number
+  outcome: number
+  balance: number
 }

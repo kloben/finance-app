@@ -14,18 +14,26 @@ const formValues = reactive({
 const isValid = computed(() => {
   return formValues.amount > 0
 })
+
+async function createTransaction () {
+  try {
+
+  } catch (e) {
+
+  }
+}
 </script>
 
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">
-      New Transaction
+      New Payment
     </div>
     <div class="form-wrapper">
       <VgInputNumber v-model="formValues.amount" label="Amount" />
       <VgInput v-model="formValues.title" label="Description (Optional)" />
       <VgInputCheck v-model="formValues.recurrent" label="Make recurrent" />
-      <VgButton :disabled="!isValid">Create</VgButton>
+      <VgButton :disabled="!isValid" @click="createTransaction">Create</VgButton>
     </div>
   </div>
 </template>
