@@ -14,7 +14,9 @@ const summaryValues = computed(() => store.lastMonths.map((data: IMonth) => ({
 </script>
 
 <template>
-  <BarChart :values="summaryValues" />
+  <div class="page-wrapper">
+    <BarChart :values="summaryValues" />
+  </div>
 </template>
 
 <style lang="scss">

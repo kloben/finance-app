@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+interface DisplayData {
+  values: {
+    up: number
+    down: number
+    label: string
+  }[]
+  gridPoints: number[]
+}
+
 const props = defineProps<{
   values: {
     positive: number
@@ -9,27 +18,40 @@ const props = defineProps<{
   }[]
 }>()
 
-const parsed = computed(() => {
-  const positiveMax = Math.max(...props.values.map(v => v.positive))
-  const negativeMax = Math.max(...props.values.map(v => v.negative))
-  return props.values.map((value) => ({
-    positive: Math.round(value.positive * 100 / positiveMax),
-    negative: Math.round(value.negative * 100 / negativeMax),
-    label: value.label
-  }))
+const displayData = computed((): DisplayData => {
+  let max = Math.max(...props.values.map(v => Math.max(v.positive, v.negative)))
+  max *= 1.10
+  return {
+    values: props.values.map((value) => ({
+      up: Math.round(value.positive * 100 / max),
+      down: Math.round(value.negative * 100 / max),
+      label: value.label
+    })),
+    gridPoints: [max, Math.round(max / 2), 0, -Math.round(max / 2), max]
+  }
 })
 </script>
 
 <template>
-  <div class="bar-chart">
-    <div class="column" v-for="(value, index) of parsed" :key="index">
-      <div class="bar-container positive">
-        <div class="bar" :style="{height: value.positive + '%'}"></div>
+  <div class="chart-container">
+    <div class="chart-lines">
+      <div class="line" v-for="(_, index) of displayData.gridPoints" :key="index"></div>
+    </div>
+    <div class="chart-bars">
+      <div class="column" v-for="(value, index) of displayData.values" :key="index">
+        <div class="bar-container positive">
+          <div class="bar" :style="{height: value.up + '%'}"></div>
+        </div>
+        <div class="bar-container negative">
+          <div class="bar" :style="{height: value.down + '%'}"></div>
+        </div>
       </div>
-      <div class="bar-container negative">
-        <div class="bar" :style="{height: value.negative + '%'}"></div>
-      </div>
-      <div class="label">{{ value.label }}</div>
+    </div>
+    <div class="chart-x-axis">
+      <div class="text-body-2" v-for="(value, index) of displayData.values" :key="index">{{ value.label }}</div>
+    </div>
+    <div class="chart-y-axis">
+      <div class="text-caption" v-for="(point, index) of displayData.gridPoints" :key="index"> {{ point }}</div>
     </div>
   </div>
 </template>
@@ -37,20 +59,65 @@ const parsed = computed(() => {
 <style scoped lang="scss">
 @import "src/styles/colors";
 
-.bar-chart {
+.chart-container {
+  background: $white;
+  margin: 0 auto;
+  padding: 12px 16px;
+  aspect-ratio: 16/9;
+  max-width: 100%;
+  max-height: 40vh;
+  display: grid;
+  grid-template-areas: "label-y bars" "empty label-x";
+  grid-template-rows: 1fr auto;
+  grid-template-columns: auto 1fr;
+}
+
+.chart-bars {
   display: flex;
   justify-content: center;
-  aspect-ratio: 16/9;
-  padding: 16px;
-  width: 100%;
-  max-height: 40vh;
+  grid-area: bars;
+}
+
+.chart-lines {
+  grid-area: bars;
+  display: flex;
+  flex-direction: column;
+
+  .line {
+    flex: 1 0 1px;
+    border-bottom: 1px solid $secondary;
+  }
+}
+
+.chart-y-axis {
+  grid-area: label-y;
+  display: flex;
+  flex-direction: column;
+
+  .text-caption {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+  }
+}
+
+.chart-x-axis {
+  grid-area: label-x;
+  display: flex;
+
+  .text-body-2 {
+    flex: 1;
+    text-align: center;
+  }
 }
 
 .column {
-  flex: 0 1 75px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 4px;
 }
 
 .bar-container {
