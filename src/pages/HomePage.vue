@@ -6,9 +6,9 @@ import type { IMonthData } from '@/models/month-data.interface'
 
 const store = useFinancesStore()
 const summaryValues = computed(() => store.months.map((data: IMonthData) => ({
-  positive: data.profit,
-  negative: data.loss,
-  label: new Date(data.month).toLocaleString('default', { month: 'short' })
+  positive: data.income,
+  negative: data.outcome,
+  label: new Date(data.monthId).toLocaleString('default', { month: 'short' })
 })))
 </script>
 
