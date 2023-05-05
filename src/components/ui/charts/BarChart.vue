@@ -35,6 +35,8 @@ const parsed = computed(() => {
 </template>
 
 <style scoped lang="scss">
+@import "src/styles/colors";
+
 .bar-chart {
   display: flex;
   justify-content: center;
@@ -63,7 +65,7 @@ const parsed = computed(() => {
     align-items: flex-end;
 
     .bar {
-      background: green;
+      background: $chart-positive;
     }
   }
 
@@ -71,7 +73,7 @@ const parsed = computed(() => {
     align-items: flex-start;
 
     .bar {
-      background: red;
+      background: $chart-negative;
     }
   }
 }
