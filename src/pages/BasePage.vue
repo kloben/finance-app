@@ -4,11 +4,15 @@ import FooterBar from '@/components/FooterBar.vue'
 </script>
 
 <template>
-  <TopBar></TopBar>
-  <router-view></router-view>
-  <FooterBar></FooterBar>
+  <div class="base-container">
+    <TopBar></TopBar>
+    <router-view></router-view>
+    <FooterBar></FooterBar>
+  </div>
 </template>
 
 <style lang="scss">
-
+.base-container {
+  padding-bottom: 60px;
+}
 </style>

@@ -1,50 +1,56 @@
 <script setup lang="ts">
 import VgButton from '@/components/ui/VgButton.vue'
 import { useFinancesStore } from '@/stores/finances.store'
-import { IncomeCategory, OutcomeCategory } from '@/data/categories.enum'
 
 const store = useFinancesStore()
 
 async function insertRandom () {
   const date = new Date()
-  date.setDate(15)
   for (let i = 0; i < 5; i++) {
+    date.setDate(Math.random() * 28)
     await store.createPayment(date, {
       type: 'income',
       amount: Math.floor(Math.random() * 250),
-      category: IncomeCategory.salary,
+      category: 'salary',
       description: crypto.randomUUID()
     })
+    date.setDate(Math.random() * 28)
     await store.createPayment(date, {
       type: 'income',
       amount: Math.floor(Math.random() * 100),
-      category: IncomeCategory.other,
+      category: 'other',
       description: crypto.randomUUID()
     })
+    date.setDate(Math.random() * 28)
     await store.createPayment(date, {
       type: 'outcome',
       amount: Math.floor(Math.random() * 50),
-      category: OutcomeCategory.electricity,
+      category: 'electricity',
       description: crypto.randomUUID()
     })
+    date.setDate(Math.random() * 28)
     await store.createPayment(date, {
       type: 'outcome',
       amount: Math.floor(Math.random() * 50),
-      category: OutcomeCategory.gas,
+      category: 'gas',
       description: crypto.randomUUID()
     })
+    date.setDate(Math.random() * 28)
     await store.createPayment(date, {
       type: 'outcome',
       amount: Math.floor(Math.random() * 50),
-      category: OutcomeCategory.fuel,
+      category: 'fuel',
       description: crypto.randomUUID()
     })
+    date.setDate(Math.random() * 28)
     await store.createPayment(date, {
       type: 'outcome',
       amount: Math.floor(Math.random() * 100),
-      category: OutcomeCategory.shopping,
+      category: 'shopping',
       description: crypto.randomUUID()
     })
+
+    date.setMonth(date.getMonth() - 1)
   }
 }
 </script>

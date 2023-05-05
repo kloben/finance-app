@@ -1,0 +1,74 @@
+<script setup lang="ts">
+import type { IPayment } from '@/models/payment.interface'
+import { computed } from 'vue'
+import { IncomeCategory, OutcomeCategory } from '@/data/categories.enum'
+
+const props = defineProps<{
+  payment: IPayment
+}>()
+
+const label = computed((): string => {
+  return props.payment.type === 'income'
+    ? IncomeCategory[props.payment.category]
+    : OutcomeCategory[props.payment.category]
+})
+
+const amount = computed((): string => {
+  return Intl.NumberFormat('default', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+  }).format(props.payment.amount * (props.payment.type === 'income' ? 1 : -1))
+})
+
+const date = computed((): { day: number, month: string } => {
+  const date = new Date(props.payment.dayId)
+  return {
+    day: date.getDate(),
+    month: date.toLocaleString('default', { month: 'short' })
+  }
+})
+</script>
+
+<template>
+  <div class="payment-container">
+    <div class="date">
+      <div class="text-body-1">{{ date.day }}</div>
+      <div class="text-title-6">{{ date.month }}</div>
+    </div>
+    <div class="label">
+      <div class="text-body-1">{{ label }}</div>
+      <div class="text-subtitle-2">{{ payment.description }}</div>
+    </div>
+    <div class="text-title-6 amount">{{ amount }}</div>
+  </div>
+</template>
+
+<style scoped lang="scss">
+@import "src/styles/colors";
+
+.payment-container {
+  padding: 8px 0;
+  border-bottom: 1px solid $base;
+  display: flex;
+  gap: 16px;
+}
+
+.date {
+  text-align: center;
+}
+
+.label {
+  flex: 1;
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.amount {
+  text-align: center;
+}
+</style>

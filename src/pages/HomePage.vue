@@ -3,6 +3,7 @@ import BarChart from '@/components/ui/charts/BarChart.vue'
 import { useFinancesStore } from '@/stores/finances.store'
 import { computed } from 'vue'
 import type { IMonth } from '@/models/month.interface'
+import PaymentData from '@/components/PaymentData.vue'
 
 const store = useFinancesStore()
 
@@ -24,13 +25,26 @@ const savings = computed(() => {
 
 <template>
   <div class="page-wrapper">
-    <div class="text-title-4">Savings: {{savings}}</div>
+    <div class="text-title-4">Savings: {{ savings }}</div>
     <BarChart :values="summaryValues" />
+
+    <div class="payments-container">
+      <PaymentData v-for="payment of store.lastPayments" :key="payment.id" :payment="payment" />
+    </div>
   </div>
 </template>
 
 <style lang="scss">
+@import "src/styles/colors";
+
 .text-title-4 {
   padding-bottom: 32px;
+}
+
+.payments-container {
+  margin-top: 32px;
+  padding: 8px 16px;
+  background: $white;
+  border-radius: 4px;
 }
 </style>
