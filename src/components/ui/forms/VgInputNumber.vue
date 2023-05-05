@@ -6,11 +6,6 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'update:modelValue', value: number): void
 }>()
-
-function emitUpdate (event: InputEvent): void {
-  const value = (event.target as HTMLInputElement).value
-  emit('update:modelValue', value ? parseInt(value) : 0)
-}
 </script>
 
 <template>
@@ -21,7 +16,7 @@ function emitUpdate (event: InputEvent): void {
              min="0"
              step="1"
              :value="modelValue ?? 0"
-             @input="emitUpdate($event as InputEvent)"
+             @input="emit('update:modelValue', $event.target.value ? Number($event.target.value) : 0)"
       />
     </label>
   </div>
