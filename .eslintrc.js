@@ -18,6 +18,7 @@ module.exports = {
     'vue'
   ],
   rules: {
+    '@typescript-eslint/strict-boolean-expressions': 'off',
     'vue/component-tags-order': ['error', {
       order: [['script', 'template'], 'style']
     }]

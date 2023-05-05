@@ -24,7 +24,7 @@ export async function initDB (): Promise<void> {
   DB = new Dexie('FinanceDB')
   DB.version(1).stores({
     months: '&monthId',
-    payments: '++id, [dayId+createdAt]'
+    payments: '++id, monthId'
   })
   await DB.open()
 }
@@ -34,10 +34,10 @@ export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
     .then(months => months.filter(v => v))
 }
 
-export async function fetchPayments (limit: number): Promise<IPayment[]> {
+export async function fetchPayments (monthId: string): Promise<IPayment[]> {
   return await DB.table(DB_TABLE.payments)
-    .orderBy('[dayId+createdAt]').reverse()
-    .limit(limit).toArray()
+    .where({ monthId })
+    .toArray()
 }
 
 export async function storePayment (date: Date, data: IPaymentData): Promise<NewPayment> {

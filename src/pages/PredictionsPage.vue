@@ -7,22 +7,22 @@ import { toMonthLabel } from '@/helpers/date.helper'
 const store = useFinancesStore()
 
 const chartData = computed(() => {
-  const months = store.lastMonths.slice(-3)
-  const currentMonth = months[months.length - 1]
-  return [
-    {
-      positive: currentMonth.income,
-      negative: currentMonth.outcome,
-      label: toMonthLabel(currentMonth.monthId)
-    }
-  ]
+  // const months = store.months.slice(-3)
+  // const currentMonth = months[months.length - 1]
+  // return [
+  //   {
+  //     positive: currentMonth.income,
+  //     negative: currentMonth.outcome,
+  //     label: toMonthLabel(currentMonth.monthId)
+  //   }
+  // ]
 })
 </script>
 
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">Predictions</div>
-    <BarChart :values="chartData" />
+<!--    <BarChart :values="chartData" />-->
   </div>
 </template>
 
