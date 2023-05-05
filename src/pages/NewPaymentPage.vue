@@ -6,8 +6,10 @@ import VgButton from '@/components/ui/VgButton.vue'
 import VgInputCheck from '@/components/ui/forms/VgInputCheck.vue'
 import VgInputSelect from '@/components/ui/forms/VgInputSelect.vue'
 import { Category } from '@/data/categories.enum'
+import VgInputSwitch from '@/components/ui/forms/VgInputSwitch.vue'
 
 const formValues = reactive({
+  type: 'outcome',
   amount: 0,
   category: null,
   title: null,
@@ -35,6 +37,7 @@ async function createTransaction () {
       New Payment
     </div>
     <div class="form-wrapper">
+      <VgInputSwitch v-model="formValues.type" :values="['outcome', 'income']" />
       <VgInputNumber v-model="formValues.amount" label="Amount" />
       <VgInputSelect v-model="formValues.category" :options="categories" label="Category" />
       <VgInput v-model="formValues.title" label="Description (Optional)" />

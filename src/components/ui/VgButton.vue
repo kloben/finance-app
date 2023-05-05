@@ -2,7 +2,9 @@
   <div class="vg-button"
        :class="[type, size, disabled ? 'disabled': '']"
   >
-    <div class="text-button"><slot /></div>
+    <div class="text-button">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -15,20 +17,5 @@ defineProps<{
 </script>
 
 <style scoped lang="scss">
-@import "src/styles/colors";
-
-.vg-button {
-  padding: 12px 16px;
-  background: $primary;
-  color: $base;
-  border-radius: 4px;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-
-  &.disabled {
-    background: $secondary;
-    pointer-events: none;
-  }
-}
+@import "./VgButton.scss";
 </style>
