@@ -15,7 +15,7 @@ const store = useFinancesStore()
 const router = useRouter()
 
 const formValues = <IPaymentData>reactive({
-  type: <PaymentType>'outcome',
+  type: 'outcome' as PaymentType,
   amount: 0,
   category: '',
   description: '',
@@ -26,6 +26,10 @@ const isValid = computed(() => {
   return formValues.amount > 0 && formValues.category && formValues.type
 })
 const categories = computed(() => formValues.type === 'outcome' ? OutcomeCategory : IncomeCategory)
+const types = {
+  income: 'Income',
+  outcome: 'Outcome'
+}
 
 async function createTransaction () {
   try {
@@ -43,7 +47,7 @@ async function createTransaction () {
       New Payment
     </div>
     <div class="form-wrapper">
-      <VgInputSwitch v-model="formValues.type" :values="['outcome', 'income']" />
+      <VgInputSwitch v-model="formValues.type" :options="types" />
       <VgInputNumber v-model="formValues.amount" label="Amount" />
       <VgInputSelect v-model="formValues.category" :options="categories" label="Category" />
       <VgInput v-model="formValues.description" label="Description (Optional)" />

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 
 defineProps<{
-  label?: string
-  values: string[]
+  options: Record<string, string>
   modelValue?: string
 }>()
 const emit = defineEmits<{
@@ -12,18 +11,15 @@ const emit = defineEmits<{
 
 <template>
   <div class="vg-input">
-    <label>
-      <span v-if="label" class="text-caption">{{ label }}</span>
-      <div class="switch-container">
-        <div class="vg-button"
-             v-for="(value, index) of values"
-             :key="index"
-             :class="{disabled: value !== modelValue}"
-             @click="emit('update:modelValue', value)"
-        >{{ value }}
-        </div>
+    <div class="switch-container">
+      <div class="vg-button"
+           v-for="(label, key) in options"
+           :key="key"
+           :class="{disabled: key !== modelValue}"
+           @click="emit('update:modelValue', key)"
+      >{{ label }}
       </div>
-    </label>
+    </div>
   </div>
 </template>
 
