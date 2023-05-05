@@ -15,7 +15,9 @@ import VgIconPrediction from '@/components/ui/icons/VgIconPrediction.vue'
       </router-link>
     </div>
     <div class="item">
-      <VgIconPrediction />
+      <router-link to="/predict">
+        <VgIconPrediction />
+      </router-link>
     </div>
   </div>
 </template>

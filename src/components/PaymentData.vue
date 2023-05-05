@@ -2,6 +2,8 @@
 import type { IPayment } from '@/models/payment.interface'
 import { computed } from 'vue'
 import { IncomeCategory, OutcomeCategory } from '@/data/categories.enum'
+import { toCurrency } from '@/helpers/number.helper'
+import { toMonthLabel } from '@/helpers/date.helper'
 
 const props = defineProps<{
   payment: IPayment
@@ -14,19 +16,14 @@ const label = computed((): string => {
 })
 
 const amount = computed((): string => {
-  return Intl.NumberFormat('default', {
-    style: 'currency',
-    currency: 'EUR',
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 0
-  }).format(props.payment.amount * (props.payment.type === 'income' ? 1 : -1))
+  return toCurrency(props.payment.amount * (props.payment.type === 'income' ? 1 : -1))
 })
 
 const date = computed((): { day: number, month: string } => {
   const date = new Date(props.payment.dayId)
   return {
     day: date.getDate(),
-    month: date.toLocaleString('default', { month: 'short' })
+    month: toMonthLabel(date)
   }
 })
 </script>
@@ -55,17 +52,20 @@ const date = computed((): { day: number, month: string } => {
   gap: 16px;
 }
 
+.date, .label, .amount {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
 .date {
-  text-align: center;
+  align-items: center;
 }
 
 .label {
   flex: 1;
   text-align: start;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
 }
 
 .amount {

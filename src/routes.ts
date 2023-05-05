@@ -5,6 +5,7 @@ import NewPaymentPage from '@/pages/NewPaymentPage.vue'
 import InitPage from '@/pages/InitPage.vue'
 import { useFinancesStore } from '@/stores/finances.store'
 import { initDB } from '@/services/db.service'
+import PredictionsPage from '@/pages/PredictionsPage.vue'
 
 async function isInitialized (from: RouteLocationNormalized): Promise<boolean> {
   const store = useFinancesStore()
@@ -31,6 +32,10 @@ export const router = createRouter({
         {
           path: 'new',
           component: NewPaymentPage
+        },
+        {
+          path: 'predict',
+          component: PredictionsPage
         },
         {
           path: '',

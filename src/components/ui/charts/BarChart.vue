@@ -66,7 +66,7 @@ const emptyChart = computed((): boolean => {
 .chart-container {
   background: $white;
   margin: 0 auto;
-  padding: 12px 16px;
+  padding: 16px;
   aspect-ratio: 16/9;
   max-width: 100%;
   max-height: 40vh;
@@ -74,6 +74,7 @@ const emptyChart = computed((): boolean => {
   grid-template-areas: "label-y bars" "empty label-x";
   grid-template-rows: 1fr auto;
   grid-template-columns: auto 1fr;
+  border-radius: 4px;
 }
 
 .chart-bars {
@@ -120,6 +121,7 @@ const emptyChart = computed((): boolean => {
 .chart-x-axis {
   grid-area: label-x;
   display: flex;
+  padding-top: 8px;
 
   .text-body-2 {
     flex: 1;
