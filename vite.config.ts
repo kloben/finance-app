@@ -1,5 +1,3 @@
-/// <reference types="vitest" />
-
 import { fileURLToPath, URL } from 'node:url'
 import checker from 'vite-plugin-checker'
 import { defineConfig } from 'vite'
@@ -17,14 +15,6 @@ export default defineConfig({
     alias: {
       vue: 'vue/dist/vue.esm-bundler',
       '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  },
-  test: {
-    environment: "jsdom",
-    coverage: {
-      provider: 'c8',
-      reporter: ['text', 'html'],
-      all: true
     }
   }
 })
