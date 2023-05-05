@@ -20,7 +20,7 @@ const props = defineProps<{
 
 const displayData = computed((): DisplayData => {
   let max = Math.max(...props.values.map(v => Math.max(v.positive, v.negative)))
-  max *= 1.10
+  max = Math.round(max * 1.10)
   return {
     values: props.values.map((value) => ({
       up: Math.round(value.positive * 100 / max),
@@ -82,9 +82,10 @@ const displayData = computed((): DisplayData => {
   grid-area: bars;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  padding: 0 12px;
 
   .line {
-    flex: 1 0 1px;
     border-bottom: 1px solid $secondary;
   }
 }
