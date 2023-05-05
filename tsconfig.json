@@ -5,6 +5,9 @@
     "src/**/*",
     "src/**/*.vue"
   ],
+  "exclude": [
+    "src/**/*.spec.ts"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "target": "ES2018",
