@@ -1,7 +1,13 @@
 import Dexie from 'dexie'
 import { toDayId, toMonthId } from '@/helpers/date.helper'
-import type { IMonth } from '@/models/month-data.interface'
+import type { IMonth } from '@/models/month.interface'
 import type { IPayment, IPaymentData } from '@/models/payment.interface'
+
+interface NewPayment {
+  payment: IPayment
+  month: IMonth
+  savings: number | null
+}
 
 enum DB_TABLE {
   months = 'months',
@@ -17,7 +23,7 @@ let DB!: Dexie
 export async function initDB (): Promise<void> {
   DB = new Dexie('FinanceDB')
   DB.version(1).stores({
-    months: '++id, &monthId',
+    months: '&monthId',
     payments: '++id, monthId, dayId'
   })
   await DB.open()
@@ -28,33 +34,48 @@ export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
     .then(months => months.filter(v => v))
 }
 
-export async function storeMonth (date: Date, data: IMonth): Promise<IMonth> {
-  // const monthId = await DB.table(DB_TABLE.months).add(data)
-  // return {
-  //   id: monthId,
-  //   ...data
-  // }
-  return data
-}
-
-export async function storePayment (date: Date, data: IPaymentData): Promise<IPayment> {
-  const payment: Omit<IPayment, 'id'> = {
+export async function storePayment (date: Date, data: IPaymentData): Promise<NewPayment> {
+  const paymentData: Omit<IPayment, 'id'> = {
     ...data,
     createdAt: Date.now(),
     dayId: toDayId(date),
     monthId: toMonthId(date)
   }
-  const paymentId = await DB.transaction('rw', DB_TABLE.months, DB_TABLE.payments, async () => {
-    const month = await DB.table(DB_TABLE.months).get({ monthId: payment.monthId }) as IMonth
-    await DB.table(DB_TABLE.months)
-      .where({ monthId: payment.monthId })
-      .modify(payment.type === 'income'
-        ? { income: payment.amount + month.income }
-        : { outcome: payment.amount + month.outcome })
-    return await DB.table(DB_TABLE.payments).add(payment)
+  return await DB.transaction('rw', DB_TABLE.months, DB_TABLE.payments, async () => {
+    const month = await upsertMonth(paymentData)
+    const payment = await createPayment(paymentData)
+    const savings = updateSavings(payment)
+    return { payment, month, savings }
   })
-  console.log(paymentId)
-  return { id: 123, ...payment }
+}
+
+function updateSavings (payment: IPayment): number | null {
+  if (new Date(payment.monthId).getMonth() === new Date().getMonth()) {
+    let current = fetchSavings() ?? 0
+    current += (payment.amount * (payment.type === 'income' ? 1 : -1))
+    storeSavings(current)
+    return current
+  }
+  return null
+}
+
+async function createPayment (paymentData: Omit<IPayment, 'id'>): Promise<IPayment> {
+  const id = await DB.table(DB_TABLE.payments).add(paymentData) as number
+  return { id, ...paymentData }
+}
+
+async function upsertMonth (payment: Omit<IPayment, 'id'>): Promise<IMonth> {
+  let month: IMonth | undefined = await DB.table(DB_TABLE.months).get({ monthId: payment.monthId })
+  let newMonth = false
+  if (month === undefined) {
+    newMonth = true
+    month = { monthId: payment.monthId, outcome: 0, income: 0 }
+  }
+  month[payment.type] += payment.amount
+  newMonth
+    ? await DB.table(DB_TABLE.months).add(month)
+    : await DB.table(DB_TABLE.months).update({ monthId: payment.monthId }, month)
+  return month
 }
 
 export function fetchSavings (): number | null {

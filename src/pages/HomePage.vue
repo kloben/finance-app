@@ -2,7 +2,7 @@
 import BarChart from '@/components/ui/charts/BarChart.vue'
 import { useFinancesStore } from '@/stores/finances.store'
 import { computed } from 'vue'
-import type { IMonth } from '@/models/month-data.interface'
+import type { IMonth } from '@/models/month.interface'
 
 const store = useFinancesStore()
 
