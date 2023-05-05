@@ -24,7 +24,9 @@ export const useFinancesStore = defineStore('finances', {
         .map((monthId) => state.months.get(monthId) ?? { monthId, income: 0, outcome: 0 })
     },
     lastPayments: (state): IPayment[] => {
-      return Array.from(state.payments.values()).slice(-5)
+      return Array.from(state.payments.values()).sort((a, b) => {
+        return `${a.dayId}${a.createdAt}` > `${b.dayId}${b.createdAt}` ? -1 : 1
+      }).slice(0, 5)
     }
   },
   actions: {
