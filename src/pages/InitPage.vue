@@ -11,9 +11,29 @@ const router = useRouter()
 
 async function onClick () {
   try {
-    await store.createMonth(new Date(), {
-      income: 0,
-      outcome: 0,
+    // await store.createMonth(new Date(), {
+    //   income: 0,
+    //   outcome: 0,
+    //   balance: amount.value
+    // })
+    // TODO: For DEV purposes only
+    const date = new Date()
+    date.setDate(15)
+    await store.createMonth(date, {
+      income: Math.floor(Math.random() * 200),
+      outcome: Math.floor(Math.random() * 200),
+      balance: amount.value
+    })
+    date.setMonth(date.getMonth() - 1)
+    await store.createMonth(date, {
+      income: Math.floor(Math.random() * 200),
+      outcome: Math.floor(Math.random() * 200),
+      balance: amount.value
+    })
+    date.setMonth(date.getMonth() - 1)
+    await store.createMonth(date, {
+      income: Math.floor(Math.random() * 200),
+      outcome: Math.floor(Math.random() * 200),
       balance: amount.value
     })
     await router.push('/')
