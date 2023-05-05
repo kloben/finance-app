@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import VgIconChart from '@/components/ui/icons/VgIconChart.vue'
+import VgIconNew from '@/components/ui/icons/VgIconNew.vue'
+import VgIconList from '@/components/ui/icons/VgIconList.vue'
+</script>
+
 <template>
   <div class="footer-bar">
     <div class="item">
@@ -13,12 +19,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import VgIconChart from '@/components/ui/icons/VgIconChart.vue'
-import VgIconNew from '@/components/ui/icons/VgIconNew.vue'
-import VgIconList from '@/components/ui/icons/VgIconList.vue'
-</script>
 
 <style scoped lang="scss">
 @import "src/styles/colors";

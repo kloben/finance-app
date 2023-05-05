@@ -18,8 +18,8 @@ module.exports = {
     'vue'
   ],
   rules: {
-    'vue/multi-word-component-names': ['error', {
-      ignores: ['Navbar']
+    'vue/component-tags-order': ['error', {
+      order: [['script', 'template'], 'style']
     }]
   }
 }

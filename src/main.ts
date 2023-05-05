@@ -1,9 +1,11 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import './styles/base.scss'
+import App from './App.vue'
 import BasePage from '@/pages/BasePage.vue'
 import HomePage from '@/pages/HomePage.vue'
 import NewExpensePage from '@/pages/NewTransactionPage.vue'
+
+import './styles/base.scss'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -25,6 +27,6 @@ const router = createRouter({
   ]
 })
 
-createApp({})
+createApp(App)
   .use(router)
   .mount('#app')

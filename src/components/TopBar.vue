@@ -1,3 +1,6 @@
+<script setup lang="ts">
+</script>
+
 <template>
   <div class="top-bar">
     <router-link to="/">
@@ -5,9 +8,6 @@
     </router-link>
   </div>
 </template>
-
-<script setup lang="ts">
-</script>
 
 <style scoped lang="scss">
 @import "src/styles/colors";
