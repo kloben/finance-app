@@ -30,11 +30,15 @@ const displayData = computed((): DisplayData => {
     gridPoints: max === 0 ? [0] : [max, Math.round(max / 2), 0, -Math.round(max / 2), max]
   }
 })
+
+const emptyChart = computed((): boolean => {
+  return displayData.value.gridPoints.length === 1
+})
 </script>
 
 <template>
   <div class="chart-container">
-    <div class="chart-lines">
+    <div class="chart-lines" :class="{empty: emptyChart}">
       <div class="line" v-for="(_, index) of displayData.gridPoints" :key="index"></div>
     </div>
     <div class="chart-bars">
@@ -50,7 +54,7 @@ const displayData = computed((): DisplayData => {
     <div class="chart-x-axis">
       <div class="text-body-2" v-for="(value, index) of displayData.values" :key="index">{{ value.label }}</div>
     </div>
-    <div class="chart-y-axis">
+    <div class="chart-y-axis" :class="{empty: emptyChart}">
       <div class="text-caption" v-for="(point, index) of displayData.gridPoints" :key="index">{{ point }}</div>
     </div>
   </div>
@@ -85,6 +89,10 @@ const displayData = computed((): DisplayData => {
   justify-content: space-between;
   padding: 0 12px;
 
+  &.empty {
+    justify-content: space-around;
+  }
+
   .line {
     border-bottom: 1px solid $secondary;
   }
@@ -95,6 +103,10 @@ const displayData = computed((): DisplayData => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &.empty {
+    justify-content: space-around;
+  }
 
   .text-caption {
     text-align: end;
