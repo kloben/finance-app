@@ -51,7 +51,7 @@ const displayData = computed((): DisplayData => {
       <div class="text-body-2" v-for="(value, index) of displayData.values" :key="index">{{ value.label }}</div>
     </div>
     <div class="chart-y-axis">
-      <div class="text-caption" v-for="(point, index) of displayData.gridPoints" :key="index"> {{ point }}</div>
+      <div class="text-caption" v-for="(point, index) of displayData.gridPoints" :key="index">{{ point }}</div>
     </div>
   </div>
 </template>
@@ -82,7 +82,7 @@ const displayData = computed((): DisplayData => {
   grid-area: bars;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 0 12px;
 
   .line {
@@ -94,9 +94,11 @@ const displayData = computed((): DisplayData => {
   grid-area: label-y;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   .text-caption {
-    flex: 1;
+    text-align: end;
+    flex: 0 1 1px;
     display: flex;
     align-items: center;
     justify-content: end;
