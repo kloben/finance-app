@@ -7,9 +7,9 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [
     vue(),
-    checker({
-      vueTsc: true
-    })
+    !process.env.VITEST
+      ? checker({ vueTsc: true })
+      : undefined
   ],
   resolve: {
     alias: {
