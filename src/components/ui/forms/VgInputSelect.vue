@@ -18,7 +18,7 @@ function emitUpdate (event: InputEvent): void {
     <label>
       <span v-if="label" class="text-caption">{{ label }}</span>
       <select @input="emitUpdate($event as InputEvent)">
-        <option value="">Select</option>
+        <option value=""></option>
         <option v-for="(option, index) of options" :value="option" :key="index">{{ option }}</option>
       </select>
     </label>

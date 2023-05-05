@@ -1,29 +1,25 @@
 import { defineStore } from 'pinia'
-import { fetchMonths, storeMonth } from '@/services/db.service'
-import type { IMonthData } from '@/models/month-data.interface'
-import { toMonthId } from '@/helpers/date.helper'
-import type { IPaymentData } from '@/models/payment-data.interface'
+import { fetchMonths, storeMonth, storePayment } from '@/services/db.service'
+import type { IMonth, IMonthData } from '@/models/month-data.interface'
+import type { IPayment, IPaymentData } from '@/models/payment.interface'
 
 export const useFinancesStore = defineStore('finances', {
   state: () => ({
-    months: [] as IMonthData[],
-    payments: [] as IPaymentData[]
+    months: [] as IMonth[],
+    payments: [] as IPayment[]
   }),
+  getters: {},
   actions: {
     async init (): Promise<void> {
       this.months = await fetchMonths()
     },
-    async createMonth (date: Date, balance: number, income: number, outcome: number): Promise<void> {
-      const month = await storeMonth({
-        monthId: toMonthId(date),
-        income,
-        outcome,
-        balance
-      })
+    async createMonth (date: Date, data: IMonthData): Promise<void> {
+      const month = await storeMonth(date, data)
       this.months.push(month)
     },
-    async createTransaction (amount: number, recurrent: boolean, description?: string, date?: Date) {
-
+    async createPayment (date: Date, paymentData: IPaymentData) {
+      const payment = await storePayment(date, paymentData)
+      this.payments.push(payment)
     }
   }
 })

@@ -11,7 +11,11 @@ const router = useRouter()
 
 async function onClick () {
   try {
-    await store.createMonth(new Date(), amount.value, 0, 0)
+    await store.createMonth(new Date(), {
+      income: 0,
+      outcome: 0,
+      balance: amount.value
+    })
     await router.push('/')
   } catch (e) {
     console.log(e)
