@@ -12,7 +12,7 @@ async function isInitialized (from: RouteLocationNormalized): Promise<boolean> {
     await initDB()
     await store.init()
   }
-  return store.hasMonths
+  return store.savings !== null
 }
 
 export const router = createRouter({
