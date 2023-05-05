@@ -26,6 +26,8 @@ describe('Create Payment Test', () => {
     cy.location().should((location) => {
       expect(location.pathname).to.eq('/')
     })
+
+    cy.get('.text-title-4').invoke('text').should('contain', 'Total savings: €14,877')
   })
 
   it('creates new income', () => {
@@ -41,5 +43,7 @@ describe('Create Payment Test', () => {
     cy.location().should((location) => {
       expect(location.pathname).to.eq('/')
     })
+
+    cy.get('.text-title-4').invoke('text').should('contain', 'Total savings: €15,321')
   })
 })
