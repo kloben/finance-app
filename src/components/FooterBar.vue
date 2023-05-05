@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import VgIconChart from '@/components/ui/icons/VgIconChart.vue'
 import VgIconNew from '@/components/ui/icons/VgIconNew.vue'
-import VgIconList from '@/components/ui/icons/VgIconList.vue'
+import VgIconPrediction from '@/components/ui/icons/VgIconPrediction.vue'
 </script>
 
 <template>
@@ -15,7 +15,7 @@ import VgIconList from '@/components/ui/icons/VgIconList.vue'
       </router-link>
     </div>
     <div class="item">
-      <VgIconList />
+      <VgIconPrediction />
     </div>
   </div>
 </template>
