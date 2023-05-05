@@ -3,12 +3,12 @@ import type { IPayment } from '@/models/payment.interface'
 import { linearRegression, linearRegressionLine } from 'simple-statistics'
 import { toMonthId } from '@/helpers/date.helper'
 
-interface IPredictionInput {
+export interface IPredictionInput {
   monthId: string
   payments: IPayment[]
 }
 
-export function calculatePredictions (inputData: IPredictionInput[], num: number = 4): IMonth[] {
+export function calculatePredictions (inputData: IPredictionInput[], outputNum: number = 4): IMonth[] {
   const flattenData: Record<string, Record<string, number[]>> = {
     income: {},
     outcome: {}
@@ -31,7 +31,7 @@ export function calculatePredictions (inputData: IPredictionInput[], num: number
     }
   }
   const date = new Date(inputData[inputData.length - 1].monthId)
-  return new Array(num).fill(0).map((_, index) => {
+  return new Array(outputNum).fill(0).map((_, index) => {
     const ix = index + inputData.length
     date.setMonth(date.getMonth() + 1)
     return {
