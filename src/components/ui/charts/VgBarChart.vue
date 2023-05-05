@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-
-export interface ChartDataValue {
-  label: string
-  up: number
-  down: number
-  predicted?: boolean
-}
+import type { ChartValue } from '@/models/chart-value.interface'
 
 interface DisplayData {
-  values: ChartDataValue[]
+  values: ChartValue[]
   gridPoints: number[]
 }
 
 const props = defineProps<{
-  values: ChartDataValue[]
+  values: ChartValue[]
 }>()
 
 const displayData = computed((): DisplayData => {
-  let max = Math.max(...props.values.map(v => Math.max(v.up, v.down)))
+  let max = Math.max(...props.values.map(v => Math.max(v.up, v.down)), 0)
   max = Math.round(max * 1.10)
+  const gridPoints = [0]
+  if (max > 0) {
+    const halfPoint = Math.round(max / 2)
+    gridPoints.unshift(max, halfPoint)
+    gridPoints.push(-halfPoint, -max)
+  }
   return {
     values: props.values.map((value) => ({
       label: value.label,
@@ -27,7 +27,7 @@ const displayData = computed((): DisplayData => {
       down: Math.round(value.down * 100 / max),
       predicted: value.predicted
     })),
-    gridPoints: max === 0 ? [0] : [max, Math.round(max / 2), 0, -Math.round(max / 2), max]
+    gridPoints
   }
 })
 

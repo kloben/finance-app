@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BarChart from '@/components/ui/charts/BarChart.vue'
+import VgBarChart from '@/components/ui/charts/VgBarChart.vue'
 import { useFinancesStore } from '@/stores/finances.store'
 import { computed } from 'vue'
 import type { IMonth } from '@/models/month.interface'
@@ -22,7 +22,7 @@ const savings = computed(() => {
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">Total savings: {{ savings }}</div>
-    <BarChart :values="summaryValues" />
+    <VgBarChart :values="summaryValues" />
   </div>
 </template>
 
