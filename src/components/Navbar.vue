@@ -1,16 +1,22 @@
 <template>
   <div class="navbar">
     <div class="item">
-      Categories
+      <VgIconChart />
     </div>
     <div class="item">
-      New
+      <VgIconNew />
     </div>
     <div class="item">
-      List
+      <VgIconList />
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import VgIconChart from '@/components/ui/icons/VgIconChart.vue'
+import VgIconNew from '@/components/ui/icons/VgIconNew.vue'
+import VgIconList from '@/components/ui/icons/VgIconList.vue'
+</script>
 
 <style scoped lang="scss">
 @import "src/styles/colors";
@@ -24,11 +30,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
 }
 
 .item {
   cursor: pointer;
-  padding: 16px;
+  padding: 12px;
 
   &:hover {
     background: darken($white, 10);
