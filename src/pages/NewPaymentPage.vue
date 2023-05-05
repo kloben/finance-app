@@ -52,7 +52,7 @@ async function createTransaction () {
       <VgInputSelect v-model="formValues.category" :options="categories" label="Category" />
       <VgInput v-model="formValues.description" label="Description (Optional)" />
       <VgInputCheck v-model="formValues.recurrent" label="Make recurrent" />
-      <VgButton :disabled="!isValid" @click="createTransaction">Create</VgButton>
+      <VgButton :disabled="!isValid" @clicked="createTransaction">Create</VgButton>
     </div>
   </div>
 </template>

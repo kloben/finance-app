@@ -25,7 +25,7 @@ async function onClick () {
     <div class="text-title-5">Let's start with how much do you have right now</div>
     <div class="form-wrapper">
       <VgInputNumber v-model="amount" />
-      <VgButton :disabled="amount <= 0" @click="onClick">Continue</VgButton>
+      <VgButton :disabled="amount <= 0" @clicked="onClick">Continue</VgButton>
     </div>
   </div>
 </template>

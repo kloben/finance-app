@@ -60,7 +60,7 @@ async function insertRandom () {
     <router-link to="/">
       <div class="logo">FinanceAPP</div>
     </router-link>
-    <VgButton @click="insertRandom()">Random</VgButton>
+    <VgButton @clicked="insertRandom()">Random</VgButton>
   </div>
 </template>
 
