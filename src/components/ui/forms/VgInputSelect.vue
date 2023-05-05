@@ -10,10 +10,6 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
 
-function emitUpdate (event: InputEvent): void {
-  emit('update:modelValue', (event.target as HTMLInputElement).value ?? '')
-}
-
 watch(() => props.options, () => {
   emit('update:modelValue', '')
 })
@@ -23,9 +19,14 @@ watch(() => props.options, () => {
   <div class="vg-input">
     <label>
       <span v-if="label" class="text-caption">{{ label }}</span>
-      <select @input="emitUpdate($event as InputEvent)">
+      <select @change="emit('update:modelValue', $event.target.value ?? '')">
         <option value=""></option>
-        <option v-for="(label, key) in options" :value="key" :key="key">{{ label }}</option>
+        <option v-for="(label, key) in options"
+                :key="key"
+                :value="key"
+                :selected="modelValue === key"
+        >{{ label }}
+        </option>
       </select>
     </label>
   </div>
