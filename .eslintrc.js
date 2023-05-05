@@ -1,26 +1,14 @@
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution')
+
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true
-  },
-  extends: [
+  root: true,
+  'extends': [
     'plugin:vue/vue3-essential',
-    'standard-with-typescript',
+    'eslint:recommended',
     '@vue/eslint-config-typescript'
   ],
-  overrides: [],
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: './tsconfig.json'
-  },
-  plugins: [
-    'vue'
-  ],
-  rules: {
-    '@typescript-eslint/strict-boolean-expressions': 'off',
-    'vue/component-tags-order': ['error', {
-      order: [['script', 'template'], 'style']
-    }]
+    ecmaVersion: 'latest'
   }
 }
