@@ -1,6 +1,25 @@
 import { createApp } from 'vue'
-import App from './App.vue'
-
+import { createRouter, createWebHistory } from 'vue-router'
 import './styles/base.scss'
+import BasePage from '@/pages/BasePage.vue'
+import HomePage from '@/pages/HomePage.vue'
 
-createApp(App).mount('#app')
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/',
+      component: BasePage,
+      children: [
+        {
+          path: '',
+          component: HomePage
+        }
+      ]
+    }
+  ]
+})
+
+createApp({})
+  .use(router)
+  .mount('#app')
