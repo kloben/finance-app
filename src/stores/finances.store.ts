@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { fetchMonths, fetchPayments, fetchSavings, storePayment, storeSavings } from '@/services/db.service'
 import type { IMonth } from '@/models/month.interface'
-import type { IPayment, IPaymentData, PaymentType } from '@/models/payment.interface'
+import type { IPayment, IPaymentData } from '@/models/payment.interface'
 import { toMonthId } from '@/helpers/date.helper'
 
 interface StoreState {

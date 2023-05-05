@@ -9,8 +9,8 @@ import { toCurrency } from '@/helpers/number.helper'
 const store = useFinancesStore()
 
 const summaryValues = computed(() => store.lastMonths.map((data: IMonth) => ({
-  positive: data.income,
-  negative: data.outcome,
+  up: data.income,
+  down: data.outcome,
   label: toMonthLabel(data.monthId)
 })))
 

@@ -1,34 +1,31 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+export interface ChartDataValue {
+  label: string
+  up: number
+  down: number
+  predicted?: boolean
+}
+
 interface DisplayData {
-  values: {
-    label: string
-    up: number
-    down: number
-    predicted?: boolean
-  }[]
+  values: ChartDataValue[]
   gridPoints: number[]
 }
 
 const props = defineProps<{
-  values: {
-    label: string
-    positive: number
-    negative: number
-    predicted?: boolean
-  }[]
+  values: ChartDataValue[]
 }>()
 
 const displayData = computed((): DisplayData => {
-  let max = Math.max(...props.values.map(v => Math.max(v.positive, v.negative)))
+  let max = Math.max(...props.values.map(v => Math.max(v.up, v.down)))
   max = Math.round(max * 1.10)
   return {
     values: props.values.map((value) => ({
       label: value.label,
-      up: Math.round(value.positive * 100 / max),
-      down: Math.round(value.negative * 100 / max),
-      predicted: value.predicted ?? false
+      up: Math.round(value.up * 100 / max),
+      down: Math.round(value.down * 100 / max),
+      predicted: value.predicted
     })),
     gridPoints: max === 0 ? [0] : [max, Math.round(max / 2), 0, -Math.round(max / 2), max]
   }
@@ -76,7 +73,7 @@ const emptyChart = computed((): boolean => {
   max-width: 100%;
   max-height: 40vh;
   display: grid;
-  grid-template-areas: "label-y bars" "empty label-x";
+  grid-template-areas: "label-y bars" ". label-x";
   grid-template-rows: 1fr auto;
   grid-template-columns: auto 1fr;
   border-radius: 4px;

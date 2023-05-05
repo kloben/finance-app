@@ -24,8 +24,8 @@ const chartData = computed(() => {
 function toChart (month: IMonth, predicted: boolean = false) {
   return {
     label: toMonthLabel(month.monthId),
-    positive: month.income,
-    negative: month.outcome,
+    up: month.income,
+    down: month.outcome,
     predicted
   }
 }
