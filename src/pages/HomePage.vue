@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import BarChart from '@/components/ui/charts/BarChart.vue'
-import { useHomeStore } from '@/stores/home.store'
+import { useMonthStore } from '@/stores/months.store'
 import { computed } from 'vue'
 import type { IMonthData } from '@/models/month-data.interface'
 
-const store = useHomeStore()
+const store = useMonthStore()
 const summaryValues = computed(() => store.months.map((data: IMonthData) => ({
   positive: data.profit,
   negative: data.loss,

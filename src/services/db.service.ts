@@ -14,8 +14,8 @@ export async function initDB (): Promise<void> {
   await DB.open()
 }
 
-export async function fetchMonths (): Promise<IMonthData[]> {
-  return await DB.table('months').orderBy('month').limit(10).toArray()
+export async function fetchMonths (limit: number = 10): Promise<IMonthData[]> {
+  return await DB.table('months').orderBy('month').limit(limit).toArray()
 }
 
 export async function storeMonth (month: IMonthData): Promise<IMonthData> {

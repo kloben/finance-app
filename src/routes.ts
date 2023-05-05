@@ -3,11 +3,11 @@ import BasePage from '@/pages/BasePage.vue'
 import HomePage from '@/pages/HomePage.vue'
 import NewExpensePage from '@/pages/NewTransactionPage.vue'
 import InitPage from '@/pages/InitPage.vue'
-import { useHomeStore } from '@/stores/home.store'
+import { useMonthStore } from '@/stores/months.store'
 import { initDB } from '@/services/db.service'
 
 async function isInitialized (from: RouteLocationNormalized): Promise<boolean> {
-  const store = useHomeStore()
+  const store = useMonthStore()
   if (from === START_LOCATION) {
     await initDB()
     await store.init()

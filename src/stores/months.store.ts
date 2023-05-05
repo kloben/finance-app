@@ -3,7 +3,7 @@ import { fetchMonths, storeMonth } from '@/services/db.service'
 import type { IMonthData } from '@/models/month-data.interface'
 import { toMonthId } from '@/helpers/date.helper'
 
-export const useHomeStore = defineStore('home', {
+export const useMonthStore = defineStore('month', {
   state: () => ({
     months: [] as IMonthData[]
   }),
