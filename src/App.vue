@@ -1,9 +1,11 @@
 <script setup lang="ts">
-
+import VgButton from '@/components/ui/VgButton.vue'
 </script>
 
 <template>
-  <div>Hello</div>
+  <div>
+    <VgButton size="small" type="clear">Hello</VgButton>
+  </div>
 </template>
 
 <style scoped>
