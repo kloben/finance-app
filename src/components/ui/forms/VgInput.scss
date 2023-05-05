@@ -2,9 +2,10 @@
 
 input {
   background: $white;
-  padding: 8px 12px;
+  padding: 12px;
   border-radius: 4px;
   border: 1px solid $secondary;
+  width: 100%;
 
   &:focus-visible, &:focus, &:hover {
     outline: none;

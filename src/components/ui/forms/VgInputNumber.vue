@@ -1,5 +1,8 @@
 <template>
-  <input type="number"
+  <input class="vg-input"
+         type="number"
+         min="0"
+         step="1"
          :value="modelValue ?? 0"
          @input="emitUpdate($event as InputEvent)"
   />

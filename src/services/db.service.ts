@@ -14,10 +14,10 @@ export async function initDB (): Promise<void> {
   await DB.open()
 }
 
-export async function fetchSummaries (): Promise<IMonthSummary[]> {
+export async function fetchMonths (): Promise<IMonthSummary[]> {
   return await DB.table('summaries').orderBy('month').limit(10).toArray()
 }
 
-export async function saveSummary (summary: IMonthSummary): Promise<IMonthSummary> {
-  return await DB.table('summaries').add(summary).then(() => summary)
+export async function storeMonth (month: IMonthSummary): Promise<IMonthSummary> {
+  return await DB.table('summaries').add(month).then(() => month)
 }

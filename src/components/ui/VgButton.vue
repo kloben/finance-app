@@ -1,5 +1,7 @@
 <template>
-  <div class="vg-button" :class="[type, size]">
+  <div class="vg-button"
+       :class="[type, size, disabled ? 'disabled': '']"
+  >
     <slot />
   </div>
 </template>
@@ -8,6 +10,7 @@
 defineProps<{
   type?: 'clear'
   size?: 'big' | 'small'
+  disabled?: boolean
 }>()
 </script>
 
@@ -21,9 +24,11 @@ defineProps<{
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
+  user-select: none;
 
-  &:hover {
-    background: darken($primary, 10);
+  &.disabled {
+    background: $secondary;
+    pointer-events: none;
   }
 }
 </style>

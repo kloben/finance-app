@@ -1,5 +1,6 @@
 <template>
-  <input type="text"
+  <input class="vg-input"
+         type="text"
          :value="modelValue ?? ''"
          @input="emitUpdate($event as InputEvent)"
   />
