@@ -1,33 +1,37 @@
 <script setup lang="ts">
-
-defineProps<{
+const props = defineProps<{
   options: Record<string, string>
   modelValue?: string
 }>()
+
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
+
+function tryClick (key: string) {
+  if (key !== props.modelValue) {
+    emit('update:modelValue', key)
+  }
+}
 </script>
 
 <template>
   <div class="vg-input">
-    <div class="switch-container">
-      <div class="vg-button"
-           v-for="(label, key) in options"
-           :key="key"
-           :class="{disabled: key !== modelValue}"
-           @click="emit('update:modelValue', key)"
-      >{{ label }}
-      </div>
+    <div class="vg-button"
+         v-for="(label, key) in options"
+         :key="key"
+         :class="{disabled: key !== modelValue}"
+         @click="tryClick(key)"
+    >{{ label }}
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-@import "../VgButton.scss";
 @import "src/styles/colors";
+@import "../VgButton.scss";
 
-.switch-container {
+.vg-input {
   display: flex;
   justify-content: center;
 
