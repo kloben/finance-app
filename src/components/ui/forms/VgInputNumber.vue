@@ -1,7 +1,7 @@
 <template>
   <input type="number"
          :value="modelValue ?? 0"
-         @input="$emit('update:modelValue', Number($event.target.value))"
+         @input="emitUpdate($event as InputEvent)"
   />
 </template>
 
@@ -9,9 +9,14 @@
 defineProps<{
   modelValue?: number
 }>()
-defineEmits<{
+const emit = defineEmits<{
   (e: 'update:modelValue', value: number): void
 }>()
+
+function emitUpdate (event: InputEvent): void {
+  const value = (event.target as HTMLInputElement).value
+  emit('update:modelValue', value ? parseInt(value) : 0)
+}
 </script>
 
 <style lang="scss">
