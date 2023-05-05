@@ -1,27 +1,37 @@
 import { defineStore } from 'pinia'
-import { fetchSummaries, saveSummary } from '@/services/db.service'
-import { ref } from 'vue'
-import { toMonthId } from '@/helpers/date.helper'
+import { fetchSummaries } from '@/services/db.service'
+import type { IMonthSummary } from '@/models/month-summary.interface'
 
-export const homeStore = defineStore('home', async () => {
-  console.log('Store INIT')
-  const summaries = await fetchSummaries()
-  console.log('Store LOADED')
-  const state = {
-    summaries: ref(summaries)
-  }
-  const getters = {
-  }
-  const actions = {
-    init: async (savings: number) => {
-      const summary = await saveSummary({
-        month: toMonthId(new Date()),
-        profit: 0,
-        loss: 0,
-        savings
-      })
-      state.summaries.value.push(summary)
+export const useHomeStore = defineStore('home', {
+  state: () => ({
+    months: [] as IMonthSummary[]
+  }),
+  getters: {
+    hasMonths: (state) => state.months.length > 0
+  },
+  actions: {
+    async init () {
+      this.months = await fetchSummaries()
     }
   }
-  return { ...state, ...getters, ...actions }
 })
+// export const homeStore = defineStore('home', async () => {
+//   const state = {
+//     summaries: ref(summaries)
+//   }
+//   const getters = {
+//   }
+//   const actions = {
+//     init: async ()
+//     initMonth: async (savings: number) => {
+//       const summary = await saveSummary({
+//         month: toMonthId(new Date()),
+//         profit: 0,
+//         loss: 0,
+//         savings
+//       })
+//       state.summaries.value.push(summary)
+//     }
+//   }
+//   return { ...state, ...getters, ...actions }
+// })

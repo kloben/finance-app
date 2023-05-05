@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { initDB } from '@/services/db.service'
+import { useHomeStore } from '@/stores/home.store'
 
 const loaded = ref(false)
 const error = ref(false)
 
-initDB()
-  .then(() => {
-    loaded.value = true
-  })
-  .catch((e) => {
+async function initApp () {
+  try {
+    await initDB()
+    const store = useHomeStore()
+    await store.init()
+  } catch (e) {
     console.log(e)
     error.value = true
+  } finally {
     loaded.value = true
-  })
+  }
+}
+initApp()
 </script>
 
 <template>
