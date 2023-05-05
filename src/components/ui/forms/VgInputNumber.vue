@@ -1,15 +1,21 @@
 <template>
-  <input class="vg-input"
-         type="number"
-         min="0"
-         step="1"
-         :value="modelValue ?? 0"
-         @input="emitUpdate($event as InputEvent)"
-  />
+  <div class="vg-input">
+    <label>
+      <span v-if="label" class="text-caption">{{label}}</span>
+      <input type="number"
+             min="0"
+             step="1"
+             :value="modelValue ?? 0"
+             @input="emitUpdate($event as InputEvent)"
+      />
+    </label>
+
+  </div>
 </template>
 
 <script setup lang="ts">
 defineProps<{
+  label?: string
   modelValue?: number
 }>()
 const emit = defineEmits<{

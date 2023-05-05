@@ -32,7 +32,6 @@ async function onClick () {
 
 <style scoped lang="scss">
 .text-title-3, .text-title-5 {
-  text-align: center;
   padding-bottom: 16px;
 }
 </style>

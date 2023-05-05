@@ -2,6 +2,7 @@
 import VgInput from '@/components/ui/forms/VgInput.vue'
 import VgInputNumber from '@/components/ui/forms/VgInputNumber.vue'
 import { reactive } from 'vue'
+import VgButton from '@/components/ui/VgButton.vue'
 
 const formValues = reactive({
   title: '',
@@ -10,12 +11,16 @@ const formValues = reactive({
 </script>
 
 <template>
-  <div class="text-title-4">
-    New Expense
+  <div class="page-wrapper">
+    <div class="text-title-4">
+      New Expense
+    </div>
+    <div class="form-wrapper">
+      <VgInputNumber v-model="formValues.amount" label="Amount" />
+      <VgInput v-model="formValues.title" label="Description (Optional)" />
+      <VgButton>Create</VgButton>
+    </div>
   </div>
-  <VgInput v-model="formValues.title" />
-  <VgInputNumber v-model="formValues.amount" />
-  <div>{{ formValues }}</div>
 </template>
 
 <style lang="scss">

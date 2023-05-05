@@ -1,14 +1,16 @@
 @import "src/styles/colors";
 
-input {
-  background: $white;
-  padding: 12px;
-  border-radius: 4px;
-  border: 1px solid $secondary;
-  width: 100%;
+.vg-input {
+  input {
+    background: $white;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid $secondary;
+    width: 100%;
 
-  &:focus-visible, &:focus, &:hover {
-    outline: none;
-    border: 1px solid $primary;
+    &:focus-visible, &:focus, &:hover {
+      outline: none;
+      border: 1px solid $primary;
+    }
   }
 }
