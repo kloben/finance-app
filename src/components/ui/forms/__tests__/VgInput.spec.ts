@@ -1,55 +1,45 @@
 import { describe, it, expect } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
-import VgInputNumber from '../forms/VgInputNumber.vue'
+import VgInput from '../VgInput.vue'
 
 function generateWrapper (props = {}): VueWrapper {
-  return mount(VgInputNumber, {
+  return mount(VgInput, {
     props
   })
 }
 
-describe('VgInputNumber', () => {
+describe('VgInput', () => {
   it('renders without initial value', () => {
     const wrapper = generateWrapper()
 
-    expect(wrapper.get('input').element.value).toBe('0')
+    expect(wrapper.get('input').element.value).toBe('')
     expect(wrapper.find('.text-caption').exists()).toBe(false)
   })
 
   it('renders with initial value', () => {
     const wrapper = generateWrapper({
-      modelValue: 123
+      modelValue: 'Some text'
     })
 
-    expect(wrapper.get('input').element.value).toBe('123')
+    expect(wrapper.get('input').element.value).toBe('Some text')
     expect(wrapper.find('.text-caption').exists()).toBe(false)
   })
-  //
+
   it('renders label', () => {
     const wrapper = generateWrapper({
-      modelValue: 123,
+      modelValue: 'Some text',
       label: 'Some label'
     })
 
-    expect(wrapper.get('input').element.value).toBe('123')
+    expect(wrapper.get('input').element.value).toBe('Some text')
     expect(wrapper.get('.text-caption').text()).toBe('Some label')
   })
 
   it('emits on value change', () => {
     const wrapper = generateWrapper()
 
-    wrapper.get('input').setValue(321)
+    wrapper.get('input').setValue('NewValue')
 
     expect(wrapper.emitted()).toHaveProperty('update:modelValue')
-    expect(wrapper.emitted()['update:modelValue'][0]).toEqual([321])
-  })
-
-  it('not emits on incorrect input', () => {
-    const wrapper = generateWrapper()
-
-    wrapper.get('input').setValue('wrong')
-
-    expect(wrapper.emitted()).toHaveProperty('update:modelValue')
-    expect(wrapper.emitted()['update:modelValue'][0]).toEqual([0])
   })
 })
