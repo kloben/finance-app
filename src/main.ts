@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import './styles/base.scss'
 import BasePage from '@/pages/BasePage.vue'
 import HomePage from '@/pages/HomePage.vue'
-import NewExpensePage from '@/pages/NewExpensePage.vue'
+import NewExpensePage from '@/pages/NewTransactionPage.vue'
 
 const router = createRouter({
   history: createWebHistory(),
