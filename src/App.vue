@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import VgButton from '@/components/ui/VgButton.vue'
+import Navbar from '@/components/Navbar.vue'
 </script>
 
 <template>
-  <div>
-    <VgButton size="small" type="clear">Hello</VgButton>
-  </div>
+  <Navbar></Navbar>
 </template>
 
 <style scoped>

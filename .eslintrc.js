@@ -8,8 +8,7 @@ module.exports = {
     'standard-with-typescript',
     '@vue/eslint-config-typescript'
   ],
-  overrides: [
-  ],
+  overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -19,5 +18,8 @@ module.exports = {
     'vue'
   ],
   rules: {
+    'vue/multi-word-component-names': ['error', {
+      ignores: ['Navbar']
+    }]
   }
 }
