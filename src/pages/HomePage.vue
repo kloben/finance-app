@@ -25,10 +25,10 @@ const savings = computed(() => {
 
 <template>
   <div class="page-wrapper">
-    <div class="text-title-4">Savings: {{ savings }}</div>
+    <div class="text-title-4">Total savings: {{ savings }}</div>
     <BarChart :values="summaryValues" />
 
-    <div class="payments-container">
+    <div class="payments-container" v-if="store.lastPayments.length">
       <PaymentData v-for="payment of store.lastPayments" :key="payment.id" :payment="payment" />
     </div>
   </div>
