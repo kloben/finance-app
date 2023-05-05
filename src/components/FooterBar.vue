@@ -1,24 +1,20 @@
 <script setup lang="ts">
-import VgIconChart from '@/components/ui/icons/VgIconChart.vue'
 import VgIconNew from '@/components/ui/icons/VgIconNew.vue'
 import VgIconPrediction from '@/components/ui/icons/VgIconPrediction.vue'
 </script>
 
 <template>
   <div class="footer-bar">
-    <div class="item">
-      <VgIconChart />
-    </div>
-    <div class="item">
-      <router-link to="/new">
+    <router-link to="/new">
+      <div class="item" data-test-id="new-link">
         <VgIconNew />
-      </router-link>
-    </div>
-    <div class="item">
-      <router-link to="/predict">
+      </div>
+    </router-link>
+    <router-link to="/predict">
+      <div class="item" data-test-id="prediction-link">
         <VgIconPrediction />
-      </router-link>
-    </div>
+      </div>
+    </router-link>
   </div>
 </template>
 
