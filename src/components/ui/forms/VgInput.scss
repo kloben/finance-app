@@ -1,6 +1,9 @@
 @import "src/styles/colors";
 
 .vg-input {
+  .text-caption {
+    user-select: none;
+  }
   input {
     background: $white;
     padding: 12px;
