@@ -8,9 +8,9 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test": "LC_ALL=en_US vitest run",
+    "test:watch": "LC_ALL=en_US vitest",
+    "test:coverage": "LC_ALL=en_US vitest run --coverage"
   },
   "dependencies": {
     "dexie": "^3.2.3",
