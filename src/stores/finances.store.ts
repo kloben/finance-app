@@ -13,11 +13,11 @@ export const useFinancesStore = defineStore('finances', {
     async init (): Promise<void> {
       this.months = await fetchMonths()
     },
-    async initMonth (savings: number): Promise<void> {
+    async createMonth (date: Date, savings: number, profit: number, loss: number): Promise<void> {
       const month = await storeMonth({
-        month: toMonthId(new Date()),
-        profit: 0,
-        loss: 0,
+        month: toMonthId(date),
+        profit,
+        loss,
         savings
       })
       this.months.push(month)
