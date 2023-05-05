@@ -16,6 +16,7 @@ describe('VgButton', () => {
     const wrapper = generateWrapper()
 
     expect(wrapper.text()).toEqual('Some text')
+    expect(wrapper.get('.vg-button').classes()).toEqual(['vg-button'])
   })
 
   it('emits clicks', () => {

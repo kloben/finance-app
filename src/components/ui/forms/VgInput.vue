@@ -6,19 +6,15 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
-
-function emitUpdate (event: InputEvent): void {
-  emit('update:modelValue', (event.target as HTMLInputElement).value ?? '')
-}
 </script>
 
 <template>
   <div class="vg-input">
     <label>
-      <span v-if="label" class="text-caption">{{label}}</span>
+      <span v-if="label" class="text-caption">{{ label }}</span>
       <input type="text"
              :value="modelValue ?? ''"
-             @input="emitUpdate($event as InputEvent)"
+             @input="emit('update:modelValue', $event.target.value ?? '')"
       />
     </label>
   </div>
