@@ -2,10 +2,12 @@ import { defineStore } from 'pinia'
 import { fetchMonths, storeMonth } from '@/services/db.service'
 import type { IMonthData } from '@/models/month-data.interface'
 import { toMonthId } from '@/helpers/date.helper'
+import type { ITransaction } from '@/models/transation.interface'
 
-export const useMonthStore = defineStore('month', {
+export const useFinancesStore = defineStore('finances', {
   state: () => ({
-    months: [] as IMonthData[]
+    months: [] as IMonthData[],
+    transactions: [] as ITransaction[]
   }),
   actions: {
     async init (): Promise<void> {

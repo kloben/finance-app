@@ -2,11 +2,11 @@
 import { ref } from 'vue'
 import VgInputNumber from '@/components/ui/forms/VgInputNumber.vue'
 import VgButton from '@/components/ui/VgButton.vue'
-import { useMonthStore } from '@/stores/months.store'
+import { useFinancesStore } from '@/stores/finances.store'
 import { useRouter } from 'vue-router'
 
 const amount = ref(0)
-const store = useMonthStore()
+const store = useFinancesStore()
 const router = useRouter()
 
 async function onClick () {
