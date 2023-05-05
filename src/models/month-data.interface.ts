@@ -1,4 +1,4 @@
-export interface IMonthSummary {
+export interface IMonthData {
   month: string // YYYY-MM
   profit: number
   loss: number
