@@ -2,7 +2,7 @@
   <div class="vg-button"
        :class="[type, size, disabled ? 'disabled': '']"
   >
-    <slot />
+    <div class="text-button"><slot /></div>
   </div>
 </template>
 
