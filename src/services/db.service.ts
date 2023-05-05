@@ -3,7 +3,7 @@ import { toDayId, toMonthId } from '@/helpers/date.helper'
 import type { IMonth } from '@/models/month.interface'
 import type { IPayment, IPaymentData } from '@/models/payment.interface'
 
-interface NewPayment {
+export interface NewPayment {
   payment: IPayment
   month: IMonth
   savings: number | null

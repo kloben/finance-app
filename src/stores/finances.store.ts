@@ -27,11 +27,6 @@ export const useFinancesStore = defineStore('finances', {
       return state.monthIds
         .map((monthId) => state.monthsCache.get(monthId) ?? { monthId, income: 0, outcome: 0 })
     }
-    // lastPayments: (state: StoreState): IPayment[] => {
-    //   // return Array.from(state.paymentsCache.values()).sort((a, b) => {
-    //   //   return `${a.dayId}${a.createdAt}` > `${b.dayId}${b.createdAt}` ? -1 : 1
-    //   // }).slice(0, 5)
-    // }
   },
   actions: {
     async init (): Promise<void> {
@@ -64,9 +59,7 @@ export const useFinancesStore = defineStore('finances', {
         if (savings !== null) {
           state.savings = savings
         }
-        if (state.monthsCache.has(month.monthId)) {
-          state.monthsCache.set(month.monthId, month)
-        }
+        state.monthsCache.set(month.monthId, month)
         const payments = state.paymentsCache.get(payment.monthId)
         if (payments) {
           payments.set(payment.id, payment)
@@ -78,7 +71,7 @@ export const useFinancesStore = defineStore('finances', {
 
 function getMonthIds (): string[] {
   return new Array(5).fill('').reduce(({ date, monthIds }) => {
-    date.setDate(15) // TODO: Review if necessary
+    date.setDate(15) // Causes problems if day too high
     monthIds.unshift(toMonthId(date))
     date.setMonth(date.getMonth() - 1)
     return { date, monthIds }
