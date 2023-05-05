@@ -41,13 +41,14 @@ $animation: 0.1s;
   display: flex;
   align-items: center;
   justify-content: end;
-  width: 70px;
-  height: 40px;
+  width: 56px;
+  height: 32px;
   border-radius: 30px;
   background: $secondary;
-  padding: 2px;
+  padding: 4px;
   cursor: pointer;
   transition: background $animation linear;
+  margin: 4px 0;
 
   &.active {
     background: $primary;
@@ -61,8 +62,8 @@ $animation: 0.1s;
 .handle {
   border-radius: 50%;
   background: $white;
-  width: 36px;
-  height: 36px;
+  height: 100%;
+  aspect-ratio: 1;
 }
 
 .spacer {
