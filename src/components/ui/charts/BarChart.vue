@@ -27,7 +27,7 @@ const displayData = computed((): DisplayData => {
       down: Math.round(value.negative * 100 / max),
       label: value.label
     })),
-    gridPoints: [max, Math.round(max / 2), 0, -Math.round(max / 2), max]
+    gridPoints: max === 0 ? [0] : [max, Math.round(max / 2), 0, -Math.round(max / 2), max]
   }
 })
 </script>

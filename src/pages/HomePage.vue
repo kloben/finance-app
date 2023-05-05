@@ -11,14 +11,26 @@ const summaryValues = computed(() => store.lastMonths.map((data: IMonth) => ({
   negative: data.outcome,
   label: new Date(data.monthId).toLocaleString('default', { month: 'short' })
 })))
+
+const savings = computed(() => {
+  return Intl.NumberFormat('default', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+  }).format(store.savings ?? 0)
+})
 </script>
 
 <template>
   <div class="page-wrapper">
+    <div class="text-title-4">Savings: {{savings}}</div>
     <BarChart :values="summaryValues" />
   </div>
 </template>
 
 <style lang="scss">
-
+.text-title-4 {
+  padding-bottom: 32px;
+}
 </style>
