@@ -3,18 +3,20 @@ import { computed } from 'vue'
 
 interface DisplayData {
   values: {
+    label: string
     up: number
     down: number
-    label: string
+    predicted?: boolean
   }[]
   gridPoints: number[]
 }
 
 const props = defineProps<{
   values: {
+    label: string
     positive: number
     negative: number
-    label: string
+    predicted?: boolean
   }[]
 }>()
 
@@ -23,9 +25,10 @@ const displayData = computed((): DisplayData => {
   max = Math.round(max * 1.10)
   return {
     values: props.values.map((value) => ({
+      label: value.label,
       up: Math.round(value.positive * 100 / max),
       down: Math.round(value.negative * 100 / max),
-      label: value.label
+      predicted: value.predicted ?? false
     })),
     gridPoints: max === 0 ? [0] : [max, Math.round(max / 2), 0, -Math.round(max / 2), max]
   }
@@ -42,7 +45,9 @@ const emptyChart = computed((): boolean => {
       <div class="line" v-for="(_, index) of displayData.gridPoints" :key="index"></div>
     </div>
     <div class="chart-bars">
-      <div class="column" v-for="(value, index) of displayData.values" :key="index">
+      <div class="column" v-for="(value, index) of displayData.values" :key="index"
+           :class="{predicted: value.predicted}"
+      >
         <div class="bar-container positive">
           <div class="bar" :style="{height: value.up + '%'}"></div>
         </div>
@@ -135,6 +140,12 @@ const emptyChart = computed((): boolean => {
   flex-direction: column;
   align-items: center;
   border-radius: 4px;
+
+  &.predicted {
+    .bar {
+      opacity: 0.4;
+    }
+  }
 }
 
 .bar-container {
