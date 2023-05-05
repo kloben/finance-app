@@ -4,7 +4,6 @@ export interface IPaymentData {
   createdAt: number
   amount: number
   category: string
-  subCategory?: string
   description?: string
   recurrent: boolean
 }

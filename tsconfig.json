@@ -1,13 +1,23 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
+    "target": "ES2018",
+    "lib": [
+      "ES2018",
+      "DOM"
+    ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
-
   "references": [
     {
       "path": "./tsconfig.node.json"

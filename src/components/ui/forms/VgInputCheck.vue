@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 defineProps<{
   label: string
   modelValue?: boolean
@@ -24,6 +23,7 @@ const emit = defineEmits<{
 
 <style scoped lang="scss">
 @import "src/styles/colors";
+
 $animation: 0.1s;
 
 .vg-input {
@@ -31,6 +31,7 @@ $animation: 0.1s;
   align-items: center;
   justify-content: end;
 }
+
 .text-body-2 {
   user-select: none;
   flex: 1;

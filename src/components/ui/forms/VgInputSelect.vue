@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   label?: string
+  options: string[]
   modelValue?: string
 }>()
 const emit = defineEmits<{
@@ -15,15 +16,15 @@ function emitUpdate (event: InputEvent): void {
 <template>
   <div class="vg-input">
     <label>
-      <span v-if="label" class="text-caption">{{label}}</span>
-      <input type="text"
-             :value="modelValue ?? ''"
-             @input="emitUpdate($event as InputEvent)"
-      />
+      <span v-if="label" class="text-caption">{{ label }}</span>
+      <select @input="emitUpdate($event as InputEvent)">
+        <option value="">Select</option>
+        <option v-for="(option, index) of options" :value="option" :key="index">{{ option }}</option>
+      </select>
     </label>
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "./VgInput";
 </style>
