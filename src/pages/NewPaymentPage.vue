@@ -5,15 +5,15 @@ import { computed, reactive } from 'vue'
 import VgButton from '@/components/ui/VgButton.vue'
 import VgInputCheck from '@/components/ui/forms/VgInputCheck.vue'
 import VgInputSelect from '@/components/ui/forms/VgInputSelect.vue'
-import { Category } from '@/data/categories.enum'
 import VgInputSwitch from '@/components/ui/forms/VgInputSwitch.vue'
 import { useFinancesStore } from '@/stores/finances.store'
 import type { IPaymentData, PaymentType } from '@/models/payment.interface'
 import { useRouter } from 'vue-router'
+import { IncomeCategory, OutcomeCategory } from '@/data/categories.enum'
 
 const store = useFinancesStore()
 const router = useRouter()
-const categories = Object.values(Category)
+
 const formValues = <IPaymentData>reactive({
   type: <PaymentType>'outcome',
   amount: 0,
@@ -25,6 +25,7 @@ const formValues = <IPaymentData>reactive({
 const isValid = computed(() => {
   return formValues.amount > 0 && formValues.category && formValues.type
 })
+const categories = computed(() => formValues.type === 'outcome' ? OutcomeCategory : IncomeCategory)
 
 async function createTransaction () {
   try {

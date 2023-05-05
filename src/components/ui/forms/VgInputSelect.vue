@@ -1,7 +1,9 @@
 <script setup lang="ts">
-defineProps<{
+import { watch } from 'vue'
+
+const props = defineProps<{
   label?: string
-  options: string[]
+  options: Record<string, string>
   modelValue?: string
 }>()
 const emit = defineEmits<{
@@ -11,6 +13,10 @@ const emit = defineEmits<{
 function emitUpdate (event: InputEvent): void {
   emit('update:modelValue', (event.target as HTMLInputElement).value ?? '')
 }
+
+watch(() => props.options, () => {
+  emit('update:modelValue', '')
+})
 </script>
 
 <template>
@@ -19,7 +25,7 @@ function emitUpdate (event: InputEvent): void {
       <span v-if="label" class="text-caption">{{ label }}</span>
       <select @input="emitUpdate($event as InputEvent)">
         <option value=""></option>
-        <option v-for="(option, index) of options" :value="option" :key="index">{{ option }}</option>
+        <option v-for="(label, key) in options" :value="key" :key="key">{{ label }}</option>
       </select>
     </label>
   </div>
