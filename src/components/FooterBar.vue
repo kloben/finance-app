@@ -1,10 +1,12 @@
 <template>
-  <div class="navbar">
+  <div class="footer-bar">
     <div class="item">
       <VgIconChart />
     </div>
     <div class="item">
-      <VgIconNew />
+      <router-link to="/new">
+        <VgIconNew />
+      </router-link>
     </div>
     <div class="item">
       <VgIconList />
@@ -21,7 +23,7 @@ import VgIconList from '@/components/ui/icons/VgIconList.vue'
 <style scoped lang="scss">
 @import "src/styles/colors";
 
-.navbar {
+.footer-bar {
   position: fixed;
   bottom: 0;
   left: 0;
