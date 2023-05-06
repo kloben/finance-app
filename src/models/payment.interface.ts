@@ -6,7 +6,7 @@ export enum PaymentType {
 export interface IPaymentData {
   type: PaymentType
   amount: number
-  category: string
+  category?: string
   description?: string
   recurrent?: boolean
 }

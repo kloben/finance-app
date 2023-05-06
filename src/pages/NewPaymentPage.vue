@@ -7,28 +7,30 @@ import VgInputCheck from '@/components/ui/forms/VgInputCheck.vue'
 import VgInputSelect from '@/components/ui/forms/VgInputSelect.vue'
 import VgInputSwitch from '@/components/ui/forms/VgInputSwitch.vue'
 import { useFinancesStore } from '@/stores/finances.store'
-import type { IPaymentData, PaymentType } from '@/models/payment.interface'
+import type { IPaymentData } from '@/models/payment.interface'
+import { PaymentType } from '@/models/payment.interface'
 import { useRouter } from 'vue-router'
 import { IncomeCategory, OutcomeCategory } from '@/data/categories.enum'
 
 const store = useFinancesStore()
 const router = useRouter()
 
-const formValues = <IPaymentData>reactive({
-  type: 'outcome' as PaymentType,
+const formValues = reactive<IPaymentData>({
+  type: PaymentType.out,
   amount: 0,
-  category: '',
-  description: '',
+  category: undefined,
+  description: undefined,
   recurrent: false
 })
 
 const isValid = computed(() => {
-  return formValues.amount > 0 && formValues.category && formValues.type
+  return formValues.amount > 0 && formValues.type
 })
-const categories = computed(() => formValues.type === 'outcome' ? OutcomeCategory : IncomeCategory)
+
+const categories = computed(() => formValues.type === PaymentType.in ? IncomeCategory : OutcomeCategory)
 const types = {
-  income: 'Income',
-  outcome: 'Outcome'
+  [PaymentType.in]: 'Income',
+  [PaymentType.out]: 'Outcome'
 }
 
 async function createTransaction () {
@@ -49,7 +51,7 @@ async function createTransaction () {
     <div class="form-wrapper">
       <VgInputSwitch v-model="formValues.type" :options="types" />
       <VgInputNumber v-model="formValues.amount" label="Amount" />
-      <VgInputSelect v-model="formValues.category" :options="categories" label="Category" />
+      <VgInputSelect v-model="formValues.category" :options="categories" label="Category (Optional)" />
       <VgInput v-model="formValues.description" label="Description (Optional)" />
       <VgInputCheck v-model="formValues.recurrent" label="Make recurrent" />
       <VgButton :disabled="!isValid" @clicked="createTransaction">Create</VgButton>
