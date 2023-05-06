@@ -1,3 +1,21 @@
+export function calculatePastMonthIds (amount: number = 5): string[] {
+  return new Array(amount).fill('').reduce(({ date, monthIds }) => {
+    date.setDate(15) // Causes problems if day too high
+    monthIds.unshift(toMonthId(date))
+    date.setMonth(date.getMonth() - 1)
+    return { date, monthIds }
+  }, { date: new Date(), monthIds: [] }).monthIds
+}
+
+export function calculateNextMonthIds (amount: number = 5): string[] {
+  return new Array(amount).fill('').reduce(({ date, monthIds }) => {
+    date.setDate(15) // Causes problems if day too high
+    monthIds.unshift(toMonthId(date))
+    date.setMonth(date.getMonth() + 1)
+    return { date, monthIds }
+  }, { date: new Date(), monthIds: [] }).monthIds
+}
+
 export function toDayId (date: Date): string {
   return `${date.getFullYear()}-${padZero(date.getMonth() + 1)}-${padZero(date.getDate())}`
 }
