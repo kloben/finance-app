@@ -1,12 +1,21 @@
 import { defineStore } from 'pinia'
-import { fetchMonths, fetchPayments, fetchSavings, storePayment, storeSavings } from '@/services/db.service'
+import {
+  fetchCategories,
+  fetchMonths,
+  fetchPayments,
+  fetchSavings,
+  storePayment,
+  storeSavings
+} from '@/services/db.service'
 import type { IMonth } from '@/models/month.interface'
 import type { IPayment, IPaymentData } from '@/models/payment.interface'
 import { toMonthId } from '@/helpers/date.helper'
+import type { ICategory } from '@/models/category.interface'
 
 interface StoreState {
   savings: number | null
   monthIds: string[]
+  categories: ICategory[] | null
   monthsCache: Map<string, IMonth>
   paymentsCache: Map<string, Map<number, IPayment>> // Grouped by month
 }
@@ -15,6 +24,7 @@ export const useFinancesStore = defineStore('finances', {
   state: (): StoreState => ({
     savings: null,
     monthIds: [],
+    categories: null,
     monthsCache: new Map<string, IMonth>(),
     paymentsCache: new Map<string, Map<number, IPayment>>()
   }),
@@ -31,13 +41,17 @@ export const useFinancesStore = defineStore('finances', {
   actions: {
     async init (): Promise<void> {
       const monthIds = getMonthIds()
-      const months = await getMonths(monthIds)
-      const payments = await getPayments(monthIds)
+      const [months, payments, categories] = await Promise.all([
+        fetchMonths(monthIds),
+        getPayments(monthIds),
+        fetchCategories()
+      ])
       const savings = fetchSavings()
 
       this.$patch((state: StoreState) => {
         state.monthIds = monthIds
         state.savings = savings
+        state.categories = categories
         for (const month of months) {
           state.monthsCache.set(month.monthId, month)
         }
@@ -76,13 +90,6 @@ function getMonthIds (): string[] {
     date.setMonth(date.getMonth() - 1)
     return { date, monthIds }
   }, { date: new Date(), monthIds: [] }).monthIds
-}
-
-async function getMonths (monthIds: string[]): Promise<IMonth[]> {
-  return await fetchMonths(monthIds)
-    .then(months => monthIds.map((monthId: string): IMonth => {
-      return months.find(m => m.monthId === monthId) ?? { monthId, income: 0, outcome: 0 }
-    }))
 }
 
 async function getPayments (monthIds: string[]): Promise<Record<string, IPayment[]>> {

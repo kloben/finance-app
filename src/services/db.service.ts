@@ -3,6 +3,7 @@ import type { IMonth } from '@/models/month.interface'
 import type { IPayment, IPaymentData } from '@/models/payment.interface'
 import { PaymentType } from '@/models/payment.interface'
 import { DB_TABLE, getDBClient } from '@/services/db.client'
+import type { ICategory } from '@/models/category.interface'
 
 export interface NewPayment {
   payment: IPayment
@@ -23,6 +24,11 @@ export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
 export async function fetchPayments (monthId: string): Promise<IPayment[]> {
   const DB = await getDBClient()
   return await DB.payments.where({ monthId }).toArray()
+}
+
+export async function fetchCategories (): Promise<ICategory[]> {
+  const DB = await getDBClient()
+  return await DB.categories.toArray()
 }
 
 export async function storePayment (date: Date, data: IPaymentData): Promise<NewPayment> {
