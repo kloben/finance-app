@@ -2,6 +2,7 @@ import Dexie from 'dexie'
 import { toDayId, toMonthId } from '@/helpers/date.helper'
 import type { IMonth } from '@/models/month.interface'
 import type { IPayment, IPaymentData } from '@/models/payment.interface'
+import { PaymentType } from '@/models/payment.interface'
 
 export interface NewPayment {
   payment: IPayment
@@ -58,7 +59,7 @@ export async function storePayment (date: Date, data: IPaymentData): Promise<New
 function updateSavings (payment: IPayment): number | null {
   if (new Date(payment.monthId).getMonth() === new Date().getMonth()) {
     let current = fetchSavings() ?? 0
-    current += (payment.amount * (payment.type === 'income' ? 1 : -1))
+    current += (payment.amount * (payment.type === PaymentType.in ? 1 : -1))
     storeSavings(current)
     return current
   }

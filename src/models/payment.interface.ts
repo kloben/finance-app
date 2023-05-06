@@ -1,4 +1,7 @@
-export type PaymentType = 'income' | 'outcome'
+export enum PaymentType {
+  in = 'income',
+  out = 'outcome'
+}
 
 export interface IPaymentData {
   type: PaymentType

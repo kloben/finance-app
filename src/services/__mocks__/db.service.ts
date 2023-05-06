@@ -1,5 +1,6 @@
 import type { IMonth } from '@/models/month.interface'
 import type { IPayment, IPaymentData } from '@/models/payment.interface'
+import { PaymentType } from '@/models/payment.interface'
 import type { NewPayment } from '@/services/db.service'
 import { toDayId, toMonthId } from '@/helpers/date.helper'
 
@@ -10,7 +11,7 @@ const monthsCache: Record<string, IMonth> = {
 const paymentsCache: Record<number, IPayment> = {
   1: {
     id: 1,
-    type: 'income',
+    type: PaymentType.in,
     category: 'test-income',
     amount: 100,
     monthId: '2023-04',
@@ -19,7 +20,7 @@ const paymentsCache: Record<number, IPayment> = {
   },
   2: {
     id: 2,
-    type: 'outcome',
+    type: PaymentType.out,
     category: 'test-outcome',
     amount: 200,
     monthId: '2023-04',
@@ -28,7 +29,7 @@ const paymentsCache: Record<number, IPayment> = {
   },
   3: {
     id: 3,
-    type: 'income',
+    type: PaymentType.in,
     category: 'test-income',
     amount: 111,
     monthId: '2023-02',
@@ -37,7 +38,7 @@ const paymentsCache: Record<number, IPayment> = {
   },
   4: {
     id: 4,
-    type: 'outcome',
+    type: PaymentType.out,
     category: 'test-outcome',
     amount: 222,
     monthId: '2023-02',
@@ -59,7 +60,7 @@ export async function storePayment (date: Date, data: IPaymentData): Promise<New
   const month = monthsCache[monthId] ? { ...monthsCache[monthId] } : { monthId, income: 0, outcome: 0 }
   month[data.type] += data.amount
 
-  const savings = fetchSavings() + (data.amount * (data.type === 'income' ? 1 : -1))
+  const savings = fetchSavings() + (data.amount * (data.type === PaymentType.in ? 1 : -1))
 
   const payment: IPayment = {
     id: 10,

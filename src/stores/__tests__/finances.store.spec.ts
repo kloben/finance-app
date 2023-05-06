@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, beforeAll, vi, afterAll } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useFinancesStore } from '../finances.store'
+import { PaymentType } from '../../models/payment.interface'
 
 describe('FinanceStore', () => {
   beforeAll(() => {
@@ -45,7 +46,7 @@ describe('FinanceStore', () => {
     await store.init()
 
     await store.createPayment(new Date(2023, 3, 10), {
-      type: 'income',
+      type: PaymentType.in,
       amount: 123,
       category: 'test'
     })
@@ -65,7 +66,7 @@ describe('FinanceStore', () => {
     await store.init()
 
     await store.createPayment(new Date(2023, 2, 10), {
-      type: 'outcome',
+      type: PaymentType.out,
       amount: 321,
       category: 'test'
     })

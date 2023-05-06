@@ -1,6 +1,5 @@
 export const IncomeCategory: Record<string, string> = {
-  salary: 'Salary',
-  other: 'Other'
+  salary: 'Salary'
 }
 
 export const OutcomeCategory: Record<string, string> = {
@@ -9,6 +8,5 @@ export const OutcomeCategory: Record<string, string> = {
   fuel: 'Fuel',
   shopping: 'Shopping',
   restaurants: 'Restaurants',
-  groceries: 'Groceries',
-  other: 'Other'
+  groceries: 'Groceries'
 }

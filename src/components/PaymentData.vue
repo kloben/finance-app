@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { IPayment } from '@/models/payment.interface'
+import { PaymentType } from '@/models/payment.interface'
 import { computed } from 'vue'
 import { IncomeCategory, OutcomeCategory } from '@/data/categories.enum'
 import { toCurrency } from '@/helpers/number.helper'
@@ -10,13 +11,13 @@ const props = defineProps<{
 }>()
 
 const label = computed((): string => {
-  return props.payment.type === 'income'
+  return props.payment.type === PaymentType.in
     ? IncomeCategory[props.payment.category]
     : OutcomeCategory[props.payment.category]
 })
 
 const amount = computed((): string => {
-  return toCurrency(props.payment.amount * (props.payment.type === 'income' ? 1 : -1))
+  return toCurrency(props.payment.amount * (props.payment.type === PaymentType.in ? 1 : -1))
 })
 
 const date = computed((): { day: number, month: string } => {
