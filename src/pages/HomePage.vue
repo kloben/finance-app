@@ -5,6 +5,7 @@ import { computed } from 'vue'
 import type { IMonth } from '@/models/month.interface'
 import { toMonthLabel } from '@/helpers/date.helper'
 import { toCurrency } from '@/helpers/number.helper'
+import PaymentData from '@/components/PaymentData.vue'
 
 const store = useFinancesStore()
 
@@ -23,6 +24,9 @@ const savings = computed(() => {
   <div class="page-wrapper">
     <div class="text-title-4">Total savings: {{ savings }}</div>
     <VgBarChart :values="summaryValues" />
+    <div class="payments-container">
+      <PaymentData v-for="payment of store.lastPayments" :key="payment.id" :payment="payment" />
+    </div>
   </div>
 </template>
 
@@ -34,9 +38,10 @@ const savings = computed(() => {
 }
 
 .payments-container {
-  margin-top: 32px;
   padding: 8px 16px;
   background: $white;
   border-radius: 4px;
+  max-width: 550px;
+  margin: 32px auto 0 auto;
 }
 </style>

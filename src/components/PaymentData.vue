@@ -52,6 +52,10 @@ const date = computed<{ day: number, month: string }>(() => {
   border-bottom: 1px solid $base;
   display: flex;
   gap: 16px;
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .date, .label, .amount {

@@ -38,6 +38,17 @@ export const useFinancesStore = defineStore('finances', {
       return state.monthIds
         .map((monthId) => state.monthsCache.get(monthId) ?? { monthId, income: 0, outcome: 0 })
     },
+    lastPayments: (state: StoreState): IPayment[] => {
+      const payments: IPayment[] = []
+      for (const month of state.monthIds.slice().reverse()) {
+        payments.push(...(state.paymentsCache.get(month)?.values() ?? []))
+        if (payments.length >= 5) {
+          break
+        }
+      }
+      return payments.sort((a, b) => `${a.dayId}-${a.createdAt}` > `${b.dayId}-${b.createdAt}` ? -1 : 1)
+        .slice(0, 5)
+    },
     getCategories: (state: StoreState): (type: PaymentType) => ICategory[] => {
       return (type: PaymentType) => Array.from(state.categories.values()).filter(cat => cat.type === type)
     },
