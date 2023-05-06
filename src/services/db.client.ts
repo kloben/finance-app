@@ -22,7 +22,7 @@ class AppDexie extends Dexie {
     this.version(1).stores({
       [DB_TABLE.months]: '&monthId',
       [DB_TABLE.payments]: '++id, monthId',
-      [DB_TABLE.categories]: '++id'
+      [DB_TABLE.categories]: 'id'
     })
 
     this.on('populate', (tx: Transaction) => {
