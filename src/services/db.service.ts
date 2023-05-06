@@ -15,11 +15,19 @@ enum STORAGE_KEY {
   savings = 'finance-db-savings'
 }
 
-export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
+export async function fetchMonth (monthId: string): Promise<IMonth> {
   const DB = await getDBClient()
-  return DB.months.bulkGet(monthIds)
-    .then((months): IMonth[] => (months.filter(v => v)) as IMonth[])
+  return await DB.months.get(monthId) ?? { monthId, income: 0, outcome: 0 }
 }
+
+// export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
+//   if (!monthIds.length) {
+//     return []
+//   }
+//   const DB = await getDBClient()
+//   return DB.months.bulkGet(monthIds)
+//     .then((months): IMonth[] => (months.filter(v => v)) as IMonth[])
+// }
 
 export async function fetchPayments (monthId: string): Promise<IPayment[]> {
   const DB = await getDBClient()

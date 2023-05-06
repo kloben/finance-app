@@ -3,11 +3,11 @@ import BasePage from '@/pages/BasePage.vue'
 import HomePage from '@/pages/HomePage.vue'
 import NewPaymentPage from '@/pages/NewPaymentPage.vue'
 import InitPage from '@/pages/InitPage.vue'
-import { useFinancesStore } from '@/stores/finances.store'
 import PredictionsPage from '@/pages/PredictionsPage.vue'
+import { useGlobalStore } from '@/stores/global.store'
 
 async function isInitialized (from: RouteLocationNormalized): Promise<boolean> {
-  const store = useFinancesStore()
+  const store = useGlobalStore()
   if (from === START_LOCATION) {
     await store.init()
   }

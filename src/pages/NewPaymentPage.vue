@@ -6,13 +6,13 @@ import VgButton from '@/components/ui/VgButton.vue'
 import VgInputCheck from '@/components/ui/forms/VgInputCheck.vue'
 import VgInputSelect from '@/components/ui/forms/VgInputSelect.vue'
 import VgInputSwitch from '@/components/ui/forms/VgInputSwitch.vue'
-import { useFinancesStore } from '@/stores/finances.store'
+import { useGlobalStore } from '@/stores/global.store'
 import type { IPaymentData } from '@/models/payment.interface'
 import { PaymentType } from '@/models/payment.interface'
 import { useRouter } from 'vue-router'
 import Toast from 'awesome-toast-component'
 
-const store = useFinancesStore()
+const store = useGlobalStore()
 const router = useRouter()
 
 const types = {

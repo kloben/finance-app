@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, beforeAll, vi, afterAll } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import { useFinancesStore } from '../finances.store'
+import { useGlobalStore } from '../global.store'
 import { PaymentType } from '../../models/payment.interface'
 
 describe('FinanceStore', () => {
@@ -17,7 +17,7 @@ describe('FinanceStore', () => {
   })
 
   it('inits with mock values', async () => {
-    const store = useFinancesStore()
+    const store = useGlobalStore()
     await store.init()
 
     expect(store.savings).toBe(15000)
@@ -33,7 +33,7 @@ describe('FinanceStore', () => {
   })
 
   it('updates savings', async () => {
-    const store = useFinancesStore()
+    const store = useGlobalStore()
     await store.init()
 
     expect(store.savings).toBe(15000)
@@ -42,7 +42,7 @@ describe('FinanceStore', () => {
   })
 
   it('creates income payment for existing month', async () => {
-    const store = useFinancesStore()
+    const store = useGlobalStore()
     await store.init()
 
     await store.createPayment(new Date(2023, 3, 10), {
@@ -62,7 +62,7 @@ describe('FinanceStore', () => {
   })
 
   it('creates outcome payment for new month', async () => {
-    const store = useFinancesStore()
+    const store = useGlobalStore()
     await store.init()
 
     await store.createPayment(new Date(2023, 2, 10), {

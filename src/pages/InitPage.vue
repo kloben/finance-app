@@ -2,12 +2,12 @@
 import { computed, ref } from 'vue'
 import VgInputNumber from '@/components/ui/forms/VgInputNumber.vue'
 import VgButton from '@/components/ui/VgButton.vue'
-import { useFinancesStore } from '@/stores/finances.store'
+import { useGlobalStore } from '@/stores/global.store'
 import { useRouter } from 'vue-router'
 import Toast from 'awesome-toast-component/src/toast'
 
 const amount = ref(0)
-const store = useFinancesStore()
+const store = useGlobalStore()
 const router = useRouter()
 
 const canSubmit = computed((): boolean => Boolean(amount.value) && amount.value > 0)

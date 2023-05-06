@@ -1,8 +1,8 @@
-import { useFinancesStore } from '@/stores/finances.store'
+import { useGlobalStore } from '@/stores/global.store'
 import { categoriesV1 } from '@/data/categories'
 
 export async function makeRandomPayment (max: number = 1) {
-  const store = useFinancesStore()
+  const store = useGlobalStore()
   const date = new Date()
   for (let i = 0; i < max; i++) {
     const { id, type } = categoriesV1[rand(0, categoriesV1.length - 1)]

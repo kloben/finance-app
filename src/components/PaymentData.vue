@@ -4,9 +4,9 @@ import { PaymentType } from '@/models/payment.interface'
 import { computed } from 'vue'
 import { toCurrency } from '@/helpers/number.helper'
 import { toMonthLabel } from '@/helpers/date.helper'
-import { useFinancesStore } from '@/stores/finances.store'
+import { useGlobalStore } from '@/stores/global.store'
 
-const store = useFinancesStore()
+const store = useGlobalStore()
 
 const props = defineProps<{
   payment: IPayment
