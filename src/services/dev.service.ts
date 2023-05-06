@@ -1,6 +1,6 @@
 import { useFinancesStore } from '@/stores/finances.store'
 import { PaymentType } from '@/models/payment.interface'
-import { IncomeCategory, OutcomeCategory } from '@/data/categories.enum'
+import { IncomeCategory, OutcomeCategory } from '@/data/categories'
 
 export async function makeRandomPayment (max: number = 1) {
   const store = useFinancesStore()

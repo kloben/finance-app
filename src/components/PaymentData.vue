@@ -2,7 +2,7 @@
 import type { IPayment } from '@/models/payment.interface'
 import { PaymentType } from '@/models/payment.interface'
 import { computed } from 'vue'
-import { IncomeCategory, OutcomeCategory } from '@/data/categories.enum'
+import { IncomeCategory, OutcomeCategory } from '@/data/categories'
 import { toCurrency } from '@/helpers/number.helper'
 import { toMonthLabel } from '@/helpers/date.helper'
 

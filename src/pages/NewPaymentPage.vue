@@ -10,7 +10,7 @@ import { useFinancesStore } from '@/stores/finances.store'
 import type { IPaymentData } from '@/models/payment.interface'
 import { PaymentType } from '@/models/payment.interface'
 import { useRouter } from 'vue-router'
-import { IncomeCategory, OutcomeCategory } from '@/data/categories.enum'
+import { IncomeCategory, OutcomeCategory } from '@/data/categories'
 
 const store = useFinancesStore()
 const router = useRouter()
