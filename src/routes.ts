@@ -4,13 +4,11 @@ import HomePage from '@/pages/HomePage.vue'
 import NewPaymentPage from '@/pages/NewPaymentPage.vue'
 import InitPage from '@/pages/InitPage.vue'
 import { useFinancesStore } from '@/stores/finances.store'
-import { initDB } from '@/services/db.service'
 import PredictionsPage from '@/pages/PredictionsPage.vue'
 
 async function isInitialized (from: RouteLocationNormalized): Promise<boolean> {
   const store = useFinancesStore()
   if (from === START_LOCATION) {
-    await initDB()
     await store.init()
   }
   return store.savings !== null

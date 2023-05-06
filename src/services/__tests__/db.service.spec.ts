@@ -1,10 +1,9 @@
 import { describe, it, expect, beforeAll, vi } from 'vitest'
-import { fetchMonths, initDB } from '../db.service'
+import { fetchMonths } from '../db.service'
 
 describe('DB Service', () => {
   beforeAll(async () => {
     vi.mock('dexie')
-    await initDB()
   })
 
   it('clears undefined months on fetchMonths', async () => {
