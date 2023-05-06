@@ -9,13 +9,7 @@ export default class DexieMock {
   version = () => this
   stores = () => this
   open = async () => this
-  table = (name: string) => name === 'months' ? new DexieTableMonthsMock() : new DexieTablePaymentMock()
-}
-
-class DexieTableMonthsMock {
-  bulkGet = async (ids: string[]) => ids.map(id => monthsCache[id])
-}
-
-class DexieTablePaymentMock {
-
+  months = {
+    bulkGet: async (ids: string[]) => ids.map(id => monthsCache[id])
+  }
 }

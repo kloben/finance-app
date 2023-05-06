@@ -4,6 +4,7 @@ import { fetchMonths } from '../db.service'
 describe('DB Service', () => {
   beforeAll(async () => {
     vi.mock('dexie')
+    vi.mock('../db.client')
   })
 
   it('clears undefined months on fetchMonths', async () => {
