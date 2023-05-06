@@ -11,11 +11,12 @@ import type { IMonth } from '@/models/month.interface'
 import type { IPayment, IPaymentData } from '@/models/payment.interface'
 import { toMonthId } from '@/helpers/date.helper'
 import type { ICategory } from '@/models/category.interface'
+import type { PaymentType } from '@/models/payment.interface'
 
 interface StoreState {
   savings: number | null
   monthIds: string[]
-  categories: ICategory[] | null
+  categories: Map<string, ICategory>
   monthsCache: Map<string, IMonth>
   paymentsCache: Map<string, Map<number, IPayment>> // Grouped by month
 }
@@ -24,7 +25,7 @@ export const useFinancesStore = defineStore('finances', {
   state: (): StoreState => ({
     savings: null,
     monthIds: [],
-    categories: null,
+    categories: new Map<string, ICategory>(),
     monthsCache: new Map<string, IMonth>(),
     paymentsCache: new Map<string, Map<number, IPayment>>()
   }),
@@ -36,6 +37,12 @@ export const useFinancesStore = defineStore('finances', {
     lastMonths: (state: StoreState): IMonth[] => {
       return state.monthIds
         .map((monthId) => state.monthsCache.get(monthId) ?? { monthId, income: 0, outcome: 0 })
+    },
+    getCategories: (state: StoreState): (type: PaymentType) => ICategory[] => {
+      return (type: PaymentType) => Array.from(state.categories.values()).filter(cat => cat.type === type)
+    },
+    getCategory: (state: StoreState): (id: string) => ICategory | undefined => {
+      return (id: string) => state.categories.get(id)
     }
   },
   actions: {
@@ -51,7 +58,9 @@ export const useFinancesStore = defineStore('finances', {
       this.$patch((state: StoreState) => {
         state.monthIds = monthIds
         state.savings = savings
-        state.categories = categories
+        for (const category of categories) {
+          state.categories.set(category.id, category)
+        }
         for (const month of months) {
           state.monthsCache.set(month.monthId, month)
         }

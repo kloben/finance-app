@@ -2,25 +2,26 @@
 import type { IPayment } from '@/models/payment.interface'
 import { PaymentType } from '@/models/payment.interface'
 import { computed } from 'vue'
-import { IncomeCategory, OutcomeCategory } from '@/data/categories'
 import { toCurrency } from '@/helpers/number.helper'
 import { toMonthLabel } from '@/helpers/date.helper'
+import { useFinancesStore } from '@/stores/finances.store'
+
+const store = useFinancesStore()
 
 const props = defineProps<{
   payment: IPayment
 }>()
 
-const label = computed((): string => {
-  return props.payment.type === PaymentType.in
-    ? IncomeCategory[props.payment.category]
-    : OutcomeCategory[props.payment.category]
+const label = computed<string>(() => {
+  if (!props.payment.category) {
+    return 'Other'
+  }
+  return store.getCategory(props.payment.category)?.label ?? 'Other'
 })
 
-const amount = computed((): string => {
-  return toCurrency(props.payment.amount * (props.payment.type === PaymentType.in ? 1 : -1))
-})
+const amount = computed<string>(() => toCurrency(props.payment.amount * (props.payment.type === PaymentType.in ? 1 : -1)))
 
-const date = computed((): { day: number, month: string } => {
+const date = computed<{ day: number, month: string }>(() => {
   const date = new Date(props.payment.dayId)
   return {
     day: date.getDate(),

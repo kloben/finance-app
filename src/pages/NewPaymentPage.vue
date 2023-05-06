@@ -10,10 +10,15 @@ import { useFinancesStore } from '@/stores/finances.store'
 import type { IPaymentData } from '@/models/payment.interface'
 import { PaymentType } from '@/models/payment.interface'
 import { useRouter } from 'vue-router'
-import { IncomeCategory, OutcomeCategory } from '@/data/categories'
+import Toast from 'awesome-toast-component'
 
 const store = useFinancesStore()
 const router = useRouter()
+
+const types = {
+  [PaymentType.in]: 'Income',
+  [PaymentType.out]: 'Outcome'
+}
 
 const formValues = reactive<IPaymentData>({
   type: PaymentType.out,
@@ -23,21 +28,26 @@ const formValues = reactive<IPaymentData>({
   recurrent: false
 })
 
-const isValid = computed(() => {
-  return formValues.amount > 0 && formValues.type
+const isValidForm = computed<boolean>(() => formValues.amount > 0 && Boolean(formValues.type))
+
+const categories = computed<Record<string, string>>(() => {
+  return store.getCategories(formValues.type).reduce((carry: Record<string, string>, category) => {
+    carry[category.id] = category.label
+    return carry
+  }, {})
 })
 
-const categories = computed(() => formValues.type === PaymentType.in ? IncomeCategory : OutcomeCategory)
-const types = {
-  [PaymentType.in]: 'Income',
-  [PaymentType.out]: 'Outcome'
-}
-
-async function createTransaction () {
+async function createTransaction (event?: SubmitEvent) {
+  event?.preventDefault()
+  if (!isValidForm.value) {
+    return
+  }
   try {
     await store.createPayment(new Date(), formValues)
     await router.push('/')
+    new Toast('👌 Payment created')
   } catch (e) {
+    new Toast('😵 Something happened. Try again later')
     console.log(e)
   }
 }
@@ -48,14 +58,15 @@ async function createTransaction () {
     <div class="text-title-4">
       New Payment
     </div>
-    <div class="form-wrapper">
+    <form class="form-wrapper" @submit="createTransaction">
       <VgInputSwitch v-model="formValues.type" :options="types" />
       <VgInputNumber v-model="formValues.amount" label="Amount" />
       <VgInputSelect v-model="formValues.category" :options="categories" label="Category (Optional)" />
       <VgInput v-model="formValues.description" label="Description (Optional)" />
       <VgInputCheck v-model="formValues.recurrent" label="Make recurrent" />
-      <VgButton :disabled="!isValid" @clicked="createTransaction">Create</VgButton>
-    </div>
+      <VgButton :disabled="!isValidForm" @clicked="createTransaction">Create</VgButton>
+      <input type="submit" hidden /> <!-- TODO: Change vgButton to submit -->
+    </form>
   </div>
 </template>
 
