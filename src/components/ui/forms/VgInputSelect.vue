@@ -3,15 +3,15 @@ import { watch } from 'vue'
 
 const props = defineProps<{
   label?: string
-  options: Record<string, string>
+  options: { key: string | number, label: string }[]
   modelValue?: string
 }>()
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
+  (e: 'update:modelValue', value: string | undefined): void
 }>()
 
 watch(() => props.options, () => {
-  emit('update:modelValue', '')
+  emit('update:modelValue', undefined)
 })
 </script>
 
@@ -19,9 +19,9 @@ watch(() => props.options, () => {
   <div class="vg-input">
     <label>
       <span v-if="label" class="text-caption">{{ label }}</span>
-      <select @change="emit('update:modelValue', $event.target.value ?? '')">
+      <select @change="emit('update:modelValue', $event.target.value.length ? $event.target.value : undefined)">
         <option value=""></option>
-        <option v-for="(label, key) in options"
+        <option v-for="{key, label} of options"
                 :key="key"
                 :value="key"
                 :selected="modelValue === key"
