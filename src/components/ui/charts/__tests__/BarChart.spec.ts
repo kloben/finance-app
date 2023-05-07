@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
-import type { ChartValue } from '../chart-value.interface'
+import type { BarChartValue } from '../chart-value.interface'
 import VgBarChart from '../VgBarChart.vue'
 
-function generateWrapper (values: ChartValue[] = []): VueWrapper {
+function generateWrapper (values: BarChartValue[] = []): VueWrapper {
   return mount(VgBarChart, {
     props: {
       values
@@ -23,7 +23,7 @@ function getValues (wrapper: VueWrapper): { labelX: string[], labelY: string[], 
   }
 }
 
-const testData: ChartValue[] = [
+const testData: BarChartValue[] = [
   { label: 'Label1', up: 10, down: 20 },
   { label: 'Label2', up: 30, down: 40 }
 ]

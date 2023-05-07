@@ -4,6 +4,8 @@ import { useDetailStore } from '@/stores/detail.store'
 import { toMonthId, toMonthLabel } from '@/helpers/date.helper'
 import PaymentInfo from '@/components/PaymentInfo.vue'
 import type { IPayment } from '@/models/payment.interface'
+import VgPieChart from '@/components/ui/charts/VgPieChart.vue'
+import type { PieChartValue } from '@/components/ui/charts/chart-value.interface'
 
 const store = useDetailStore()
 
@@ -21,11 +23,18 @@ const cleanDate = computed<string>(() => {
 const sortedPayments = computed<IPayment[]>(() => {
   return [...store.payments].sort((a, b) => `${a.dayId}-${a.createdAt}` > `${b.dayId}-${b.createdAt}` ? -1 : 1)
 })
+
+const input: PieChartValue[] = [
+  { label: 'First', value: 123 },
+  { label: 'Second', value: 32 },
+  { label: 'Third', value: 66 },
+]
 </script>
 
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">Summary for {{ cleanDate }}</div>
+    <VgPieChart :input="input" />
     <div class="payments-container" v-if="sortedPayments.length">
       <PaymentInfo v-for="payment of sortedPayments" :key="payment.id" :payment="payment" />
     </div>
