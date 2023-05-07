@@ -16,7 +16,7 @@ describe('PredictionsService', function () {
       }
     ]
 
-    const output = calculatePredictions(input, 2)
+    const output = calculatePredictions(input, ['2023-07', '2023-08'])
 
     expect(output).toEqual([
       { monthId: '2023-07', income: 0, outcome: 0 },
@@ -40,7 +40,7 @@ describe('PredictionsService', function () {
       }
     ]
 
-    const output = calculatePredictions(input, 2)
+    const output = calculatePredictions(input, ['2023-07', '2023-08'])
 
     expect(output).toEqual([
       { monthId: '2023-07', income: 30, outcome: 0 },
@@ -66,7 +66,7 @@ describe('PredictionsService', function () {
       }
     ]
 
-    const output = calculatePredictions(input, 2)
+    const output = calculatePredictions(input, ['2023-07', '2023-08'])
 
     expect(output).toEqual([
       { monthId: '2023-07', income: 30, outcome: 150 },
@@ -96,7 +96,7 @@ describe('PredictionsService', function () {
       }
     ]
 
-    const output = calculatePredictions(input, 2)
+    const output = calculatePredictions(input, ['2023-07', '2023-08'])
 
     expect(output).toEqual([
       { monthId: '2023-07', income: 45, outcome: 183 },
@@ -120,7 +120,7 @@ describe('PredictionsService', function () {
       }
     ]
 
-    const output = calculatePredictions(input, 2)
+    const output = calculatePredictions(input, ['2023-07', '2023-08'])
 
     expect(output).toEqual([
       { monthId: '2023-07', income: 0, outcome: 0 },

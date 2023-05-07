@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { ChartValue } from '@/models/chart-value.interface'
+import type { ChartValue } from '@/components/ui/charts/chart-value.interface'
 
 interface DisplayData {
   values: ChartValue[]

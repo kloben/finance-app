@@ -69,14 +69,9 @@ export const useGlobalStore = defineStore('global', {
     async createPayment (date: Date, paymentData: IPaymentData): Promise<void> {
       const { payment, month, savings } = await storePayment(date, paymentData)
       this.$patch((state: StoreState) => {
-        if (savings !== null) {
-          state.savings = savings
-        }
+        state.savings = savings
         state.months.set(month.monthId, month)
-        const payments = state.payments.get(payment.monthId)
-        if (payments) {
-          payments.set(payment.id, payment)
-        }
+        state.payments.get(payment.monthId)?.set(payment.id, payment)
       })
     }
   },

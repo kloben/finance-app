@@ -8,7 +8,7 @@ import type { ICategory } from '@/models/category.interface'
 export interface NewPayment {
   payment: IPayment
   month: IMonth
-  savings: number | null
+  savings: number
 }
 
 enum STORAGE_KEY {
@@ -17,7 +17,7 @@ enum STORAGE_KEY {
 
 export async function fetchMonth (monthId: string): Promise<IMonth> {
   const DB = await getDBClient()
-  return await DB.months.get(monthId) ?? { monthId, income: 0, outcome: 0 }
+  return await DB.months.get(monthId) ?? { monthId, income: 0, outcome: 0, totals: {} }
 }
 
 // export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
@@ -55,14 +55,13 @@ export async function storePayment (date: Date, data: IPaymentData): Promise<New
   })
 }
 
-function updateSavings (payment: IPayment): number | null {
+function updateSavings (payment: IPayment): number {
+  let current = fetchSavings() ?? 0
   if (new Date(payment.monthId).getMonth() === new Date().getMonth()) {
-    let current = fetchSavings() ?? 0
     current += (payment.amount * (payment.type === PaymentType.in ? 1 : -1))
     storeSavings(current)
-    return current
   }
-  return null
+  return current
 }
 
 async function createPayment (paymentData: Omit<IPayment, 'id'>): Promise<IPayment> {
@@ -73,17 +72,13 @@ async function createPayment (paymentData: Omit<IPayment, 'id'>): Promise<IPayme
 
 async function upsertMonth (payment: Omit<IPayment, 'id'>): Promise<IMonth> {
   const DB = await getDBClient()
-  const existingMonth = await DB.months.get({ monthId: payment.monthId })
-  if (existingMonth) {
-    existingMonth[payment.type] += payment.amount
-    await DB.months.update(payment.monthId, existingMonth)
-    return existingMonth
-  } else {
-    const newMonth = { monthId: payment.monthId, outcome: 0, income: 0 }
-    newMonth[payment.type] += payment.amount
-    await DB.months.add(newMonth)
-    return newMonth
+  const month: IMonth = await DB.months.get({ monthId: payment.monthId }) ?? {
+    monthId: payment.monthId, outcome: 0, income: 0, totals: {}
   }
+  month[payment.type] += payment.amount
+  month.totals[payment.category ?? ''] = (month.totals[payment.category ?? ''] ?? 0) + payment.amount
+  await DB.months.put(month)
+  return month
 }
 
 export function fetchSavings (): number | null {
