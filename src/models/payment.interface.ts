@@ -8,7 +8,6 @@ export interface IPaymentData {
   amount: number
   category?: string
   description?: string
-  recurrent?: boolean
 }
 
 export interface IPayment extends IPaymentData {
