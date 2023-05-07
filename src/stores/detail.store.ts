@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import type { IMonth } from '@/models/month.interface'
 import type { IPayment } from '@/models/payment.interface'
 import { useGlobalStore } from '@/stores/global.store'
+import { getEmptyMonth } from '@/helpers/data.helper'
 
 interface StoreState {
   monthId: string | null
@@ -16,7 +17,8 @@ export const useDetailStore = defineStore('detail', {
       if (!state.monthId) {
         return null
       }
-      return null
+      const global = useGlobalStore()
+      return global.months.get(state.monthId) ?? getEmptyMonth(state.monthId)
     },
     payments: (state: StoreState): IPayment[] => {
       if (!state.monthId) {

@@ -6,8 +6,10 @@ import PaymentInfo from '@/components/PaymentInfo.vue'
 import type { IPayment } from '@/models/payment.interface'
 import VgPieChart from '@/components/ui/charts/VgPieChart.vue'
 import type { PieChartData } from '@/components/ui/charts/chart-value.interface'
+import { useGlobalStore } from '@/stores/global.store'
 
 const store = useDetailStore()
+const globalStore = useGlobalStore()
 
 onMounted(() => {
   store.loadMonth(toMonthId(new Date()))
@@ -24,17 +26,26 @@ const sortedPayments = computed<IPayment[]>(() => {
   return [...store.payments].sort((a, b) => `${a.dayId}-${a.createdAt}` > `${b.dayId}-${b.createdAt}` ? -1 : 1)
 })
 
-const pieChartData = computed<PieChartData>(() => [
-  { label: 'First', value: 123 },
-  { label: 'Second', value: 32 },
-  { label: 'Third', value: 66 },
-])
+const pieData = computed<PieChartData>(() => {
+  const month = store.month
+  if (!month) {
+    return []
+  }
+  return Object.keys(month.totals).reduce((carry, categoryId) => {
+    const category = globalStore.getCategory(categoryId)
+    carry.push({
+      label: category.label,
+      value: month.totals[categoryId]
+    })
+    return carry
+  }, <PieChartData>[])
+})
 </script>
 
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">Summary for {{ cleanDate }}</div>
-    <VgPieChart :data="pieChartData" />
+    <VgPieChart :data="pieData" />
     <div class="payments-container" v-if="sortedPayments.length">
       <PaymentInfo v-for="payment of sortedPayments" :key="payment.id" :payment="payment" />
     </div>

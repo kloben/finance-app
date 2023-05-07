@@ -19,16 +19,18 @@ const barData = computed<BarChartData>(() => store.lastMonths.map((data: IMonth)
   label: toMonthLabel(data.monthId)
 })))
 
-const pieData = computed<PieChartData>(() => Object.keys(store.currentMonth.totals).reduce((carry, categoryId) => {
-  const category = globalStore.getCategory(categoryId)
-  if (category.type === PaymentType.out) {
-    carry.push({
-      label: category.label,
-      value: store.currentMonth.totals[categoryId]
-    })
-  }
-  return carry
-}, <PieChartData>[]))
+const pieData = computed<PieChartData>(() => {
+  return Object.keys(store.currentMonth.totals).reduce((carry, categoryId) => {
+    const category = globalStore.getCategory(categoryId)
+    if (category.type === PaymentType.out) {
+      carry.push({
+        label: category.label,
+        value: store.currentMonth.totals[categoryId]
+      })
+    }
+    return carry
+  }, <PieChartData>[])
+})
 
 const savings = computed(() => {
   return toCurrency(globalStore.savings ?? 0)
