@@ -38,7 +38,7 @@ export const useGlobalStore = defineStore('global', {
       if (!missing.length) {
         return
       }
-      const months = await fetchMonths(missing)// Promise.all(missing.map(monthId => fetchMonth(monthId)))
+      const months = await fetchMonths(missing)
       this.$patch((state: StoreState) => {
         for (const month of months) {
           state.months.set(month.monthId, month)
