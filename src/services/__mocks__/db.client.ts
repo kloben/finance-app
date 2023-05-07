@@ -10,7 +10,8 @@ class DexieMock {
   open = async () => this
   months = {
     // bulkGet: async (ids: string[]) => ids.map(id => monthsCache[id]),
-    get: async (monthId: string) => TestMonths[monthId]
+    get: async (monthId: string) => TestMonths[monthId],
+    bulkGet: async (monthIds: string[]) => monthIds.map(monthId => TestMonths[monthId]).filter(v => Boolean(v))
   }
   payments = {
     where: (query: any) => ({

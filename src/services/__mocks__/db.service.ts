@@ -5,9 +5,14 @@ import type { NewPayment } from '@/services/db.service'
 import { toDayId, toMonthId } from '@/helpers/date.helper'
 import type { ICategory } from '@/models/category.interface'
 import { TestMonths, TestPayments, TestCategories } from '@/services/__mocks__/data'
+import { getEmptyMonth } from '@/helpers/data.helper'
 
 export async function fetchMonth (monthId: string): Promise<IMonth> {
-  return TestMonths[monthId] ?? { monthId, income: 0, outcome: 0, totals: {} }
+  return TestMonths[monthId] ?? getEmptyMonth(monthId)
+}
+
+export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
+  return monthIds.map(monthId => TestMonths[monthId] ?? getEmptyMonth(monthId))
 }
 
 export async function fetchCategories (): Promise<ICategory[]> {

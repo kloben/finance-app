@@ -1,9 +1,5 @@
 import { defineStore } from 'pinia'
-import {
-  fetchCategories, fetchMonth,
-  fetchPayments,
-  fetchSavings, storePayment, storeSavings,
-} from '@/services/db.service'
+import { fetchCategories, fetchMonths, fetchSavings, storePayment, storeSavings } from '@/services/db.service'
 import type { IMonth } from '@/models/month.interface'
 import type { IPayment, IPaymentData } from '@/models/payment.interface'
 import type { ICategory } from '@/models/category.interface'
@@ -42,7 +38,7 @@ export const useGlobalStore = defineStore('global', {
       if (!missing.length) {
         return
       }
-      const months = await Promise.all(missing.map(monthId => fetchMonth(monthId)))
+      const months = await fetchMonths(missing)// Promise.all(missing.map(monthId => fetchMonth(monthId)))
       this.$patch((state: StoreState) => {
         for (const month of months) {
           state.months.set(month.monthId, month)

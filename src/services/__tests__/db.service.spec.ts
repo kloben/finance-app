@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, vi } from 'vitest'
-import { fetchCategories, fetchMonth, fetchPayments } from '../db.service'
+import { fetchCategories, fetchMonth, fetchMonths, fetchPayments } from '../db.service'
 import { TestCategories, TestMonths, TestPayments } from '../__mocks__/data'
 
 describe('DB Service', () => {
@@ -24,6 +24,22 @@ describe('DB Service', () => {
     })
   })
 
+  it('fetches months even non existing', async () => {
+    const months = await fetchMonths(['2023-03', '2023-04', '2023-05'])
+
+    expect(months).toEqual([
+      { monthId: '2023-03', income: 0, outcome: 0, totals: {} },
+      { monthId: '2023-04', income: 100, outcome: 200, totals: { inCat: 100, outCat: 200 } },
+      { monthId: '2023-05', income: 0, outcome: 0, totals: {} }
+    ])
+  })
+
+  it('fetches empty month list', async () => {
+    const months = await fetchMonths([])
+
+    expect(months).toEqual([])
+  })
+
   it('fetches existing payments', async () => {
     const payments = await fetchPayments('2023-04')
     expect(payments).toEqual([TestPayments['1'], TestPayments['2']])
@@ -38,12 +54,4 @@ describe('DB Service', () => {
     const categories = await fetchCategories()
     expect(categories).toEqual(Object.values(TestCategories))
   })
-
-  // it('clears undefined months on fetchMonths', async () => {
-  //   const result = await fetchMonths(['2023-05', '2023-04', '2023-03', '2023-02', '2023-01'])
-  //   expect(result).toEqual([
-  //     { monthId: '2023-05', income: 123, outcome: 321 },
-  //     { monthId: '2023-04', income: 456, outcome: 654 }
-  //   ])
-  // })
 })

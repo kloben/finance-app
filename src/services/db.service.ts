@@ -4,6 +4,7 @@ import type { IPayment, IPaymentData } from '@/models/payment.interface'
 import { PaymentType } from '@/models/payment.interface'
 import { DB_TABLE, getDBClient } from '@/services/db.client'
 import type { ICategory } from '@/models/category.interface'
+import { getEmptyMonth } from '@/helpers/data.helper'
 
 export interface NewPayment {
   payment: IPayment
@@ -17,17 +18,17 @@ enum STORAGE_KEY {
 
 export async function fetchMonth (monthId: string): Promise<IMonth> {
   const DB = await getDBClient()
-  return await DB.months.get(monthId) ?? { monthId, income: 0, outcome: 0, totals: {} }
+  return await DB.months.get(monthId) ?? getEmptyMonth(monthId)
 }
 
-// export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
-//   if (!monthIds.length) {
-//     return []
-//   }
-//   const DB = await getDBClient()
-//   return DB.months.bulkGet(monthIds)
-//     .then((months): IMonth[] => (months.filter(v => v)) as IMonth[])
-// }
+export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
+  if (!monthIds.length) {
+    return []
+  }
+  const DB = await getDBClient()
+  return DB.months.bulkGet(monthIds)
+    .then((months): IMonth[] => monthIds.map(monthId => months.find(m => m?.monthId === monthId) ?? getEmptyMonth(monthId)))
+}
 
 export async function fetchPayments (monthId: string): Promise<IPayment[]> {
   const DB = await getDBClient()
