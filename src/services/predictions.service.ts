@@ -61,8 +61,8 @@ function generateEstimates (regressions: RegressionData, fixed: FixedData, categ
 }
 
 function updatePrediction (month: IMonth, amount: number, category: ICategory): void {
-  month[category.type] += amount
-  month.totals[category.id] = amount
+  month[category.type] += Math.max(amount, 0)
+  month.totals[category.id] = Math.max(amount, 0)
 }
 
 function getCategory (categories: CategoriesData, categoryId?: string): ICategory {
