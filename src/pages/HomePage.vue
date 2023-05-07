@@ -5,7 +5,6 @@ import {computed, onMounted} from 'vue'
 import type {IMonth} from '@/models/month.interface'
 import {toMonthLabel} from '@/helpers/date.helper'
 import {toCurrency} from '@/helpers/number.helper'
-import PaymentData from '@/components/PaymentData.vue'
 import {useHomeStore} from '@/stores/home.store'
 
 const globalStore = useGlobalStore()
@@ -28,9 +27,6 @@ onMounted(() => {
   <div class="page-wrapper">
     <div class="text-title-4">Total savings: {{ savings }}</div>
     <VgBarChart :values="summaryValues"/>
-    <div class="payments-container" v-if="store.lastPayments.length">
-      <PaymentData v-for="payment of store.lastPayments" :key="payment.id" :payment="payment"/>
-    </div>
   </div>
 </template>
 
@@ -41,11 +37,11 @@ onMounted(() => {
   padding-bottom: 32px;
 }
 
-.payments-container {
-  padding: 8px 16px;
-  background: $white;
-  border-radius: 4px;
-  max-width: 550px;
-  margin: 32px auto 0 auto;
-}
+//.payments-container {
+//  padding: 8px 16px;
+//  background: $white;
+//  border-radius: 4px;
+//  max-width: 550px;
+//  margin: 32px auto 0 auto;
+//}
 </style>

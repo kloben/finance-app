@@ -1,8 +1,9 @@
-import {defineStore} from 'pinia'
-import {calculatePastMonthIds} from '@/helpers/date.helper'
-import type {IMonth} from '@/models/month.interface'
-import {useGlobalStore} from '@/stores/global.store'
-import type {IPayment} from '@/models/payment.interface'
+import { defineStore } from 'pinia'
+import { calculatePastMonthIds } from '@/helpers/date.helper'
+import type { IMonth } from '@/models/month.interface'
+import { useGlobalStore } from '@/stores/global.store'
+import type { IPayment } from '@/models/payment.interface'
+import { getEmptyMonth } from '@/helpers/data.helper'
 
 interface StoreState {
   isInit: boolean,
@@ -20,7 +21,7 @@ export const useHomeStore = defineStore('home', {
         return []
       }
       const global = useGlobalStore()
-      return state.monthIds.map((monthId) => global.months.get(monthId) ?? {monthId, income: 0, outcome: 0})
+      return state.monthIds.map((monthId) => global.months.get(monthId) ?? getEmptyMonth(monthId))
     },
     lastPayments: (state: StoreState): IPayment[] => {
       if (!state.isInit) {
@@ -39,12 +40,11 @@ export const useHomeStore = defineStore('home', {
     }
   },
   actions: {
-    async init() {
+    async init () {
       if (this.isInit) {
         return
       }
-      const global = useGlobalStore()
-      await global.initMonths(this.monthIds)
+      await useGlobalStore().initMonths(this.monthIds)
       this.isInit = true
     }
   }

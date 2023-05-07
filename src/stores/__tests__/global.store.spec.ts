@@ -40,9 +40,7 @@ describe('GlobalStore', () => {
     await store.initMonths(['2023-04', '2023-05'])
 
     expect(store.months.size).toBe(2)
-    expect(store.payments.size).toBe(2)
-    expect(store.payments.get('2023-04')?.size).toBe(2)
-    expect(store.payments.get('2023-05')?.size).toBe(0)
+    expect(store.payments.size).toBe(0)
   })
 
   it('updates savings', async () => {
@@ -99,6 +97,6 @@ describe('GlobalStore', () => {
         }
       }
     ])
-    expect(store.payments.get('2023-04')?.size).toBe(3)
+    expect(store.payments.size).toBe(0)
   })
 })

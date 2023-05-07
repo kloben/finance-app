@@ -38,27 +38,14 @@ export const useGlobalStore = defineStore('global', {
       })
     },
     async initMonths (monthIds: string[]) {
-      const missing = []
-      for (const monthId of monthIds) {
-        if (!this.months.has(monthId)) {
-          missing.push(monthId)
-        }
-      }
+      const missing = monthIds.filter(monthId => !this.months.has(monthId))
       if (!missing.length) {
         return
       }
-      const fetched: { month: IMonth, payments: IPayment[] }[] = []
-      for (const monthId of missing) {
-        const [month, payments] = await Promise.all([fetchMonth(monthId), fetchPayments(monthId)])
-        fetched.push({ month, payments })
-      }
+      const months = await Promise.all(missing.map(monthId => fetchMonth(monthId)))
       this.$patch((state: StoreState) => {
-        for (const { month, payments } of fetched) {
+        for (const month of months) {
           state.months.set(month.monthId, month)
-          state.payments.set(month.monthId, payments.reduce((carry, payment) => {
-            carry.set(payment.id, payment)
-            return carry
-          }, new Map<number, IPayment>()))
         }
       })
     },
