@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { BarChartData } from '@/components/ui/charts/chart-value.interface'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { Chart } from 'chart.js'
 
 const props = defineProps<{
@@ -41,6 +41,10 @@ onMounted(() => {
       }
     }
   )
+})
+
+onUnmounted(() => {
+  chart.destroy()
 })
 
 watch(() => props.data, (newData: BarChartData) => {
