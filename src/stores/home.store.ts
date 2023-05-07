@@ -1,18 +1,19 @@
 import { defineStore } from 'pinia'
-import { calculatePastMonthIds } from '@/helpers/date.helper'
+import { calculatePastMonthIds, toMonthId } from '@/helpers/date.helper'
 import type { IMonth } from '@/models/month.interface'
 import { useGlobalStore } from '@/stores/global.store'
-import type { IPayment } from '@/models/payment.interface'
 import { getEmptyMonth } from '@/helpers/data.helper'
 
 interface StoreState {
-  isInit: boolean,
+  isInit: boolean
+  currentMonthId: string
   monthIds: string[]
 }
 
 export const useHomeStore = defineStore('home', {
   state: (): StoreState => ({
     isInit: false,
+    currentMonthId: toMonthId(new Date()),
     monthIds: calculatePastMonthIds()
   }),
   getters: {
@@ -23,20 +24,9 @@ export const useHomeStore = defineStore('home', {
       const global = useGlobalStore()
       return state.monthIds.map((monthId) => global.months.get(monthId) ?? getEmptyMonth(monthId))
     },
-    lastPayments: (state: StoreState): IPayment[] => {
-      if (!state.isInit) {
-        return []
-      }
-      const payments: IPayment[] = []
+    currentMonth: (state: StoreState): IMonth => {
       const global = useGlobalStore()
-      for (const month of state.monthIds.slice().reverse()) {
-        payments.push(...(global.payments.get(month)?.values() ?? []))
-        if (payments.length >= 5) {
-          break
-        }
-      }
-      return payments.sort((a, b) => `${a.dayId}-${a.createdAt}` > `${b.dayId}-${b.createdAt}` ? -1 : 1)
-        .slice(0, 5)
+      return global.months.get(state.currentMonthId) ?? getEmptyMonth(state.currentMonthId)
     }
   },
   actions: {
