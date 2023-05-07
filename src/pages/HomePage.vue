@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import VgBarChart from '@/components/ui/charts/VgBarChart.vue'
-import { useFinancesStore } from '@/stores/finances.store'
-import { computed } from 'vue'
-import type { IMonth } from '@/models/month.interface'
-import { toMonthLabel } from '@/helpers/date.helper'
-import { toCurrency } from '@/helpers/number.helper'
+import {useGlobalStore} from '@/stores/global.store'
+import {computed, onMounted} from 'vue'
+import type {IMonth} from '@/models/month.interface'
+import {toMonthLabel} from '@/helpers/date.helper'
+import {toCurrency} from '@/helpers/number.helper'
+import {useHomeStore} from '@/stores/home.store'
 
-const store = useFinancesStore()
+const globalStore = useGlobalStore()
+const store = useHomeStore()
 
 const summaryValues = computed(() => store.lastMonths.map((data: IMonth) => ({
   up: data.income,
@@ -14,15 +16,17 @@ const summaryValues = computed(() => store.lastMonths.map((data: IMonth) => ({
   label: toMonthLabel(data.monthId)
 })))
 
-const savings = computed(() => {
-  return toCurrency(store.savings ?? 0)
+const savings = computed(() => toCurrency(globalStore.savings ?? 0))
+
+onMounted(() => {
+  store.init()
 })
 </script>
 
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">Total savings: {{ savings }}</div>
-    <VgBarChart :values="summaryValues" />
+    <VgBarChart :values="summaryValues"/>
   </div>
 </template>
 
@@ -33,10 +37,11 @@ const savings = computed(() => {
   padding-bottom: 32px;
 }
 
-.payments-container {
-  margin-top: 32px;
-  padding: 8px 16px;
-  background: $white;
-  border-radius: 4px;
-}
+//.payments-container {
+//  padding: 8px 16px;
+//  background: $white;
+//  border-radius: 4px;
+//  max-width: 550px;
+//  margin: 32px auto 0 auto;
+//}
 </style>

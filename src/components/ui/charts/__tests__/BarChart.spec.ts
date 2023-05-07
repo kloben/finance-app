@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
-import type { ChartValue } from '../../../../models/chart-value.interface'
+import type { ChartValue } from '../chart-value.interface'
 import VgBarChart from '../VgBarChart.vue'
 
 function generateWrapper (values: ChartValue[] = []): VueWrapper {

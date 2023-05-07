@@ -1,65 +1,38 @@
 import type { IMonth } from '@/models/month.interface'
 import type { IPayment, IPaymentData } from '@/models/payment.interface'
+import { PaymentType } from '@/models/payment.interface'
 import type { NewPayment } from '@/services/db.service'
 import { toDayId, toMonthId } from '@/helpers/date.helper'
+import type { ICategory } from '@/models/category.interface'
+import { TestMonths, TestPayments, TestCategories } from '@/services/__mocks__/data'
+import { getEmptyMonth } from '@/helpers/data.helper'
 
-const monthsCache: Record<string, IMonth> = {
-  '2023-04': { monthId: '2023-04', income: 100, outcome: 200 },
-  '2023-02': { monthId: '2023-02', income: 111, outcome: 222 }
-}
-const paymentsCache: Record<number, IPayment> = {
-  1: {
-    id: 1,
-    type: 'income',
-    category: 'test-income',
-    amount: 100,
-    monthId: '2023-04',
-    dayId: '2023-04-15',
-    createdAt: 123456789
-  },
-  2: {
-    id: 2,
-    type: 'outcome',
-    category: 'test-outcome',
-    amount: 200,
-    monthId: '2023-04',
-    dayId: '2023-04-20',
-    createdAt: 123456789
-  },
-  3: {
-    id: 3,
-    type: 'income',
-    category: 'test-income',
-    amount: 111,
-    monthId: '2023-02',
-    dayId: '2023-04-05',
-    createdAt: 123456789
-  },
-  4: {
-    id: 4,
-    type: 'outcome',
-    category: 'test-outcome',
-    amount: 222,
-    monthId: '2023-02',
-    dayId: '2023-04-10',
-    createdAt: 123456789
-  }
+export async function fetchMonth (monthId: string): Promise<IMonth> {
+  return TestMonths[monthId] ?? getEmptyMonth(monthId)
 }
 
 export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
-  return Object.values(monthsCache)
+  return monthIds.map(monthId => TestMonths[monthId] ?? getEmptyMonth(monthId))
+}
+
+export async function fetchCategories (): Promise<ICategory[]> {
+  return Object.values(TestCategories)
 }
 
 export async function fetchPayments (monthId: string): Promise<IPayment[]> {
-  return Object.values(paymentsCache)
+  return Object.values(TestPayments).filter(payment => payment.monthId === monthId)
 }
 
 export async function storePayment (date: Date, data: IPaymentData): Promise<NewPayment> {
   const monthId = toMonthId(date)
-  const month = monthsCache[monthId] ? { ...monthsCache[monthId] } : { monthId, income: 0, outcome: 0 }
+  const month: IMonth = JSON.parse(JSON.stringify(TestMonths[monthId] ?? {
+    monthId, income: 0, outcome: 0, totals: {}
+  }))
   month[data.type] += data.amount
+  const category = data.category ?? ''
+  month.totals[category] = (month.totals[category] ?? 0) + data.amount
 
-  const savings = fetchSavings() + (data.amount * (data.type === 'income' ? 1 : -1))
+  const savings = fetchSavings() + (data.amount * (data.type === PaymentType.in ? 1 : -1))
 
   const payment: IPayment = {
     id: 10,

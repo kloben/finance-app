@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import VgInputSelect from '../VgInputSelect.vue'
 
-function generateWrapper (options = {}, props = {}): VueWrapper {
+function generateWrapper (options: any[] = [], props = {}): VueWrapper {
   return mount(VgInputSelect, {
     props: {
       ...props,
@@ -11,10 +11,10 @@ function generateWrapper (options = {}, props = {}): VueWrapper {
   })
 }
 
-const testOptions: Record<string, string> = {
-  key: 'value',
-  key2: 'value2'
-}
+const testOptions: { key: string, label: string }[] = [
+  { key: 'key', label: 'value' },
+  { key: 'key2', label: 'value2' }
+]
 
 describe('VgInputSelect', () => {
   it('renders with empty values', () => {
