@@ -28,6 +28,13 @@ export function toMonthLabel (date: Date | string): string {
   return new Date(date).toLocaleString('default', { month: 'short' })
 }
 
+export function modifyMonthId (monthId: string, modifier: 1 | -1): string {
+  const date = new Date(monthId)
+  date.setDate(15)
+  date.setMonth(date.getMonth() + modifier)
+  return toMonthId(date)
+}
+
 function padZero (num: number): string {
   return num < 10 ? `0${num}` : String(num)
 }
