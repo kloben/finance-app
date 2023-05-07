@@ -5,7 +5,7 @@ export interface BarChartValue {
   predicted?: boolean
 }
 
-export interface PieChartValue {
+export type PieChartData = {
   label: string
   value: number
-}
+}[]

@@ -1,58 +1,54 @@
 <script setup lang="ts">
-import { describeArc } from '@/helpers/chart.helper'
-import type { PieChartValue } from '@/components/ui/charts/chart-value.interface'
-import { computed } from 'vue'
-
-interface DisplayData {
-  path: string
-  color: string
-}
+import type { PieChartData } from '@/components/ui/charts/chart-value.interface'
+import { onMounted, ref, watch } from 'vue'
+import { Chart } from 'chart.js'
 
 const props = defineProps<{
-  input: PieChartValue[]
+  data: PieChartData
 }>()
 
-const display = computed<DisplayData[]>(() => {
-  const total = props.input.reduce((carry, value) => carry + value.value, 0)
-  let offset = 0
-  return props.input.map((value: PieChartValue) => {
-    const angle = value.value / total * 360
-    const path = describeArc(200, 200, 100, offset, offset + angle)
-    const color = '#' + Math.floor(Math.random() * 16777215).toString(16)
-    offset += angle
-    return { path, color }
-  })
+const canvasRef = ref<HTMLCanvasElement>()
+let chart: Chart<'pie', number[], string>
+
+function parseData (data: PieChartData): { labels: string[], data: number[] } {
+  return data.reduce((carry: { labels: string[], data: number[] }, data) => {
+    carry.labels.push(data.label)
+    carry.data.push(data.value)
+    return carry
+  }, { labels: [], data: [] })
+}
+
+onMounted(() => {
+  const { labels, data } = parseData(props.data)
+  chart = new Chart<'pie', number[], string>(
+    <HTMLCanvasElement>canvasRef.value,
+    {
+      type: 'pie',
+      responsive: true,
+      data: {
+        labels,
+        datasets: [{ data }]
+      }
+    }
+  )
+})
+
+watch(() => props.data, (newData: PieChartData) => {
+  const { labels, data } = parseData(props.data)
+  chart.data.labels = labels
+  chart.data.datasets[0].data = data
+  chart.update()
 })
 </script>
 
 <template>
-  <div class="chart-container">
-    <svg>
-      <path v-for="(data, index) of display" :key="index" :d="data.path" :stroke="data.color" />
-    </svg>
-  </div>
+  <canvas ref="canvasRef"></canvas>
 </template>
 
 <style scoped lang="scss">
 @import "src/styles/colors";
 
-svg {
-  width: 400px;
-  height: 400px;
-
-  path {
-    fill: none;
-    //stroke: black;
-    stroke-width: 200;
-  }
-}
-
-// https://codepen.io/jh3y/pen/bQbpWd
-.chart-container {
-  //background: black;
-  //height: 200px;
-  //clip-path: circle(40% at 50% 50%);
-  //aspect-ratio: 1;
-  //position: relative;
+canvas {
+  max-height: 30vh;
 }
 </style>

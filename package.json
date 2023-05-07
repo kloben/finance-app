@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "awesome-toast-component": "^2.0.6",
+    "chart.js": "^4.3.0",
     "dexie": "^3.2.3",
     "pinia": "^2.0.35",
     "simple-statistics": "^7.8.3",
