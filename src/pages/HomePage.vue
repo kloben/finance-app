@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import VgBarChart from '@/components/ui/charts/VgBarChart.vue'
-import {useGlobalStore} from '@/stores/global.store'
-import {computed, onMounted} from 'vue'
-import type {IMonth} from '@/models/month.interface'
-import {toMonthLabel} from '@/helpers/date.helper'
-import {toCurrency} from '@/helpers/number.helper'
-import {useHomeStore} from '@/stores/home.store'
+import { useGlobalStore } from '@/stores/global.store'
+import { computed, onMounted } from 'vue'
+import type { IMonth } from '@/models/month.interface'
+import { toMonthLabel } from '@/helpers/date.helper'
+import { toCurrency } from '@/helpers/number.helper'
+import { useHomeStore } from '@/stores/home.store'
+import type { BarChartData } from '@/components/ui/charts/chart-value.interface'
 
 const globalStore = useGlobalStore()
 const store = useHomeStore()
 
-const summaryValues = computed(() => store.lastMonths.map((data: IMonth) => ({
+const summaryValues = computed<BarChartData>(() => store.lastMonths.map((data: IMonth) => ({
   up: data.income,
   down: data.outcome,
   label: toMonthLabel(data.monthId)
@@ -26,7 +27,7 @@ onMounted(() => {
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">Total savings: {{ savings }}</div>
-    <VgBarChart :values="summaryValues"/>
+    <VgBarChart :data="summaryValues" />
   </div>
 </template>
 

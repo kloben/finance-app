@@ -26,11 +26,12 @@ function toChart (month: IMonth, predicted: boolean = false) {
 onMounted(() => {
   store.init()
 })
+
 </script>
 
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">Predictions</div>
-    <VgBarChart :values="chartData" />
+    <VgBarChart :data="chartData" />
   </div>
 </template>
