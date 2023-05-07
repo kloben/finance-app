@@ -36,12 +36,4 @@ onMounted(() => {
 .text-title-4 {
   padding-bottom: 32px;
 }
-
-//.payments-container {
-//  padding: 8px 16px;
-//  background: $white;
-//  border-radius: 4px;
-//  max-width: 550px;
-//  margin: 32px auto 0 auto;
-//}
 </style>

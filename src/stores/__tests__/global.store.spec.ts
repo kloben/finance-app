@@ -37,7 +37,7 @@ describe('GlobalStore', () => {
   it('inits selected months', async () => {
     const store = useGlobalStore()
 
-    await store.initMonths(['2023-04', '2023-05'])
+    await store.loadMonths(['2023-04', '2023-05'])
 
     expect(store.months.size).toBe(2)
     expect(store.payments.size).toBe(0)
@@ -77,7 +77,7 @@ describe('GlobalStore', () => {
 
   it('creates new payment with init', async () => {
     const store = useGlobalStore()
-    await store.initMonths(['2023-04'])
+    await store.loadMonths(['2023-04'])
 
     await store.createPayment(new Date(2023, 3, 10), {
       type: PaymentType.in,

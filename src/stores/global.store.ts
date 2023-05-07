@@ -1,5 +1,12 @@
 import { defineStore } from 'pinia'
-import { fetchCategories, fetchMonths, fetchSavings, storePayment, storeSavings } from '@/services/db.service'
+import {
+  fetchCategories,
+  fetchMonths,
+  fetchPayments,
+  fetchSavings,
+  storePayment,
+  storeSavings
+} from '@/services/db.service'
 import type { IMonth } from '@/models/month.interface'
 import type { IPayment, IPaymentData } from '@/models/payment.interface'
 import type { ICategory } from '@/models/category.interface'
@@ -33,7 +40,7 @@ export const useGlobalStore = defineStore('global', {
         categories.forEach(category => this.categories.set(category.id, category))
       })
     },
-    async initMonths (monthIds: string[]) {
+    async loadMonths (monthIds: string[]): Promise<void> {
       const missing = monthIds.filter(monthId => !this.months.has(monthId))
       if (!missing.length) {
         return
@@ -44,6 +51,16 @@ export const useGlobalStore = defineStore('global', {
           state.months.set(month.monthId, month)
         }
       })
+    },
+    async loadPayments (monthId: string): Promise<void> {
+      if (this.payments.has(monthId)) {
+        return
+      }
+      const newPayments = await fetchPayments(monthId).then(payments => payments.reduce((carry, payment) => {
+        carry.set(payment.id, payment)
+        return carry
+      }, new Map<number, IPayment>()))
+      this.payments.set(monthId, newPayments)
     },
     updateSavings (newValue: number): void {
       storeSavings(newValue)

@@ -44,7 +44,7 @@ export const useHomeStore = defineStore('home', {
       if (this.isInit) {
         return
       }
-      await useGlobalStore().initMonths(this.monthIds)
+      await useGlobalStore().loadMonths(this.monthIds)
       this.isInit = true
     }
   }
