@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import VgBarChart from '@/components/ui/charts/VgBarChart.vue'
-import { useGlobalStore } from '@/stores/global.store'
-import { computed, onMounted } from 'vue'
-import type { IMonth } from '@/models/month.interface'
-import { toMonthLabel } from '@/helpers/date.helper'
-import { toCurrency } from '@/helpers/number.helper'
+import {useGlobalStore} from '@/stores/global.store'
+import {computed, onMounted} from 'vue'
+import type {IMonth} from '@/models/month.interface'
+import {toMonthLabel} from '@/helpers/date.helper'
+import {toCurrency} from '@/helpers/number.helper'
 import PaymentData from '@/components/PaymentData.vue'
-import { useHomeStore } from '@/stores/home.store'
+import {useHomeStore} from '@/stores/home.store'
 
 const globalStore = useGlobalStore()
 const store = useHomeStore()
@@ -17,9 +17,7 @@ const summaryValues = computed(() => store.lastMonths.map((data: IMonth) => ({
   label: toMonthLabel(data.monthId)
 })))
 
-const savings = computed(() => {
-  return toCurrency(globalStore.savings ?? 0)
-})
+const savings = computed(() => toCurrency(globalStore.savings ?? 0))
 
 onMounted(() => {
   store.init()
@@ -29,9 +27,9 @@ onMounted(() => {
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">Total savings: {{ savings }}</div>
-    <VgBarChart :values="summaryValues" />
+    <VgBarChart :values="summaryValues"/>
     <div class="payments-container" v-if="store.lastPayments.length">
-      <PaymentData v-for="payment of store.lastPayments" :key="payment.id" :payment="payment" />
+      <PaymentData v-for="payment of store.lastPayments" :key="payment.id" :payment="payment"/>
     </div>
   </div>
 </template>
