@@ -72,7 +72,7 @@ async function createPayment (paymentData: Omit<IPayment, 'id'>): Promise<IPayme
 
 async function upsertMonth (payment: Omit<IPayment, 'id'>): Promise<IMonth> {
   const DB = await getDBClient()
-  const month: IMonth = await DB.months.get({ monthId: payment.monthId }) ?? {
+  const month: IMonth = await DB.months.get(payment.monthId) ?? {
     monthId: payment.monthId, outcome: 0, income: 0, totals: {}
   }
   month[payment.type] += payment.amount
