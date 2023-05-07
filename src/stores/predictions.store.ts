@@ -3,6 +3,7 @@ import { useGlobalStore } from '@/stores/global.store'
 import { calculateNextMonthIds, calculatePastMonthIds, toMonthId } from '@/helpers/date.helper'
 import type { IMonth } from '@/models/month.interface'
 import { calculatePredictions } from '@/services/predictions.service'
+import { getEmptyMonth } from '@/helpers/data.helper'
 
 interface StoreState {
   isInit: boolean
@@ -21,20 +22,16 @@ export const usePredictionsStore = defineStore('predictions', {
   getters: {
     actual: (state: StoreState): IMonth => {
       const global = useGlobalStore()
-      return global.months.get(state.monthId) ?? { monthId: state.monthId, income: 0, outcome: 0 }
+      return global.months.get(state.monthId) ?? getEmptyMonth(state.monthId)
     },
     predictions: (state: StoreState): IMonth[] => {
       if (!state.isInit) {
-        return state.nextIds.map(monthId => ({ monthId, income: 0, outcome: 0 }))
+        return state.nextIds.map(monthId => getEmptyMonth(monthId))
       }
       const global = useGlobalStore()
       return calculatePredictions(
-        state.nextIds.map(monthId => {
-          return {
-            monthId,
-            payments: Array.from(global.payments.get(monthId)?.values() ?? [])
-          }
-        }),
+        state.pastIds.map(monthId => global.months.get(monthId) ?? getEmptyMonth(monthId)),
+        global.categories,
         state.nextIds
       )
     }
@@ -44,9 +41,7 @@ export const usePredictionsStore = defineStore('predictions', {
       if (this.isInit) {
         return
       }
-
-      const global = useGlobalStore()
-      await global.initMonths(this.pastIds)
+      await useGlobalStore().initMonths(this.pastIds)
       this.isInit = true
     }
   }
