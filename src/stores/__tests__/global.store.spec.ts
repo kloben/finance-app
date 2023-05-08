@@ -88,10 +88,11 @@ describe('GlobalStore', () => {
 
   it('inits new month payments', async () => {
     const store = useGlobalStore()
-    await store.loadPayments('2023-05')
+    await store.loadPayments('2023-04')
 
     expect(fetchPayments).toHaveBeenCalledTimes(1)
-    expect(fetchPayments).toHaveBeenCalledWith('2023-05')
+    expect(fetchPayments).toHaveBeenCalledWith('2023-04')
+    expect(store.payments.get('2023-04')!.size).toBe(2)
   })
 
   it('skips existing month payments', async () => {
