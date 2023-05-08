@@ -9,9 +9,9 @@ export function calculatePastMonthIds (amount: number = 5): string[] {
 
 export function calculateNextMonthIds (amount: number = 5): string[] {
   return new Array(amount).fill('').reduce(({ date, monthIds }) => {
-    date.setDate(15) // Causes problems if day too high
-    monthIds.unshift(toMonthId(date))
     date.setMonth(date.getMonth() + 1)
+    date.setDate(15) // Causes problems if day too high
+    monthIds.push(toMonthId(date))
     return { date, monthIds }
   }, { date: new Date(), monthIds: [] }).monthIds
 }
