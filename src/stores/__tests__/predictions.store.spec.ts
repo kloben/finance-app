@@ -6,7 +6,7 @@ import { fetchMonths } from '../../services/__mocks__/db.service'
 import { TestMonths } from '../../services/__mocks__/data'
 import { useGlobalStore } from '../global.store'
 
-describe('HomeStore', () => {
+describe('PredictionsStore', () => {
   beforeAll(() => {
     vi.useFakeTimers()
     vi.setSystemTime(new Date(2023, 3, 30))

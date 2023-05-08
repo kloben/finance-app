@@ -17,15 +17,13 @@ export const useDetailStore = defineStore('detail', {
       if (!state.monthId) {
         return null
       }
-      const global = useGlobalStore()
-      return global.months.get(state.monthId) ?? getEmptyMonth(state.monthId)
+      return useGlobalStore().months.get(state.monthId) ?? getEmptyMonth(state.monthId)
     },
     payments: (state: StoreState): IPayment[] => {
       if (!state.monthId) {
         return []
       }
-      const global = useGlobalStore()
-      return Array.from(global.payments.get(state.monthId)?.values() ?? [])
+      return Array.from(useGlobalStore().payments.get(state.monthId)?.values() ?? [])
     }
   },
   actions: {
