@@ -42,7 +42,7 @@ describe('HomeStore', () => {
     expect(fetchMonths).toHaveBeenCalledWith(['2022-12', '2023-01', '2023-02', '2023-03', '2023-04'])
   })
 
-  it('skips inits if already initialized', async () => {
+  it('skips init if already initialized', async () => {
     const store = useHomeStore()
     store.isInit = true
     await store.init()
