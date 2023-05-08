@@ -1,7 +1,9 @@
-import { describe, it, expect, beforeEach, beforeAll, vi, afterAll } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useGlobalStore } from '../global.store'
 import { PaymentType } from '../../models/payment.interface'
+import { fetchMonths } from '../../services/__mocks__/db.service'
+import { getEmptyMonth } from '../../helpers/data.helper'
 
 describe('GlobalStore', () => {
   beforeAll(() => {
@@ -11,6 +13,7 @@ describe('GlobalStore', () => {
   })
   beforeEach(() => {
     setActivePinia(createPinia())
+    vi.clearAllMocks()
   })
   afterAll(() => {
     vi.useRealTimers()
@@ -34,13 +37,53 @@ describe('GlobalStore', () => {
     expect(Array.from(store.categories.keys())).toEqual(['inCat', 'outCat'])
   })
 
-  it('inits selected months', async () => {
+  it('gets all categories of type', async () => {
     const store = useGlobalStore()
+    await store.init()
 
+    expect(store.getCategories(PaymentType.in)).toEqual([{ id: 'inCat', label: 'First category', type: 'income' }])
+  })
+
+  it('gets existing category ', async () => {
+    const store = useGlobalStore()
+    await store.init()
+
+    expect(store.getCategory('inCat')).toEqual({ id: 'inCat', label: 'First category', type: 'income' })
+  })
+
+  it('gets non existing category ', async () => {
+    const store = useGlobalStore()
+    await store.init()
+
+    expect(store.getCategory('new')).toEqual({ id: '', label: 'Other' })
+  })
+
+  it('inits new months', async () => {
+    const store = useGlobalStore()
     await store.loadMonths(['2023-04', '2023-05'])
 
     expect(store.months.size).toBe(2)
     expect(store.payments.size).toBe(0)
+    expect(fetchMonths).toHaveBeenCalledTimes(1)
+    expect(fetchMonths).toHaveBeenCalledWith(['2023-04', '2023-05'])
+  })
+
+  it('skip init existing months', async () => {
+    const store = useGlobalStore()
+    store.months.set('2023-04', getEmptyMonth('2023-04'))
+    await store.loadMonths(['2023-04', '2023-05'])
+
+    expect(fetchMonths).toHaveBeenCalledTimes(1)
+    expect(fetchMonths).toHaveBeenCalledWith(['2023-05'])
+  })
+
+  it('skip init if all months exist', async () => {
+    const store = useGlobalStore()
+    store.months.set('2023-04', getEmptyMonth('2023-04'))
+    store.months.set('2023-05', getEmptyMonth('2023-05'))
+    await store.loadMonths(['2023-04', '2023-05'])
+
+    expect(fetchMonths).toHaveBeenCalledTimes(0)
   })
 
   it('updates savings', async () => {
