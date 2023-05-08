@@ -20,9 +20,9 @@ export async function fetchCategories (): Promise<ICategory[]> {
   return Object.values(TestCategories)
 }
 
-export async function fetchPayments (monthId: string): Promise<IPayment[]> {
+export const fetchPayments = vi.fn(async (monthId: string) => {
   return Object.values(TestPayments).filter(payment => payment.monthId === monthId)
-}
+})
 
 export async function storePayment (date: Date, data: IPaymentData): Promise<NewPayment> {
   const monthId = toMonthId(date)

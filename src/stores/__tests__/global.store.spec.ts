@@ -2,7 +2,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vites
 import { createPinia, setActivePinia } from 'pinia'
 import { useGlobalStore } from '../global.store'
 import { PaymentType } from '../../models/payment.interface'
-import { fetchMonths } from '../../services/__mocks__/db.service'
+import { fetchMonths, fetchPayments } from '../../services/__mocks__/db.service'
 import { getEmptyMonth } from '../../helpers/data.helper'
 
 describe('GlobalStore', () => {
@@ -84,6 +84,22 @@ describe('GlobalStore', () => {
     await store.loadMonths(['2023-04', '2023-05'])
 
     expect(fetchMonths).toHaveBeenCalledTimes(0)
+  })
+
+  it('inits new month payments', async () => {
+    const store = useGlobalStore()
+    await store.loadPayments('2023-05')
+
+    expect(fetchPayments).toHaveBeenCalledTimes(1)
+    expect(fetchPayments).toHaveBeenCalledWith('2023-05')
+  })
+
+  it('skips existing month payments', async () => {
+    const store = useGlobalStore()
+    store.payments.set('2023-05', new Map())
+    await store.loadPayments('2023-05')
+
+    expect(fetchPayments).toHaveBeenCalledTimes(0)
   })
 
   it('updates savings', async () => {
