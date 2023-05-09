@@ -15,7 +15,7 @@ async function isInitialized (from: RouteLocationNormalized): Promise<boolean> {
   return store.savings !== null
 }
 
-export const router = createRouter({
+export const appRouter = createRouter({
   history: createWebHistory(),
   routes: [
     {
@@ -33,11 +33,11 @@ export const router = createRouter({
           component: NewPaymentPage
         },
         {
-          path: 'predict',
+          path: 'future',
           component: PredictionsPage
         },
         {
-          path: 'detail',
+          path: 'status',
           component: DetailPage
         },
         {

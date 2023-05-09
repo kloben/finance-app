@@ -1,23 +1,29 @@
 <script setup lang="ts">
-
 import VgIconHome from '@/components/ui/icons/VgIconHome.vue'
 import VgIconStatus from '@/components/ui/icons/VgIconStatus.vue'
 import VgIconFuture from '@/components/ui/icons/VgIconFuture.vue'
 import VgIconSettings from '@/components/ui/icons/VgIconSettings.vue'
 import VgIconAdd from '@/components/ui/icons/VgIconAdd.vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const current = computed(() => route.path)
 </script>
 
 <template>
+  {{ current }}
   <div class="bar-container">
     <router-link to="/">
-      <div class="bar-item">
-        <VgIconHome />
+      <div class="bar-item" :class="{active: current === '/'}">
+        <VgIconHome :active="current === '/'" />
         <div class="bar-label">Home</div>
       </div>
     </router-link>
-    <router-link to="/detail">
-      <div class="bar-item">
-        <VgIconStatus />
+    <router-link to="/status">
+      <div class="bar-item" :class="{active: current === '/status'}">
+        <VgIconStatus :active="current === '/status'" />
         <div class="bar-label">Status</div>
       </div>
     </router-link>
@@ -26,9 +32,9 @@ import VgIconAdd from '@/components/ui/icons/VgIconAdd.vue'
         <VgIconAdd />
       </div>
     </router-link>
-    <router-link to="/predictions">
-      <div class="bar-item">
-        <VgIconFuture />
+    <router-link to="/future">
+      <div class="bar-item" :class="{active: current === '/future'}">
+        <VgIconFuture :active="current === '/future'" />
         <div class="bar-label">Future</div>
       </div>
     </router-link>
@@ -46,7 +52,7 @@ import VgIconAdd from '@/components/ui/icons/VgIconAdd.vue'
 
 $big: 41px;
 $small: 33px;
-$smallOffset: 26px;
+$offset: 26px;
 
 .bar-container {
   width: 100%;
@@ -65,21 +71,21 @@ $smallOffset: 26px;
                   #fff calc(#{$big} + 1px)
   ) 0 calc($big / 2) / 100% calc(100% - #{$big} / 2) no-repeat no-repeat,
   radial-gradient(
-                  circle at calc(50% - #{$big} - #{$smallOffset}) #{$small},
+                  circle at calc(50% - #{$big} - #{$offset}) #{$small},
                   #fff #{$small},
                   transparent calc(#{$small} + 1px)
   ) 0 0 / 100% 100% no-repeat no-repeat,
   radial-gradient(
-                  circle at calc(50% + #{$big} + #{$smallOffset}) #{$small},
+                  circle at calc(50% + #{$big} + #{$offset}) #{$small},
                   #fff #{$small},
                   transparent calc(#{$small} + 1px)
   ) 0 0 / 100% 100% no-repeat no-repeat,
   linear-gradient(
                   90deg,
-                  #fff calc(50% - #{$big} - #{$smallOffset}),
-                  transparent calc(50% - #{$big} - #{$smallOffset} + 1px),
-                  transparent calc(50% + #{$big} + #{$smallOffset} - 1px),
-                  #fff calc(50% + #{$big} + #{$smallOffset})
+                  #fff calc(50% - #{$big} - #{$offset}),
+                  transparent calc(50% - #{$big} - #{$offset} + 1px),
+                  transparent calc(50% + #{$big} + #{$offset} - 1px),
+                  #fff calc(50% + #{$big} + #{$offset})
   ) 0 0 / 100% 100% no-repeat no-repeat;
 }
 
@@ -93,6 +99,10 @@ a {
   color: $grey;
   overflow: hidden;
   cursor: pointer;
+
+  &.active {
+    color: $primary;
+  }
 }
 
 .bar-label {

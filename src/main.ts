@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { router } from '@/routes'
+import { appRouter } from '@/routes'
 import { createPinia } from 'pinia'
 import { makeRandomPayment } from '@/services/dev.service'
 import {
@@ -18,7 +18,7 @@ import {
 import './styles/base.scss'
 
 createApp(App)
-  .use(router)
+  .use(appRouter)
   .use(createPinia())
   .mount('#app')
 
