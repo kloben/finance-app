@@ -117,7 +117,7 @@ a {
   top: -40px;
   padding: 16px;
   border-radius: 50%;
-  background: linear-gradient(315.39deg, #4C1CD5 15.22%, rgba(76, 28, 213, 0.8) 85.05%);
+  background: linear-gradient(315deg, $primary 0%, $primaryGradient 100%);
   display: flex;
   align-items: center;
   justify-content: center;
