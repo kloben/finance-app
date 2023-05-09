@@ -1,29 +1,19 @@
 <script lang="ts" setup>
-const props = defineProps<{
-  type?: 'clear'
-  size?: 'big' | 'small'
+defineProps<{
+  type?: 'button' | 'submit' // Defaults button
+  mode?: 'light' | 'dark'  // Defaults light
   disabled?: boolean
 }>()
-const emit = defineEmits<{
-  (e: 'clicked'): void
-}>()
 
-function tryClick () {
-  if (!props.disabled) {
-    emit('clicked')
-  }
-}
 </script>
 
 <template>
-  <div class="vg-button"
-       :class="[type, size, disabled ? 'disabled': '']"
-       @click="tryClick"
+  <button class="vg-button"
+          :class="mode ?? 'light'"
+          :disabled="disabled" :type="type"
   >
-    <div class="text-button">
-      <slot />
-    </div>
-  </div>
+    <slot />
+  </button>
 </template>
 
 <style scoped lang="scss">

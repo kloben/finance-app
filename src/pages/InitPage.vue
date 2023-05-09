@@ -38,7 +38,7 @@ async function submitForm (event?: SubmitEvent) {
       <div class="subtitle">Let’s start saving!<br>How much money do you have?</div>
       <form class="form-wrapper" @submit="submitForm">
         <VgInputNumber v-model="amount" label="Add Savings" />
-        <VgButton :disabled="amount <= 0" @clicked="submitForm">Continue</VgButton>
+        <VgButton type="submit" :disabled="!canSubmit" @click="submitForm">Continue</VgButton>
       </form>
     </div>
   </div>

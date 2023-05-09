@@ -3,10 +3,10 @@
 .vg-input {
   input, select {
     background: transparent;
-    padding: 16px;
+    padding: 15px;
     border-radius: 12px;
     border: 1px solid $secondary;
-    color: $secondary;
+    color: $white;
     width: 100%;
     font-weight: 400;
     font-size: 16px;
@@ -15,7 +15,7 @@
     &:focus-visible, &:focus, &:hover {
       outline: none;
       border: 2px solid $white;
-      padding: 15px;
+      padding: 14px;
     }
 
     &::placeholder {

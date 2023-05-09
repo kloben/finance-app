@@ -61,7 +61,7 @@ async function createTransaction (event?: SubmitEvent) {
       <VgInputNumber v-model="formValues.amount" label="Amount" />
       <VgInputSelect v-model="formValues.category" :options="categories" label="Category (Optional)" />
       <VgInput v-model="formValues.description" label="Description (Optional)" />
-      <VgButton :disabled="!isValidForm" @clicked="createTransaction">Create</VgButton>
+      <VgButton :disabled="!isValidForm" @click="createTransaction">Create</VgButton>
       <input type="submit" hidden /> <!-- TODO: Change vgButton to submit -->
     </form>
   </div>
