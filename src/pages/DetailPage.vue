@@ -7,8 +7,8 @@ import type { IPayment } from '@/models/payment.interface'
 import VgPieChart from '@/components/ui/charts/VgPieChart.vue'
 import type { PieChartData } from '@/components/ui/charts/chart-value.interface'
 import { useGlobalStore } from '@/stores/global.store'
-import VgIconBack from '@/components/ui/icons/VgIconBack.vue'
-import VgIconNext from '@/components/ui/icons/VgIconNext.vue'
+import VgIconBack from '@/components/ui/icons/old/VgIconBack.vue'
+import VgIconNext from '@/components/ui/icons/old/VgIconNext.vue'
 
 const store = useDetailStore()
 const globalStore = useGlobalStore()
