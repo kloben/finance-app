@@ -41,7 +41,7 @@ export const usePredictionsStore = defineStore('predictions', {
       if (this.isInit) {
         return
       }
-      await useGlobalStore().initMonths(this.pastIds)
+      await useGlobalStore().loadMonths(this.pastIds)
       this.isInit = true
     }
   }

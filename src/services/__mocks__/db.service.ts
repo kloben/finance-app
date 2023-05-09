@@ -6,22 +6,23 @@ import { toDayId, toMonthId } from '@/helpers/date.helper'
 import type { ICategory } from '@/models/category.interface'
 import { TestMonths, TestPayments, TestCategories } from '@/services/__mocks__/data'
 import { getEmptyMonth } from '@/helpers/data.helper'
+import { vi } from 'vitest'
 
 export async function fetchMonth (monthId: string): Promise<IMonth> {
   return TestMonths[monthId] ?? getEmptyMonth(monthId)
 }
 
-export async function fetchMonths (monthIds: string[]): Promise<IMonth[]> {
+export const fetchMonths = vi.fn((monthIds: string[]) => {
   return monthIds.map(monthId => TestMonths[monthId] ?? getEmptyMonth(monthId))
-}
+})
 
 export async function fetchCategories (): Promise<ICategory[]> {
   return Object.values(TestCategories)
 }
 
-export async function fetchPayments (monthId: string): Promise<IPayment[]> {
+export const fetchPayments = vi.fn(async (monthId: string) => {
   return Object.values(TestPayments).filter(payment => payment.monthId === monthId)
-}
+})
 
 export async function storePayment (date: Date, data: IPaymentData): Promise<NewPayment> {
   const monthId = toMonthId(date)

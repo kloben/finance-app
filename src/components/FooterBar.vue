@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import VgIconNew from '@/components/ui/icons/VgIconNew.vue'
 import VgIconPrediction from '@/components/ui/icons/VgIconPrediction.vue'
+import VgIconChart from '@/components/ui/icons/VgIconChart.vue'
 </script>
 
 <template>
   <div class="footer-bar">
+    <router-link to="/detail">
+      <div class="item" data-test-id="detail-link">
+        <VgIconChart />
+      </div>
+    </router-link>
     <router-link to="/new">
       <div class="item" data-test-id="new-link">
         <VgIconNew />

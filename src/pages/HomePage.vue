@@ -1,22 +1,40 @@
 <script setup lang="ts">
 import VgBarChart from '@/components/ui/charts/VgBarChart.vue'
-import {useGlobalStore} from '@/stores/global.store'
-import {computed, onMounted} from 'vue'
-import type {IMonth} from '@/models/month.interface'
-import {toMonthLabel} from '@/helpers/date.helper'
-import {toCurrency} from '@/helpers/number.helper'
-import {useHomeStore} from '@/stores/home.store'
+import { useGlobalStore } from '@/stores/global.store'
+import { computed, onMounted } from 'vue'
+import type { IMonth } from '@/models/month.interface'
+import { toMonthLabel } from '@/helpers/date.helper'
+import { toCurrency } from '@/helpers/number.helper'
+import { useHomeStore } from '@/stores/home.store'
+import type { BarChartData, PieChartData } from '@/components/ui/charts/chart-value.interface'
+import VgPieChart from '@/components/ui/charts/VgPieChart.vue'
+import { PaymentType } from '@/models/payment.interface'
 
 const globalStore = useGlobalStore()
 const store = useHomeStore()
 
-const summaryValues = computed(() => store.lastMonths.map((data: IMonth) => ({
+const barData = computed<BarChartData>(() => store.lastMonths.map((data: IMonth) => ({
   up: data.income,
   down: data.outcome,
   label: toMonthLabel(data.monthId)
 })))
 
-const savings = computed(() => toCurrency(globalStore.savings ?? 0))
+const pieData = computed<PieChartData>(() => {
+  return Object.keys(store.currentMonth.totals).reduce((carry, categoryId) => {
+    const category = globalStore.getCategory(categoryId)
+    if (category.type === PaymentType.out) {
+      carry.push({
+        label: category.label,
+        value: store.currentMonth.totals[categoryId]
+      })
+    }
+    return carry
+  }, <PieChartData>[])
+})
+
+const savings = computed(() => {
+  return toCurrency(globalStore.savings ?? 0)
+})
 
 onMounted(() => {
   store.init()
@@ -26,7 +44,8 @@ onMounted(() => {
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">Total savings: {{ savings }}</div>
-    <VgBarChart :values="summaryValues"/>
+    <VgBarChart :data="barData" />
+    <VgPieChart :data="pieData" />
   </div>
 </template>
 
@@ -36,12 +55,4 @@ onMounted(() => {
 .text-title-4 {
   padding-bottom: 32px;
 }
-
-//.payments-container {
-//  padding: 8px 16px;
-//  background: $white;
-//  border-radius: 4px;
-//  max-width: 550px;
-//  margin: 32px auto 0 auto;
-//}
 </style>

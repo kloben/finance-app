@@ -1,22 +1,21 @@
 <script setup lang="ts">
-import type { BarChartData } from '@/components/ui/charts/chart-value.interface'
+import type { PieChartData } from '@/components/ui/charts/chart-value.interface'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { Chart } from 'chart.js'
 
 const props = defineProps<{
-  data: BarChartData
+  data: PieChartData
 }>()
 
 const canvasRef = ref<HTMLCanvasElement>()
 let chart: Chart<'pie', number[], string>
 
-function parseData (data: BarChartData): { labels: string[], data: [number[], number[]] } {
-  return data.reduce((carry: { labels: string[], data: [number[], number[]] }, data) => {
+function parseData (data: PieChartData): { labels: string[], data: number[] } {
+  return data.reduce((carry: { labels: string[], data: number[] }, data) => {
     carry.labels.push(data.label)
-    carry.data[0].push(data.up)
-    carry.data[1].push(-data.down)
+    carry.data.push(data.value)
     return carry
-  }, { labels: [], data: [[], []] })
+  }, { labels: [], data: [] })
 }
 
 onMounted(() => {
@@ -24,20 +23,11 @@ onMounted(() => {
   chart = new Chart<'pie', number[], string>(
     <HTMLCanvasElement>canvasRef.value,
     {
-      type: 'bar',
+      type: 'pie',
       responsive: true,
-      options: {
-        scales: {
-          x: { stacked: true },
-          y: { stacked: true }
-        },
-      },
       data: {
         labels,
-        datasets: [
-          { data: data[0] },
-          { data: data[1] }
-        ]
+        datasets: [{ data }]
       }
     }
   )
@@ -47,14 +37,12 @@ onUnmounted(() => {
   chart.destroy()
 })
 
-watch(() => props.data, (newData: BarChartData) => {
+watch(() => props.data, (newData: PieChartData) => {
   const { labels, data } = parseData(props.data)
   chart.data.labels = labels
-  chart.data.datasets[0].data = data[0]
-  chart.data.datasets[1].data = data[1]
+  chart.data.datasets[0].data = data
   chart.update()
 })
-
 </script>
 
 <template>
@@ -67,5 +55,4 @@ watch(() => props.data, (newData: BarChartData) => {
 canvas {
   max-height: 30vh;
 }
-
 </style>

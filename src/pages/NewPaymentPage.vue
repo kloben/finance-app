@@ -24,17 +24,15 @@ const formValues = reactive<IPaymentData>({
   type: PaymentType.out,
   amount: 0,
   category: undefined,
-  description: undefined,
-  recurrent: false
+  description: undefined
 })
 
 const isValidForm = computed<boolean>(() => formValues.amount > 0 && Boolean(formValues.type))
 
-const categories = computed<Record<string, string>>(() => {
-  return store.getCategories(formValues.type).reduce((carry: Record<string, string>, category) => {
-    carry[category.id] = category.label
-    return carry
-  }, {})
+const categories = computed<{ key: string, label: string }[]>(() => {
+  return store.getCategories(formValues.type).map((category) => {
+    return { key: category.id, label: category.label }
+  })
 })
 
 async function createTransaction (event?: SubmitEvent) {
@@ -63,7 +61,6 @@ async function createTransaction (event?: SubmitEvent) {
       <VgInputNumber v-model="formValues.amount" label="Amount" />
       <VgInputSelect v-model="formValues.category" :options="categories" label="Category (Optional)" />
       <VgInput v-model="formValues.description" label="Description (Optional)" />
-      <VgInputCheck v-model="formValues.recurrent" label="Make recurrent" />
       <VgButton :disabled="!isValidForm" @clicked="createTransaction">Create</VgButton>
       <input type="submit" hidden /> <!-- TODO: Change vgButton to submit -->
     </form>

@@ -1,12 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import VgInputSelect from '../VgInputSelect.vue'
+import { reactive } from 'vue'
 
 function generateWrapper (options: any[] = [], props = {}): VueWrapper {
   return mount(VgInputSelect, {
     props: {
       ...props,
-      options
+      options: reactive(options)
     }
   })
 }
@@ -45,7 +46,6 @@ describe('VgInputSelect', () => {
     expect(optionElements[1].element.value).toBe('key')
     expect(optionElements[2].text()).toBe('value2')
     expect(optionElements[2].element.value).toBe('key2')
-    // TODO: Object props are not sorted
   })
 
   it('renders with selected value', () => {
@@ -70,5 +70,18 @@ describe('VgInputSelect', () => {
 
     expect(wrapper.emitted()).toHaveProperty('update:modelValue')
     expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['key2'])
+  })
+
+  it('emits and reset on options change', async () => {
+    const wrapper = generateWrapper(testOptions, {
+      modelValue: 'key'
+    })
+
+    await wrapper.setProps({
+      options: [{ key: 'new', label: 'options' }]
+    })
+
+    expect(wrapper.emitted()).toHaveProperty('update:modelValue')
+    expect(wrapper.emitted()['update:modelValue'][0]).toEqual([undefined])
   })
 })

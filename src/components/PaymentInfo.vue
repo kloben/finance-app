@@ -16,7 +16,7 @@ const label = computed<string>(() => {
   if (!props.payment.category) {
     return 'Other'
   }
-  return store.getCategory(props.payment.category)?.label ?? 'Other'
+  return store.getCategory(props.payment.category).label
 })
 
 const amount = computed<string>(() => toCurrency(props.payment.amount * (props.payment.type === PaymentType.in ? 1 : -1)))
