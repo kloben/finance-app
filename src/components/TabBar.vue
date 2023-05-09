@@ -13,7 +13,6 @@ const current = computed(() => route.path)
 </script>
 
 <template>
-  {{ current }}
   <div class="bar-container">
     <router-link to="/">
       <div class="bar-item" :class="{active: current === '/'}">
