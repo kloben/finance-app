@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import NavBar from '@/components/NavBar.vue'
 import TabBar from '@/components/TabBar.vue'
 </script>
 
 <template>
   <div class="base-container">
-    <NavBar></NavBar>
     <router-view></router-view>
     <TabBar></TabBar>
   </div>
