@@ -1,19 +1,25 @@
 @import "src/styles/colors";
 
 .vg-input {
-  .text-caption {
-    user-select: none;
-  }
   input, select {
-    background: $white;
-    padding: 12px;
-    border-radius: 4px;
+    background: transparent;
+    padding: 16px;
+    border-radius: 12px;
     border: 1px solid $secondary;
+    color: $secondary;
     width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
 
     &:focus-visible, &:focus, &:hover {
       outline: none;
-      border: 1px solid $primary;
+      border: 2px solid $white;
+      padding: 15px;
+    }
+
+    &::placeholder {
+      color: $secondary;
     }
   }
 }

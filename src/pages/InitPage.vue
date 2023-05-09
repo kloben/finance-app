@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router'
 import Toast from 'awesome-toast-component/src/toast'
 import VgAppLogo from '@/components/ui/icons/VgAppLogo.vue'
 
-const amount = ref(0)
+const amount = ref()
 const store = useGlobalStore()
 const router = useRouter()
 
@@ -37,7 +37,7 @@ async function submitForm (event?: SubmitEvent) {
       <div class="title">Welcome 👋</div>
       <div class="subtitle">Let’s start saving!<br>How much money do you have?</div>
       <form class="form-wrapper" @submit="submitForm">
-        <VgInputNumber v-model="amount" />
+        <VgInputNumber v-model="amount" label="Add Savings" />
         <VgButton :disabled="amount <= 0" @clicked="submitForm">Continue</VgButton>
       </form>
     </div>

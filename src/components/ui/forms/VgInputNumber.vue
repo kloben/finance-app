@@ -4,21 +4,19 @@ defineProps<{
   modelValue?: number
 }>()
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: number): void
+  (e: 'update:modelValue', value: number | undefined): void
 }>()
 </script>
 
 <template>
   <div class="vg-input">
-    <label>
-      <span v-if="label" class="text-caption">{{ label }}</span>
-      <input type="number"
-             min="0"
-             step="1"
-             :value="modelValue ?? 0"
-             @input="emit('update:modelValue', $event.target.value ? Number($event.target.value) : 0)"
-      />
-    </label>
+    <input type="number"
+           min="0"
+           step="1"
+           :value="modelValue"
+           :placeholder="label ?? ''"
+           @input="emit('update:modelValue', $event.target.value ? Number($event.target.value) : undefined)"
+    />
   </div>
 </template>
 

@@ -10,13 +10,11 @@ const emit = defineEmits<{
 
 <template>
   <div class="vg-input">
-    <label>
-      <span v-if="label" class="text-caption">{{ label }}</span>
-      <input type="text"
-             :value="modelValue ?? ''"
-             @input="emit('update:modelValue', $event.target.value ?? '')"
-      />
-    </label>
+    <input type="text"
+           :placeholder="label ?? ''"
+           :value="modelValue ?? ''"
+           @input="emit('update:modelValue', $event.target.value ?? '')"
+    />
   </div>
 </template>
 
