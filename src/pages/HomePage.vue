@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import VgBarChart from '@/components/ui/charts/VgBarChart.vue'
-import {useGlobalStore} from '@/stores/global.store'
-import {computed, onMounted} from 'vue'
-import type {IMonth} from '@/models/month.interface'
-import {toMonthLabel} from '@/helpers/date.helper'
-import {toCurrency} from '@/helpers/number.helper'
-import {useHomeStore} from '@/stores/home.store'
-import type {BarChartData, PieChartData} from '@/components/ui/charts/chart-value.interface'
+import { useGlobalStore } from '@/stores/global.store'
+import { computed, onMounted } from 'vue'
+import type { IMonth } from '@/models/month.interface'
+import { toMonthLabel } from '@/helpers/date.helper'
+import { toCurrency } from '@/helpers/number.helper'
+import { useHomeStore } from '@/stores/home.store'
+import type { BarChartData, PieChartData } from '@/components/ui/charts/chart-value.interface'
 import VgPieChart from '@/components/ui/charts/VgPieChart.vue'
-import {PaymentType} from '@/models/payment.interface'
+import { PaymentType } from '@/models/payment.interface'
 
 const globalStore = useGlobalStore()
 const store = useHomeStore()
@@ -45,13 +45,16 @@ onMounted(() => {
   <div class="page-wrapper">
 
     <div class="footer-container">
+      <div class="guide big"></div>
+      <div class="guide small a"></div>
+      <div class="guide small b"></div>
       <div class="footer"></div>
     </div>
 
 
     <div class="text-title-4">Total savings: {{ savings }}</div>
-    <VgBarChart :data="barData"/>
-    <VgPieChart :data="pieData"/>
+    <VgBarChart :data="barData" />
+    <VgPieChart :data="pieData" />
   </div>
 </template>
 
@@ -64,30 +67,74 @@ onMounted(() => {
 
 .footer-container {
   width: 100%;
-  height: 75px;
+  height: 82px;
   background: grey;
+  position: relative;
 
-  $cut: 30px;
-  $round: 20px;
+  $big: 41px;
+  $small: 33px;
+  $smallOffset: 25px;
 
   --bg-layer-1: radial-gradient(
                   circle at 50% 0,
-                  transparent #{$cut},
-                  #fff calc(#{$cut} + 1px)
-  ) 0 #{$round} / 100% calc(100% - #{$round}) no-repeat no-repeat;
+                  transparent #{$big},
+                  #fff calc(#{$big} + 1px)
+  ) 0 #{$small} / 100% calc(100% - #{$small}) no-repeat no-repeat;
   --bg-layer-2: radial-gradient(
-                  circle at calc(100% - #{$cut}) 100%,
-                  #fff #{$cut},
-                  transparent calc(#{$cut} + 1px)
-  ) 0 0 / calc(50% - #{$cut}) #{$cut} no-repeat no-repeat;
-
+                  circle at calc(100% - #{$big}) 100%,
+                  #fff #{$big},
+                  transparent calc(#{$big} + 1px)
+  ) 0 0 / calc(50% - #{$big}) #{$big} no-repeat no-repeat;
+  --bg-layer-3: radial-gradient(
+                  circle at #{$big} 100%,
+                  #fff #{$big},
+                  transparent calc(#{$big} + 1px)
+  ) 100% 0 / calc(50% - #{$big}) #{$big} no-repeat no-repeat;
+  --bg-layer-4: linear-gradient(
+                  90deg,
+                  #fff calc(50% - #{$big} - #{$small}),
+                  transparent calc(50% - #{$big} - #{$small} + 1px),
+                  transparent calc(50% + #{$big} + #{$small} - 1px),
+                  #fff calc(50% + #{$big} + #{$small})
+  ) 0 0 / 100% #{$small} no-repeat no-repeat;
+  --bg-layer-test: linear-gradient(
+                  90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%
+  ) 100% 0 / calc(50% - #{$big}) #{$big} no-repeat no-repeat;
+  //
+  // x-pos y-pos / width height no-repeat
 
   .footer {
     width: 100%;
     height: 100%;
-    background: var(--bg-layer-1), var(--bg-layer-2);
+    background: var(--bg-layer-1), var(--bg-layer-2), var(--bg-layer-3), var(--bg-layer-4)
+  }
 
-    // x-pos y-pos / width height no-repeat
+  .guide {
+    border-radius: 50%;
+    aspect-ratio: 1;
+    opacity: 0.5;
+    position: absolute;
+
+    &.big {
+      background: #02c902;
+      height: calc($big * 2);
+      top: -50%;
+      left: calc(50% - $big);
+    }
+
+    &.small {
+      background: #c9023e;
+      height: calc($small * 2);
+      top: 0;
+
+      &.a {
+        left: calc(50% - $big - $small - $smallOffset);
+      }
+
+      &.b {
+        left: calc(50% + $big - $small + $smallOffset);
+      }
+    }
   }
 }
 
