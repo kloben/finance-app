@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import TopBar from '@/components/TopBar.vue'
+import NavBar from '@/components/NavBar.vue'
 import TabBar from '@/components/TabBar.vue'
 </script>
 
 <template>
   <div class="base-container">
-    <TopBar></TopBar>
+    <NavBar></NavBar>
     <router-view></router-view>
     <TabBar></TabBar>
   </div>
