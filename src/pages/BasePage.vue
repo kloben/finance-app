@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import TopBar from '@/components/TopBar.vue'
-import FooterBar from '@/components/FooterBar.vue'
+import TabBar from '@/components/TabBar.vue'
 </script>
 
 <template>
   <div class="base-container">
     <TopBar></TopBar>
     <router-view></router-view>
-    <FooterBar></FooterBar>
+    <TabBar></TabBar>
   </div>
 </template>
 
