@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory, type RouteLocationNormalized, START_LOCATION } from 'vue-router'
-import BasePage from '@/pages/BasePage.vue'
-import HomePage from '@/pages/HomePage.vue'
-import NewPaymentPage from '@/pages/NewPaymentPage.vue'
-import WelcomePage from '@/pages/WelcomePage.vue'
-import PredictionsPage from '@/pages/PredictionsPage.vue'
+import BasePage from '@/views/BasePage.vue'
+import HomePage from '@/views/HomePage.vue'
+import WelcomePage from '@/views/WelcomePage.vue'
+import FuturePage from '@/views/FuturePage.vue'
 import { useGlobalStore } from '@/stores/global.store'
-import DetailPage from '@/pages/DetailPage.vue'
+import DetailPage from '@/views/DetailPage.vue'
 
 async function isInitialized (from: RouteLocationNormalized): Promise<boolean> {
   const store = useGlobalStore()
@@ -30,12 +29,8 @@ export const appRouter = createRouter({
       beforeEnter: async (_, from) => await isInitialized(from) ? true : { name: 'welcome' },
       children: [
         {
-          path: 'new',
-          component: NewPaymentPage
-        },
-        {
           path: 'future',
-          component: PredictionsPage
+          component: FuturePage
         },
         {
           path: 'status',

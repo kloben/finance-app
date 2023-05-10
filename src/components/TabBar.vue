@@ -7,7 +7,7 @@ import VgIconAdd from '@/components/ui/icons/VgIconAdd.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePopupStore } from '@/stores/popup.store'
-import NewPaymentPage from '@/pages/NewPaymentPage.vue'
+import NewPaymentView from '@/views/NewPaymentView.vue'
 
 const route = useRoute()
 const popup = usePopupStore()
@@ -15,7 +15,7 @@ const popup = usePopupStore()
 const current = computed(() => route.path)
 
 function openPaymentPopup () {
-  popup.openPopup(NewPaymentPage)
+  popup.openPopup(NewPaymentView)
 }
 </script>
 
