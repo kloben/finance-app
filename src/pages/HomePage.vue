@@ -9,6 +9,7 @@ import { useHomeStore } from '@/stores/home.store'
 import type { BarChartData, PieChartData } from '@/components/ui/charts/chart-value.interface'
 import VgPieChart from '@/components/ui/charts/VgPieChart.vue'
 import { PaymentType } from '@/models/payment.interface'
+import VgCard from '@/components/ui/VgCard.vue'
 
 const globalStore = useGlobalStore()
 const store = useHomeStore()
@@ -43,16 +44,45 @@ onMounted(() => {
 
 <template>
   <div class="page-wrapper">
-    <div class="text-title-4">Total savings: {{ savings }}</div>
-    <VgBarChart :data="barData" />
-    <VgPieChart :data="pieData" />
+    <VgCard>
+      <div class="home-summary">
+        <div class="label">My Savings ✌️</div>
+        <div class="value">{{ savings }}</div>
+      </div>
+      <VgBarChart :data="barData" />
+    </VgCard>
+    <VgCard>
+      <div class="home-summary">
+        <div class="label">This month</div>
+        <div class="value">{{ savings }}</div>
+      </div>
+      <VgPieChart :data="pieData" />
+    </VgCard>
   </div>
 </template>
 
 <style lang="scss">
 @import "src/styles/colors";
 
-.text-title-4 {
-  padding-bottom: 32px;
+.home-summary {
+  .label {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    padding-bottom: 6px;
+  }
+
+  .value {
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 43px;
+  }
+
+  padding-bottom: 16px;
 }
+
+.vg-card + .vg-card {
+  margin-top: 19px;
+}
+
 </style>

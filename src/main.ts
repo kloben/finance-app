@@ -11,8 +11,7 @@ import {
   BarElement,
   CategoryScale,
   LinearScale,
-  Tooltip,
-  Colors
+  Tooltip
 } from 'chart.js'
 
 import './styles/base.scss'
@@ -22,7 +21,7 @@ createApp(App)
   .use(createPinia())
   .mount('#app')
 
-Chart.register(PieController, ArcElement, BarController, BarElement, CategoryScale, LinearScale, Tooltip, Colors)
+Chart.register(PieController, ArcElement, BarController, BarElement, CategoryScale, LinearScale, Tooltip)
 
 // @ts-ignore
 window.randomPayment = makeRandomPayment

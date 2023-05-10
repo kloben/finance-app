@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, type RouteLocationNormalized, START_LOC
 import BasePage from '@/pages/BasePage.vue'
 import HomePage from '@/pages/HomePage.vue'
 import NewPaymentPage from '@/pages/NewPaymentPage.vue'
-import InitPage from '@/pages/InitPage.vue'
+import WelcomePage from '@/pages/WelcomePage.vue'
 import PredictionsPage from '@/pages/PredictionsPage.vue'
 import { useGlobalStore } from '@/stores/global.store'
 import DetailPage from '@/pages/DetailPage.vue'
@@ -19,14 +19,15 @@ export const appRouter = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/init',
-      component: InitPage,
+      path: '/welcome',
+      name: 'welcome',
+      component: WelcomePage,
       beforeEnter: async (_, from) => await isInitialized(from) ? { path: '/' } : true
     },
     {
       path: '/',
       component: BasePage,
-      beforeEnter: async (_, from) => await isInitialized(from) ? true : { path: '/init' },
+      beforeEnter: async (_, from) => await isInitialized(from) ? true : { name: 'welcome' },
       children: [
         {
           path: 'new',

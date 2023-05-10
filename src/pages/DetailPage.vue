@@ -46,21 +46,17 @@ const pieData = computed<PieChartData>(() => {
 const canGoNext = computed<boolean>(() => Boolean(store.monthId) && (store.monthId < toMonthId(new Date())))
 const canGoBack = computed<boolean>(() => Boolean(store.monthId))
 
-function goBack () {
-  store.loadMonth(modifyMonthId(store.monthId ?? '', -1))
-}
-
-function goNext () {
-  store.loadMonth(modifyMonthId(store.monthId ?? '', 1))
+function changeMonth (modifier: 1 | -1) {
+  store.loadMonth(modifyMonthId(store.monthId ?? '', modifier))
 }
 </script>
 
 <template>
   <div class="page-wrapper">
     <div class="text-title-4">
-      <VgIconBack v-show="canGoBack" @click="goBack()" />
+      <VgIconBack v-show="canGoBack" @click="changeMonth(-1)" />
       Summary for {{ cleanDate }}
-      <VgIconNext v-show="canGoNext" @click="goNext()" />
+      <VgIconNext v-show="canGoNext" @click="changeMonth(1)" />
     </div>
     <VgPieChart :data="pieData" />
     <div class="payments-container" v-if="sortedPayments.length">
