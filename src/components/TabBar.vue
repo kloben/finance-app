@@ -6,10 +6,17 @@ import VgIconSettings from '@/components/ui/icons/VgIconSettings.vue'
 import VgIconAdd from '@/components/ui/icons/VgIconAdd.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { usePopupStore } from '@/stores/popup.store'
+import NewPaymentPage from '@/pages/NewPaymentPage.vue'
 
 const route = useRoute()
+const popup = usePopupStore()
 
 const current = computed(() => route.path)
+
+function openPaymentPopup () {
+  popup.openPopup(NewPaymentPage)
+}
 </script>
 
 <template>
@@ -26,11 +33,9 @@ const current = computed(() => route.path)
         <div class="bar-label">Status</div>
       </div>
     </router-link>
-    <router-link to="/new">
-      <div class="floating-item">
-        <VgIconAdd />
-      </div>
-    </router-link>
+    <div class="floating-item" @click="openPaymentPopup()">
+      <VgIconAdd />
+    </div>
     <router-link to="/future">
       <div class="bar-item" :class="{active: current === '/future'}">
         <VgIconFuture :active="current === '/future'" />
