@@ -4,6 +4,7 @@ import { computed, onMounted } from 'vue'
 import { toMonthLabel } from '@/helpers/date.helper'
 import type { IMonth } from '@/models/month.interface'
 import { usePredictionsStore } from '@/stores/predictions.store'
+import VgCard from '@/components/ui/VgCard.vue'
 
 const store = usePredictionsStore()
 
@@ -31,7 +32,8 @@ onMounted(() => {
 
 <template>
   <div class="page-wrapper">
-    <div class="text-title-4">Predictions</div>
-    <VgBarChart :data="chartData" />
+    <VgCard>
+      <VgBarChart :data="chartData" />
+    </VgCard>
   </div>
 </template>

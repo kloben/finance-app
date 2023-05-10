@@ -87,7 +87,8 @@ export const barChartOptions: ChartOptions = {
       },
       ticks: {
         padding: 12,
-        color: AppColor.grey
+        color: AppColor.grey,
+        maxTicksLimit: 7
       },
       border: {
         display: false
