@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import type { Component } from 'vue'
 
+type GetComponentFn = () => any // This should be ComponentDefinition. There is no types
+
 interface StoreState {
-  component?: () => Component | undefined
+  component?: GetComponentFn | undefined
 }
 
 export const usePopupStore = defineStore('popup', {
