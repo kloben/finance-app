@@ -116,7 +116,7 @@ a {
   top: -40px;
   padding: 16px;
   border-radius: 50%;
-  background: linear-gradient(315deg, $primary 0%, $primaryGradient 100%);
+  background: linear-gradient(315deg, $primary 0%, $primary-gradient 100%);
   display: flex;
   align-items: center;
   justify-content: center;

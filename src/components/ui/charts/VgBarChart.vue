@@ -2,7 +2,7 @@
 import type { BarChartData } from '@/components/ui/charts/chart-value.interface'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { Chart } from 'chart.js'
-import { parseBarChartData } from '@/helpers/chart.helper'
+import { barChartOptions, parseBarChartData } from '@/helpers/chart.helper'
 
 const props = defineProps<{
   data: BarChartData
@@ -18,12 +18,7 @@ onMounted(() => {
     {
       type: 'bar',
       responsive: true,
-      options: {
-        scales: {
-          x: { stacked: true },
-          y: { stacked: true }
-        },
-      },
+      options: barChartOptions,
       data: {
         labels,
         datasets
@@ -37,7 +32,7 @@ onUnmounted(() => {
 })
 
 watch(() => props.data, (newData: BarChartData) => {
-  const { labels, datasets } = parseBarChartData(props.data)
+  const { labels, datasets } = parseBarChartData(newData)
   chart.data.labels = labels
   chart.data.datasets = datasets
   chart.update()

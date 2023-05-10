@@ -25,3 +25,41 @@ export function parseBarChartData (inputData: BarChartData): ParsedData {
   }
   return parsed
 }
+
+export const barChartOptions = {
+  scales: {
+    x: {
+      stacked: true,
+      grid: {
+        color: AppColor.lightGrey,
+        tickLength: 0
+      },
+      ticks: {
+        padding: 8,
+        color: AppColor.darkGrey
+      },
+      border: {
+        display: false
+      }
+    },
+    y: {
+      grid: {
+        color: AppColor.lightGrey,
+        tickLength: 0
+      },
+      ticks: {
+        padding: 12,
+        color: AppColor.grey
+      },
+      border: {
+        display: false
+      }
+    }
+  },
+  datasets: {
+    bar: {
+      barThickness: 16,
+      borderRadius: 14
+    }
+  }
+}
