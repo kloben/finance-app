@@ -2,6 +2,7 @@
 defineProps<{
   label?: string
   modelValue?: string
+  mode?: 'light' | 'dark'  // Defaults light
 }>()
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
@@ -9,7 +10,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="vg-input">
+  <div class="vg-input" :class="mode ?? 'light'">
     <input type="text"
            :placeholder="label ?? ''"
            :value="modelValue ?? ''"

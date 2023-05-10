@@ -31,8 +31,8 @@ async function submitForm (event?: SubmitEvent) {
   <div class="page-container">
     <div class="title">Welcome 👋</div>
     <div class="subtitle">Let’s start saving!<br>How much money do you have?</div>
-    <form class="form-wrapper" @submit="submitForm">
-      <VgInputNumber v-model="amount" label="Add Savings" />
+    <form @submit="submitForm">
+      <VgInputNumber v-model="amount" label="Add Savings" mode="dark" />
       <VgButton type="submit" :disabled="!canSubmit" @click="submitForm">Continue</VgButton>
     </form>
   </div>
@@ -64,5 +64,4 @@ async function submitForm (event?: SubmitEvent) {
   font-size: 18px;
   line-height: 22px;
 }
-
 </style>
