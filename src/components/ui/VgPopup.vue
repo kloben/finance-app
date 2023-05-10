@@ -66,6 +66,6 @@ const store = usePopupStore()
 }
 
 .popup-body {
-  padding: 0 16px 16px 16px;
+  padding: 0 32px 48px 32px;
 }
 </style>

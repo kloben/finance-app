@@ -10,23 +10,32 @@ import type { IPaymentData } from '@/models/payment.interface'
 import { PaymentType } from '@/models/payment.interface'
 import Toast from 'awesome-toast-component'
 import { usePopupStore } from '@/stores/popup.store'
+import { AppColor } from '@/styles/colors'
 
 const store = useGlobalStore()
 const popup = usePopupStore()
 
-const types = {
-  [PaymentType.in]: 'Income',
-  [PaymentType.out]: 'Outcome'
-}
+const paymentTypes = [
+  {
+    label: 'Expense',
+    value: PaymentType.out,
+    color: AppColor.chartNegative
+  },
+  {
+    label: 'Income',
+    value: PaymentType.in,
+    color: AppColor.chartPositive
+  }
+]
 
-const formValues = reactive<IPaymentData>({
+const formValues = reactive<Partial<IPaymentData> & { type: PaymentType }>({
   type: PaymentType.out,
-  amount: 0,
+  amount: undefined,
   category: undefined,
   description: undefined
 })
 
-const isValidForm = computed<boolean>(() => formValues.amount > 0 && Boolean(formValues.type))
+const isValidForm = computed<boolean>(() => Boolean(formValues.amount) && Number(formValues.amount) > 0 && Boolean(formValues.type))
 
 const categories = computed<{ key: string, label: string }[]>(() => {
   return store.getCategories(formValues.type).map((category) => {
@@ -40,7 +49,7 @@ async function createTransaction (event?: SubmitEvent) {
     return
   }
   try {
-    await store.createPayment(new Date(), formValues)
+    await store.createPayment(new Date(), <IPaymentData>formValues)
     await popup.closePopup()
     new Toast('👌 Payment created')
   } catch (e) {
@@ -53,7 +62,7 @@ async function createTransaction (event?: SubmitEvent) {
 <template>
   <div class="title">New Payment</div>
   <form @submit="createTransaction">
-    <VgInputSwitch v-model="formValues.type" :options="types" />
+    <VgInputSwitch v-model="formValues.type" :options="paymentTypes" />
     <VgInputNumber v-model="formValues.amount" label="Amount" />
     <VgInputSelect v-model="formValues.category" :options="categories" label="Select category" />
     <VgInput v-model="formValues.description" label="Add description" />
@@ -66,5 +75,6 @@ async function createTransaction (event?: SubmitEvent) {
   font-weight: 500;
   font-size: 21px;
   line-height: 25px;
+  padding-bottom: 32px;
 }
 </style>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { AppColor } from '@/styles/colors'
+
 const props = defineProps<{
-  options: Record<string, string>
+  options: { label: string, value: string, color?: string }[]
   modelValue?: string
 }>()
 
@@ -17,12 +19,13 @@ function tryClick (key: string) {
 
 <template>
   <div class="vg-input">
-    <div class="vg-button"
-         v-for="(label, key) in options"
-         :key="key"
-         :class="{disabled: key !== modelValue}"
-         @click="tryClick(key)"
-    >{{ label }}
+    <div class="switch-option"
+         v-for="(option, index) in options"
+         :key="index"
+         :class="{disabled: option.value !== modelValue}"
+         :style="{background: option.value === modelValue ? (option.color ?? AppColor.primary) : AppColor.lightGrey }"
+         @click="tryClick(option.value)"
+    >{{ option.label }}
     </div>
   </div>
 </template>
@@ -34,22 +37,23 @@ function tryClick (key: string) {
 .vg-input {
   display: flex;
   justify-content: center;
+  gap: 24px;
 
-  .vg-button {
+  .switch-option {
+    flex: 1;
+    padding: 8px;
+    text-transform: uppercase;
+    border-radius: 26px;
+    text-align: center;
+    color: $white;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 22px;
+
     &.disabled {
-      pointer-events: all;
-    }
-
-    &:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    &:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
+      color: $darkGrey;
     }
   }
 }
-
 </style>
