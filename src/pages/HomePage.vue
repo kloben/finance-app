@@ -6,10 +6,10 @@ import type { IMonth } from '@/models/month.interface'
 import { toMonthLabel } from '@/helpers/date.helper'
 import { toCurrency } from '@/helpers/number.helper'
 import { useHomeStore } from '@/stores/home.store'
-import type { BarChartData, PieChartData } from '@/components/ui/charts/chart-value.interface'
 import VgPieChart from '@/components/ui/charts/VgPieChart.vue'
 import { PaymentType } from '@/models/payment.interface'
 import VgCard from '@/components/ui/VgCard.vue'
+import type { BarChartData, PieChartData } from '@/helpers/chart.helper'
 
 const globalStore = useGlobalStore()
 const store = useHomeStore()

@@ -7,5 +7,12 @@ export enum AppColor {
   secondary = '#EAE2FF',
 
   chartPositive = '#00C8A0',
-  chartNegative = '#FF0072'
+  chartNegative = '#FF0072',
+
+  chartColor1 = '#FFBC41',
+  chartColor2 = '#FF754A',
+  chartColor3 = '#D800A6',
+  chartColor4 = '#00B5D6',
+  chartColor5 = '#00C8A0',
+  chartColor6 = '#4FFBDF'
 }

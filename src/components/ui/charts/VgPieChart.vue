@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { PieChartData } from '@/components/ui/charts/chart-value.interface'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { Chart } from 'chart.js'
+import type { PieChartData } from '@/helpers/chart.helper'
+import { parsePieChartData, pieChartOptions } from '@/helpers/chart.helper'
 
 const props = defineProps<{
   data: PieChartData
@@ -10,25 +11,14 @@ const props = defineProps<{
 const canvasRef = ref<HTMLCanvasElement>()
 let chart: Chart<'pie', number[], string>
 
-function parseData (data: PieChartData): { labels: string[], data: number[] } {
-  return data.reduce((carry: { labels: string[], data: number[] }, data) => {
-    carry.labels.push(data.label)
-    carry.data.push(data.value)
-    return carry
-  }, { labels: [], data: [] })
-}
-
 onMounted(() => {
-  const { labels, data } = parseData(props.data)
+  const { labels, datasets } = parsePieChartData(props.data)
   chart = new Chart<'pie', number[], string>(
     <HTMLCanvasElement>canvasRef.value,
     {
       type: 'pie',
-      responsive: true,
-      data: {
-        labels,
-        datasets: [{ data }]
-      }
+      options: pieChartOptions,
+      data: { labels, datasets }
     }
   )
 })
@@ -38,9 +28,9 @@ onUnmounted(() => {
 })
 
 watch(() => props.data, (newData: PieChartData) => {
-  const { labels, data } = parseData(props.data)
+  const { labels, datasets } = parsePieChartData(props.data)
   chart.data.labels = labels
-  chart.data.datasets[0].data = data
+  chart.data.datasets = datasets
   chart.update()
 })
 </script>

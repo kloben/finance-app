@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type { BarChartData } from '@/components/ui/charts/chart-value.interface'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { Chart } from 'chart.js'
-import { barChartOptions, parseBarChartData } from '@/helpers/chart.helper'
+import { BarChartData, barChartOptions, parseBarChartData } from '@/helpers/chart.helper'
 
 const props = defineProps<{
   data: BarChartData

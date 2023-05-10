@@ -1,18 +1,36 @@
-import type { BarChartData } from '@/components/ui/charts/chart-value.interface'
 import { AppColor } from '@/styles/colors'
+import { shuffle } from '@/helpers/number.helper'
+import type { ChartOptions } from 'chart.js/dist/types'
+
+export type BarChartData = {
+  label: string
+  up: number
+  down: number
+  predicted?: boolean
+}[]
+
+export type PieChartData = {
+  label: string
+  value: number
+}[]
 
 interface SetData {
   data: number[]
   backgroundColor: string[]
 }
 
-interface ParsedData {
+interface BarParsedData {
   labels: string[]
   datasets: [SetData, SetData]
 }
 
-export function parseBarChartData (inputData: BarChartData): ParsedData {
-  const parsed: ParsedData = {
+interface PieParsedData {
+  labels: string[]
+  datasets: [SetData]
+}
+
+export function parseBarChartData (inputData: BarChartData): BarParsedData {
+  const parsed: BarParsedData = {
     labels: [],
     datasets: [{ data: [], backgroundColor: [] }, { data: [], backgroundColor: [] }]
   }
@@ -26,7 +44,26 @@ export function parseBarChartData (inputData: BarChartData): ParsedData {
   return parsed
 }
 
-export const barChartOptions = {
+export function parsePieChartData (inputData: PieChartData): PieParsedData {
+  const colors = shuffle([AppColor.chartColor1, AppColor.chartColor2, AppColor.chartColor3, AppColor.chartColor4, AppColor.chartColor5, AppColor.chartColor6])
+  const parsed: PieParsedData = {
+    labels: [],
+    datasets: [{ data: [], backgroundColor: [] }]
+  }
+  for (const [index, input] of inputData.entries()) {
+    parsed.labels.push(input.label)
+    parsed.datasets[0].data.push(input.value)
+    parsed.datasets[0].backgroundColor.push(colors[index])
+  }
+  return parsed
+}
+
+export const barChartOptions: ChartOptions = {
+  plugins: {
+    legend: {
+      display: false
+    }
+  },
   scales: {
     x: {
       stacked: true,
@@ -60,6 +97,18 @@ export const barChartOptions = {
     bar: {
       barThickness: 16,
       borderRadius: 14
+    }
+  }
+}
+
+export const pieChartOptions: ChartOptions = {
+  plugins: {
+    legend: {
+      position: 'right',
+      onClick: () => {},
+      labels: {
+        boxWidth: 22
+      }
     }
   }
 }

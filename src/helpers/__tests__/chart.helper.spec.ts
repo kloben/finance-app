@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseBarChartData } from '../chart.helper'
-import type { BarChartData } from '../../components/ui/charts/chart-value.interface'
+import { type BarChartData, parseBarChartData } from '../chart.helper'
 import { AppColor } from '../../styles/colors'
 
 describe('Chart helper', () => {
