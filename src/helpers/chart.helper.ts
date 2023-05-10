@@ -1,6 +1,7 @@
 import { AppColor } from '@/styles/colors'
 import { shuffle } from '@/helpers/number.helper'
 import type { ChartOptions } from 'chart.js/dist/types'
+import type { LayoutPosition } from 'chart.js/dist/types/layout'
 
 export type BarChartData = {
   label: string
@@ -60,6 +61,7 @@ export function parsePieChartData (inputData: PieChartData): PieParsedData {
 
 export const barChartOptions: ChartOptions = {
   responsive: true,
+  animation: false,
   plugins: {
     legend: {
       display: false
@@ -103,15 +105,17 @@ export const barChartOptions: ChartOptions = {
   }
 }
 
-export const pieChartOptions: ChartOptions = {
+export const pieChartOptions = (position?: LayoutPosition): ChartOptions => ({
   responsive: true,
+  parsing: false,
+  animation: false,
   plugins: {
     legend: {
-      position: 'right',
+      position: position ?? 'right',
       onClick: () => {},
       labels: {
         boxWidth: 22
       }
     }
   }
-}
+})

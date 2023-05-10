@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue'
-import { Chart } from 'chart.js'
+import { Chart, LayoutPosition } from 'chart.js'
 import type { PieChartData } from '@/helpers/chart.helper'
 import { parsePieChartData, pieChartOptions } from '@/helpers/chart.helper'
 
 const props = defineProps<{
   data: PieChartData
+  position?: LayoutPosition
 }>()
 
 const canvasRef = ref<HTMLCanvasElement>()
@@ -17,7 +18,7 @@ onMounted(() => {
     <HTMLCanvasElement>canvasRef.value,
     {
       type: 'pie',
-      options: pieChartOptions,
+      options: pieChartOptions(props.position),
       data: { labels, datasets }
     }
   )

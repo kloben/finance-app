@@ -11,6 +11,6 @@ import TabBar from '@/components/TabBar.vue'
 
 <style lang="scss">
 .base-container {
-  padding-bottom: 60px;
+  padding-bottom: 100px;
 }
 </style>

@@ -6,8 +6,8 @@ import PaymentInfo from '@/components/PaymentInfo.vue'
 import type { IPayment } from '@/models/payment.interface'
 import VgPieChart from '@/components/ui/charts/VgPieChart.vue'
 import { useGlobalStore } from '@/stores/global.store'
-import VgIconBack from '@/components/ui/icons/old/VgIconBack.vue'
-import VgIconNext from '@/components/ui/icons/old/VgIconNext.vue'
+import VgIconBack from '@/components/ui/icons/VgIconBack.vue'
+import VgIconNext from '@/components/ui/icons/VgIconNext.vue'
 import type { PieChartData } from '@/helpers/chart.helper'
 
 const store = useDetailStore()
@@ -52,13 +52,15 @@ function changeMonth (modifier: 1 | -1) {
 </script>
 
 <template>
-  <div class="page-wrapper">
-    <div class="text-title-4">
+  <div class="page-header">
+    <div class="selector">
       <VgIconBack v-show="canGoBack" @click="changeMonth(-1)" />
-      Summary for {{ cleanDate }}
+      {{ cleanDate }}
       <VgIconNext v-show="canGoNext" @click="changeMonth(1)" />
     </div>
-    <VgPieChart :data="pieData" />
+    <VgPieChart :data="pieData" position="bottom"/>
+  </div>
+  <div class="page-wrapper">
     <div class="payments-container" v-if="sortedPayments.length">
       <PaymentInfo v-for="payment of sortedPayments" :key="payment.id" :payment="payment" />
     </div>
@@ -68,22 +70,29 @@ function changeMonth (modifier: 1 | -1) {
 <style scoped lang="scss">
 @import "src/styles/colors";
 
+.page-header {
+  background: $white;
+  padding: 24px 28px;
+  .selector {
+    display: grid;
+    align-items: center;
+    text-align: center;
+    grid-template-columns: 32px 1fr 32px;
+    max-width: 350px;
+    margin: 0 auto;
+    padding-bottom: 16px;
+
+    svg {
+      cursor: pointer;
+    }
+  }
+}
+
 .payments-container {
   padding: 8px 16px;
   background: $white;
   border-radius: 4px;
   max-width: 550px;
   margin: 32px auto 0 auto;
-}
-
-.text-title-4 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 26px;
-
-  svg {
-    cursor: pointer;
-  }
 }
 </style>
