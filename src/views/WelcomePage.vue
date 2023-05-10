@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import VgInputNumber from '@/components/ui/forms/VgInputNumber.vue'
+import VgInputNumber from '@/components/ui/VgInputNumber.vue'
 import VgButton from '@/components/ui/VgButton.vue'
 import { useGlobalStore } from '@/stores/global.store'
 import { useRouter } from 'vue-router'

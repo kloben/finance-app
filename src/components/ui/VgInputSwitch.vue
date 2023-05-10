@@ -29,7 +29,7 @@ function tryClick (key: string) {
 
 <style scoped lang="scss">
 @import "src/styles/colors";
-@import "../VgButton.scss";
+@import "VgButton";
 
 .vg-input {
   display: flex;
