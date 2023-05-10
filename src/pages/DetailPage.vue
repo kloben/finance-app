@@ -60,11 +60,11 @@ function changeMonth (modifier: 1 | -1) {
     </div>
     <VgPieChart :data="pieData" position="bottom"/>
   </div>
-  <div class="page-wrapper">
-    <div class="payments-container" v-if="sortedPayments.length">
-      <PaymentInfo v-for="payment of sortedPayments" :key="payment.id" :payment="payment" />
-    </div>
+
+  <div class="payments" v-if="sortedPayments.length">
+    <PaymentInfo v-for="payment of sortedPayments" :key="payment.id" :payment="payment" />
   </div>
+
 </template>
 
 <style scoped lang="scss">
@@ -88,11 +88,7 @@ function changeMonth (modifier: 1 | -1) {
   }
 }
 
-.payments-container {
-  padding: 8px 16px;
-  background: $white;
-  border-radius: 4px;
-  max-width: 550px;
-  margin: 32px auto 0 auto;
+.payments {
+  padding-top: 12px;
 }
 </style>
