@@ -8,15 +8,14 @@ const props = defineProps<{
 }>()
 
 const canvasRef = ref<HTMLCanvasElement>()
-let chart: Chart<'pie', number[], string>
+let chart: Chart
 
 onMounted(() => {
   const { labels, datasets } = parseBarChartData(props.data)
-  chart = new Chart<'pie', number[], string>(
+  chart = new Chart(
     <HTMLCanvasElement>canvasRef.value,
     {
       type: 'bar',
-      responsive: true,
       options: barChartOptions,
       data: {
         labels,

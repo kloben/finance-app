@@ -59,6 +59,7 @@ export function parsePieChartData (inputData: PieChartData): PieParsedData {
 }
 
 export const barChartOptions: ChartOptions = {
+  responsive: true,
   plugins: {
     legend: {
       display: false
@@ -102,6 +103,7 @@ export const barChartOptions: ChartOptions = {
 }
 
 export const pieChartOptions: ChartOptions = {
+  responsive: true,
   plugins: {
     legend: {
       position: 'right',
