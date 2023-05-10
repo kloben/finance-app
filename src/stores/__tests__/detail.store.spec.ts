@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, beforeEach, describe, vi, it, expect } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useDetailStore } from '../detail.store'
-import {TestMonths} from "../../services/__mocks__/data";
+import {TestMonths} from "../../services/__mocks__/test-data";
 import {fetchMonths, fetchPayments} from "../../services/__mocks__/db.service";
 import {getEmptyMonth} from "../../helpers/data.helper";
 

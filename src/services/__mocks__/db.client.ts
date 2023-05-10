@@ -1,4 +1,4 @@
-import { TestCategories, TestMonths, TestPayments } from '@/services/__mocks__/data'
+import { TestCategories, TestMonths, TestPayments } from '@/services/__mocks__/test-data'
 
 export async function getDBClient (): Promise<any> {
   return new DexieMock()

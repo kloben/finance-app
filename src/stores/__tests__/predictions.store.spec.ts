@@ -3,7 +3,7 @@ import { createPinia, setActivePinia } from 'pinia'
 import { usePredictionsStore } from '../predictions.store'
 import { getEmptyMonth } from '../../helpers/data.helper'
 import { fetchMonths } from '../../services/__mocks__/db.service'
-import { TestMonths } from '../../services/__mocks__/data'
+import { TestMonths } from '../../services/__mocks__/test-data'
 import { useGlobalStore } from '../global.store'
 
 describe('PredictionsStore', () => {

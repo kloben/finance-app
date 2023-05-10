@@ -4,7 +4,7 @@ import { PaymentType } from '@/models/payment.interface'
 import type { NewPayment } from '@/services/db.service'
 import { toDayId, toMonthId } from '@/helpers/date.helper'
 import type { ICategory } from '@/models/category.interface'
-import { TestMonths, TestPayments, TestCategories } from '@/services/__mocks__/data'
+import { TestMonths, TestPayments, TestCategories } from '@/services/__mocks__/test-data'
 import { getEmptyMonth } from '@/helpers/data.helper'
 import { vi } from 'vitest'
 
