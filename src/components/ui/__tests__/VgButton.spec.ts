@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
-import VgButton from '../VgButton.vue'
+import VgButton, { type ButtonProps } from '../VgButton.vue'
 
-function generateWrapper (props = {}): VueWrapper {
+function generateWrapper (props: ButtonProps = {}): VueWrapper {
   return mount(VgButton, {
     slots: {
       default: 'Some text'
@@ -14,35 +14,51 @@ function generateWrapper (props = {}): VueWrapper {
 describe('VgButton', () => {
   it('renders without props', () => {
     const wrapper = generateWrapper()
+    const element = wrapper.get('.vg-button')
 
     expect(wrapper.text()).toEqual('Some text')
-    expect(wrapper.get('.vg-button').classes()).toEqual(['vg-button'])
+    expect(element.classes()).toEqual(['vg-button', 'light'])
+    expect(element.attributes()).not.haveOwnProperty('disabled')
+    expect(element.attributes('type')).toBe('button')
   })
 
   it('emits clicks', () => {
     const wrapper = generateWrapper()
 
     wrapper.get('.vg-button').trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('clicked')
+    expect(wrapper.emitted()).toHaveProperty('click')
   })
 
   it('not emits if disabled', () => {
     const wrapper = generateWrapper({
       disabled: true
     })
+    const element = wrapper.get('.vg-button')
 
-    wrapper.get('.vg-button').trigger('click')
+    element.trigger('click')
+    expect(element.attributes()).haveOwnProperty('disabled')
     expect(wrapper.emitted()).not.toHaveProperty('clicked')
   })
 
-  it('applies styles', () => {
+  it('applies type', () => {
     const wrapper = generateWrapper({
-      type: 'clear',
-      size: 'small'
+      type: 'submit'
     })
+    const element = wrapper.get('.vg-button')
 
-    const classes = wrapper.get('.vg-button').classes()
-    expect(classes).toContain('clear')
-    expect(classes).toContain('small')
+    expect(element.classes()).toEqual(['vg-button', 'light'])
+    expect(element.attributes()).not.haveOwnProperty('disabled')
+    expect(element.attributes('type')).toBe('submit')
+  })
+
+  it('applies mode', () => {
+    const wrapper = generateWrapper({
+      mode: 'dark'
+    })
+    const element = wrapper.get('.vg-button')
+
+    expect(element.classes()).toEqual(['vg-button', 'dark'])
+    expect(element.attributes()).not.haveOwnProperty('disabled')
+    expect(element.attributes('type')).toBe('button')
   })
 })

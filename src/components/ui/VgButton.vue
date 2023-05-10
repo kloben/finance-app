@@ -1,16 +1,19 @@
 <script lang="ts" setup>
-defineProps<{
+export interface ButtonProps {
   type?: 'button' | 'submit' // Defaults button
   mode?: 'light' | 'dark'  // Defaults light
   disabled?: boolean
-}>()
+}
+
+defineProps<ButtonProps>()
 
 </script>
 
 <template>
   <button class="vg-button"
           :class="mode ?? 'light'"
-          :disabled="disabled" :type="type"
+          :disabled="disabled"
+          :type="type ?? 'button'"
   >
     <slot />
   </button>
