@@ -3,7 +3,7 @@ import type { IPayment } from '@/models/payment.interface'
 import { PaymentType } from '@/models/payment.interface'
 import { computed } from 'vue'
 import { toCurrency } from '@/helpers/number.helper'
-import { toDayLabel, toMonthLabel } from '@/helpers/date.helper'
+import { toDayLabel } from '@/helpers/date.helper'
 import { useGlobalStore } from '@/stores/global.store'
 
 const store = useGlobalStore()
