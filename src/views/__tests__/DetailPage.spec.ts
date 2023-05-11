@@ -1,12 +1,16 @@
 import { describe, it, afterAll, beforeAll, beforeEach, vi, expect } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import { flushPromises, shallowMount, VueWrapper } from '@vue/test-utils';
+import { flushPromises, mount, VueWrapper } from '@vue/test-utils';
 import DetailPage from '../DetailPage.vue';
 import { useGlobalStore } from '../../stores/global.store';
 import { TestPayments } from "../../services/__mocks__/test-data";
 
 function generateWrapper (): VueWrapper<DetailPage> {
-  return shallowMount(DetailPage)
+  return mount(DetailPage, {
+    global: {
+      stubs: ['VgBarChart', 'VgPieChart']
+    }
+  })
 }
 
 describe('DetailPage', () => {
