@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest'
-import { mount, VueWrapper } from '@vue/test-utils'
-import VgInputNumber from '../VgInputNumber.vue'
+import {describe, it, expect} from 'vitest'
+import {mount, VueWrapper} from '@vue/test-utils'
+import VgInputNumber, {type VgInputNumberProps} from '../VgInputNumber.vue'
 
-function generateWrapper (props = {}): VueWrapper {
+function generateWrapper(props: VgInputNumberProps = {}): VueWrapper {
   return mount(VgInputNumber, {
     props
   })
@@ -11,28 +11,28 @@ function generateWrapper (props = {}): VueWrapper {
 describe('VgInputNumber', () => {
   it('renders without initial value', () => {
     const wrapper = generateWrapper()
+    const inputElement = wrapper.get('input')
 
-    expect(wrapper.get('input').element.value).toBe('0')
-    expect(wrapper.find('.text-caption').exists()).toBe(false)
+    expect(inputElement.element.value).toBe('')
+    expect(inputElement.attributes()['placeholder']).toBe('')
   })
 
   it('renders with initial value', () => {
-    const wrapper = generateWrapper({
-      modelValue: 123
-    })
+    const wrapper = generateWrapper({modelValue: 123})
+    const inputElement = wrapper.get('input')
 
-    expect(wrapper.get('input').element.value).toBe('123')
-    expect(wrapper.find('.text-caption').exists()).toBe(false)
+    expect(inputElement.element.value).toBe('123')
   })
-  //
-  it('renders label', () => {
+
+  it('renders placeholder', () => {
     const wrapper = generateWrapper({
       modelValue: 123,
       label: 'Some label'
     })
+    const inputElement = wrapper.get('input')
 
-    expect(wrapper.get('input').element.value).toBe('123')
-    expect(wrapper.get('.text-caption').text()).toBe('Some label')
+    expect(inputElement.element.value).toBe('123')
+    expect(inputElement.attributes()['placeholder']).toBe('Some label')
   })
 
   it('emits on value change', () => {
@@ -50,6 +50,6 @@ describe('VgInputNumber', () => {
     wrapper.get('input').setValue('wrong')
 
     expect(wrapper.emitted()).toHaveProperty('update:modelValue')
-    expect(wrapper.emitted()['update:modelValue'][0]).toEqual([0])
+    expect(wrapper.emitted()['update:modelValue'][0]).toEqual([undefined])
   })
 })

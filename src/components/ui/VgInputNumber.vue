@@ -1,9 +1,12 @@
 <script setup lang="ts">
-defineProps<{
+export interface VgInputNumberProps {
   label?: string
   modelValue?: number
   mode?: 'light' | 'dark'  // Defaults light
-}>()
+}
+
+defineProps<VgInputNumberProps>()
+
 const emit = defineEmits<{
   (e: 'update:modelValue', value: number | undefined): void
 }>()

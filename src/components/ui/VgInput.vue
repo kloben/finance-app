@@ -1,9 +1,10 @@
 <script setup lang="ts">
-defineProps<{
+export interface VgInputProps {
   label?: string
   modelValue?: string
   mode?: 'light' | 'dark'  // Defaults light
-}>()
+}
+defineProps<VgInputProps>()
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
