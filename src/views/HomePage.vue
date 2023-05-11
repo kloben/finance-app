@@ -45,14 +45,14 @@ onMounted(() => {
 <template>
   <div class="page-wrapper">
     <VgCard>
-      <div class="home-summary">
+      <div class="home-summary savings">
         <div class="label">My Savings ✌️</div>
         <div class="value">{{ savings }}</div>
       </div>
       <VgBarChart :data="barData" />
     </VgCard>
     <VgCard>
-      <div class="home-summary">
+      <div class="home-summary outcomes">
         <div class="label">This month</div>
         <div class="value">{{ savings }}</div>
       </div>

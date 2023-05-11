@@ -20,7 +20,7 @@ function openPaymentPopup () {
 </script>
 
 <template>
-  <div class="bar-container">
+  <div class="tab-bar-container">
     <router-link to="/">
       <div class="bar-item" :class="{active: current === '/'}">
         <VgIconHome :active="current === '/'" />
@@ -58,7 +58,7 @@ $big: 41px;
 $small: 33px;
 $offset: 26px;
 
-.bar-container {
+.tab-bar-container {
   width: 100%;
   height: 82px;
   position: fixed;
