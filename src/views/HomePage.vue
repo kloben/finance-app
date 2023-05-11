@@ -23,7 +23,7 @@ const barData = computed<BarChartData>(() => store.lastMonths.map((data: IMonth)
 const pieData = computed<PieChartData>(() => {
   return Object.keys(store.currentMonth.totals).reduce((carry, categoryId) => {
     const category = globalStore.getCategory(categoryId)
-    if (category.type === PaymentType.out) {
+    if (category && category.type === PaymentType.out) {
       carry.push({
         label: category.label,
         value: store.currentMonth.totals[categoryId]

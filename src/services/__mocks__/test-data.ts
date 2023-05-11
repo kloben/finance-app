@@ -31,7 +31,8 @@ export const TestPayments: Record<number, IPayment> = {
     amount: 100,
     monthId: '2023-04',
     dayId: '2023-04-15',
-    createdAt: 123456789
+    createdAt: 123456789,
+    description: 'Some description 1'
   },
   2: {
     id: 2,
@@ -66,11 +67,13 @@ export const TestCategories: Record<string, ICategory> = {
   inCat: {
     id: 'inCat',
     type: PaymentType.in,
-    label: 'First category'
+    label: 'First category',
+    icon: 'IC1'
   },
   outCat: {
     id: 'outCat',
     type: PaymentType.out,
-    label: 'Second category'
+    label: 'Second category',
+    icon: 'IC2'
   }
 }

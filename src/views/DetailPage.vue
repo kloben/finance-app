@@ -34,9 +34,8 @@ const pieData = computed<PieChartData>(() => {
     return []
   }
   return Object.keys(month.totals).reduce((carry, categoryId) => {
-    const category = globalStore.getCategory(categoryId)
     carry.push({
-      label: category.label,
+      label: globalStore.getCategory(categoryId)?.label ?? 'Other',
       value: month.totals[categoryId]
     })
     return carry

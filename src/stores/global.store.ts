@@ -30,8 +30,8 @@ export const useGlobalStore = defineStore('global', {
     getCategories: (state: StoreState): (type: PaymentType) => ICategory[] => {
       return (type: PaymentType) => Array.from(state.categories.values()).filter(cat => cat.type === type)
     },
-    getCategory: (state: StoreState): (id: string) => ICategory => {
-      return (id: string) => state.categories.get(id) ?? <ICategory>{ id: '', label: 'Other' }
+    getCategory: (state: StoreState): (id?: string) => ICategory | undefined => {
+      return (id?: string) => id ? state.categories.get(id) : undefined
     }
   },
   actions: {

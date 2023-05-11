@@ -12,13 +12,9 @@ const props = defineProps<{
   payment: IPayment
 }>()
 
-const display = computed<{ label: string, icon: string }>(() => {
-  if (!props.payment.category) {
-    return { label: 'Other', icon: '❔' }
-  }
-  const category = store.getCategory(props.payment.category)
-  return { label: category.label, icon: category.icon ?? '❔' }
-})
+const icon = computed<string>(() => store.getCategory(props.payment.category)?.icon ?? '❔')
+
+const label = computed<string>(() => store.getCategory(props.payment.category)?.label ?? 'Other')
 
 const amount = computed<string>(() => toCurrency(props.payment.amount * (props.payment.type === PaymentType.in ? 1 : -1)))
 
@@ -28,10 +24,10 @@ const date = computed<string>(() => toDayLabel(props.payment.dayId))
 <template>
   <div class="payment-container">
     <div class="icon">
-      {{ display.icon }}
+      {{ icon }}
     </div>
     <div class="labels">
-      <div class="category">{{ display.label }}</div>
+      <div class="category">{{ label }}</div>
       <div class="description" v-if="payment.description">{{ payment.description }}</div>
     </div>
     <div class="data">
@@ -102,6 +98,7 @@ const date = computed<string>(() => toDayLabel(props.payment.dayId))
     &.income {
       color: $chart-positive;
     }
+
     &.outcome {
       color: $chart-negative;
     }
