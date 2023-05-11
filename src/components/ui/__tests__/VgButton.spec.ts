@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
-import VgButton, { type ButtonProps } from '../VgButton.vue'
+import VgButton, { type VgButtonProps } from '../VgButton.vue'
 
-function generateWrapper (props: ButtonProps = {}): VueWrapper {
+function generateWrapper (props: VgButtonProps = {}): VueWrapper {
   return mount(VgButton, {
     slots: {
       default: 'Some text'

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { AppColor } from '@/styles/colors'
 
-const props = defineProps<{
+export interface VgInputSwitchProps {
   options: { label: string, value: string, color?: string }[]
   modelValue?: string
-}>()
+}
+
+const props = defineProps<VgInputSwitchProps>()
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
@@ -19,7 +21,7 @@ function tryClick (key: string) {
 
 <template>
   <div class="vg-input">
-    <div class="switch-option"
+    <div class="vg-switch"
          v-for="(option, index) in options"
          :key="index"
          :class="{disabled: option.value !== modelValue}"
@@ -38,7 +40,7 @@ function tryClick (key: string) {
   justify-content: center;
   gap: 24px;
 
-  .switch-option {
+  .vg-switch {
     flex: 1;
     padding: 8px;
     text-transform: uppercase;

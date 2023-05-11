@@ -1,56 +1,83 @@
 import { describe, it, expect } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
-import VgInputSwitch from '../VgInputSwitch.vue'
+import VgInputSwitch, { type VgInputSwitchProps} from '../VgInputSwitch.vue'
 
-function generateWrapper (options: Record<string, string> = {}, modelValue?: string): VueWrapper {
+function generateWrapper (props: Partial<VgInputSwitchProps> = {}): VueWrapper {
   return mount(VgInputSwitch, {
     props: {
-      options,
-      modelValue
+      options: props.options ?? testOptions,
+      modelValue: props.modelValue
     }
   })
 }
 
-const testOptions = {
-  first: 'First Value',
-  second: 'Second Value'
+const colorStyles = {
+  grey: 'background: rgb(236, 236, 236);',
+  primary: 'background: rgb(76, 28, 213);',
+  red: 'background: red;',
+  green: 'background: green;'
 }
+
+const testOptions = [
+  { label: 'First Value', value: 'first', color: 'red' },
+  { label: 'Second Value', value: 'second', color: 'green' },
+]
 
 describe('VgInputSwitch', () => {
   it('renders with empty options', () => {
-    const wrapper = generateWrapper()
-    const options = wrapper.find('.vg-input').findAll('.vg-button')
+    const wrapper = generateWrapper({options: []})
+    const options = wrapper.find('.vg-input').findAll('.vg-switch')
 
     expect(options.length).toBe(0)
   })
 
-  it('renders disabled options', () => {
-    const wrapper = generateWrapper(testOptions)
-    const options = wrapper.find('.vg-input').findAll('.vg-button')
+  it('renders default options', () => {
+    const wrapper = generateWrapper()
+    const options = wrapper.find('.vg-input').findAll('.vg-switch')
     const [first, second] = options
 
     expect(options.length).toBe(2)
     expect(first.text()).toBe('First Value')
     expect(first.classes()).include('disabled')
+    expect(first.attributes()['style']).toBe(colorStyles.grey)
     expect(second.text()).toBe('Second Value')
     expect(second.classes()).include('disabled')
+    expect(second.attributes()['style']).toBe(colorStyles.grey)
   })
 
-  it('renders selected options', () => {
-    const wrapper = generateWrapper(testOptions, 'first')
-    const options = wrapper.find('.vg-input').findAll('.vg-button')
+  it('renders with initial value', () => {
+    const wrapper = generateWrapper({modelValue: 'first'})
+    const options = wrapper.find('.vg-input').findAll('.vg-switch')
     const [first, second] = options
 
     expect(options.length).toBe(2)
     expect(first.text()).toBe('First Value')
     expect(first.classes()).not.include('disabled')
+    expect(first.attributes()['style']).toBe(colorStyles.red)
     expect(second.text()).toBe('Second Value')
     expect(second.classes()).include('disabled')
+    expect(second.attributes()['style']).toBe(colorStyles.grey)
+  })
+
+  it('renders default color if not provided', () => {
+    const wrapper = generateWrapper({
+      options: [
+        { label: 'First Value', value: 'first' },
+        { label: 'Second Value', value: 'second'},
+      ],
+      modelValue: 'second'
+    })
+    const options = wrapper.find('.vg-input').findAll('.vg-switch')
+    const [first, second] = options
+
+    expect(options.length).toBe(2)
+    expect(first.attributes()['style']).toBe(colorStyles.grey)
+    expect(second.attributes()['style']).toBe(colorStyles.primary)
   })
 
   it('emits on option updated', () => {
-    const wrapper = generateWrapper(testOptions, 'first')
-    const options = wrapper.find('.vg-input').findAll('.vg-button')
+    const wrapper = generateWrapper({})
+    const options = wrapper.find('.vg-input').findAll('.vg-switch')
 
     options[1].trigger('click')
 
@@ -58,8 +85,8 @@ describe('VgInputSwitch', () => {
   })
 
   it('not emits on same option updated', () => {
-    const wrapper = generateWrapper(testOptions, 'first')
-    const options = wrapper.find('.vg-input').findAll('.vg-button')
+    const wrapper = generateWrapper({modelValue: 'first'})
+    const options = wrapper.find('.vg-input').findAll('.vg-switch')
 
     options[0].trigger('click')
 

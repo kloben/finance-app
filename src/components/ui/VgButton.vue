@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-export interface ButtonProps {
+export interface VgButtonProps {
   type?: 'button' | 'submit' // Defaults button
   mode?: 'light' | 'dark'  // Defaults light
   disabled?: boolean
 }
 
-defineProps<ButtonProps>()
+defineProps<VgButtonProps>()
 
 </script>
 
