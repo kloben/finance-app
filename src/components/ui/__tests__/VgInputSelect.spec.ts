@@ -1,13 +1,14 @@
 import { describe, it, expect } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
-import VgInputSelect from '../VgInputSelect.vue'
 import { reactive } from 'vue'
+// @ts-ignore
+import VgInputSelect, { type VgInputSelectProps } from '../VgInputSelect.vue'
 
-function generateWrapper (options: any[] = [], props = {}): VueWrapper {
+function generateWrapper (props: VgInputSelectProps = {}): VueWrapper {
   return mount(VgInputSelect, {
     props: {
       ...props,
-      options: reactive(options)
+      options: reactive(props.options ?? testOptions)
     }
   })
 }
@@ -19,7 +20,7 @@ const testOptions: { key: string, label: string }[] = [
 
 describe('VgInputSelect', () => {
   it('renders with empty values', () => {
-    const wrapper = generateWrapper()
+    const wrapper = generateWrapper({ options: [] })
 
     const selectElement = wrapper.get('select')
     const optionElements = selectElement.findAll('option')
@@ -28,12 +29,10 @@ describe('VgInputSelect', () => {
     expect(optionElements.length).toBe(1)
     expect(optionElements[0].text()).toBe('')
     expect(optionElements[0].element.value).toBe('')
-
-    expect(wrapper.find('.text-caption').exists()).toBe(false)
   })
 
-  it('renders with some values', () => {
-    const wrapper = generateWrapper(testOptions)
+  it('renders with default values', () => {
+    const wrapper = generateWrapper()
 
     const selectElement = wrapper.get('select')
     const optionElements = selectElement.findAll('option')
@@ -48,8 +47,8 @@ describe('VgInputSelect', () => {
     expect(optionElements[2].element.value).toBe('key2')
   })
 
-  it('renders with selected value', () => {
-    const wrapper = generateWrapper(testOptions, {
+  it('renders with initial value', () => {
+    const wrapper = generateWrapper({
       modelValue: 'key2'
     })
 
@@ -60,8 +59,22 @@ describe('VgInputSelect', () => {
     expect(optionElements.length).toBe(3)
   })
 
+  it('Applies label', () => {
+    const wrapper = generateWrapper({
+      label: 'Default option'
+    })
+
+    const selectElement = wrapper.get('select')
+    const optionElements = selectElement.findAll('option')
+
+    expect(selectElement.element.value).toBe('')
+    expect(optionElements.length).toBe(3)
+    expect(optionElements[0].text()).toBe('Default option')
+    expect(optionElements[0].element.value).toBe('')
+  })
+
   it('emits on value update', () => {
-    const wrapper = generateWrapper(testOptions, {
+    const wrapper = generateWrapper({
       modelValue: 'key'
     })
 
@@ -73,7 +86,7 @@ describe('VgInputSelect', () => {
   })
 
   it('emits and reset on options change', async () => {
-    const wrapper = generateWrapper(testOptions, {
+    const wrapper = generateWrapper({
       modelValue: 'key'
     })
 

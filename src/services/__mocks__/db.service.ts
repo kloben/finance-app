@@ -50,5 +50,5 @@ export function fetchSavings (): number {
   return 15000
 }
 
-export function storeSavings (value: number): void {
+export function storeSavings (): void {
 }

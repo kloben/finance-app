@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 
-const props = defineProps<{
+export interface VgInputSelectProps {
   label?: string
   options: { key: string | number, label: string }[]
   modelValue?: string
   mode?: 'light' | 'dark'  // Defaults light
-}>()
+}
+
+const props = defineProps<VgInputSelectProps>()
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string | undefined): void
 }>()
