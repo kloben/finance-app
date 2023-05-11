@@ -13,16 +13,7 @@ import type { PieChartData } from '@/helpers/chart.helper'
 const store = useDetailStore()
 const globalStore = useGlobalStore()
 
-onMounted(() => {
-  store.loadMonth(toMonthId(new Date()))
-})
-
-const cleanDate = computed<string>(() => {
-  if (!store.monthId) {
-    return ''
-  }
-  return `${toMonthLabel(store.monthId)} ${store.monthId.split('-')[0]}`
-})
+const cleanDate = computed<string>(() => store.monthId ? toMonthLabel(store.monthId) : '')
 
 const sortedPayments = computed<IPayment[]>(() => {
   return [...store.payments].sort((a, b) => `${a.dayId}-${a.createdAt}` > `${b.dayId}-${b.createdAt}` ? -1 : 1)
@@ -42,12 +33,16 @@ const pieData = computed<PieChartData>(() => {
   }, <PieChartData>[])
 })
 
-const canGoNext = computed<boolean>(() => Boolean(store.monthId) && (store.monthId < toMonthId(new Date())))
-const canGoBack = computed<boolean>(() => Boolean(store.monthId))
+const canGoNext = computed<boolean>(() => !!store.monthId && (store.monthId < toMonthId(new Date())))
+const canGoBack = computed<boolean>(() => !!store.monthId)
 
 function changeMonth (modifier: 1 | -1) {
   store.loadMonth(modifyMonthId(store.monthId ?? '', modifier))
 }
+
+onMounted(() => {
+  store.loadMonth(toMonthId(new Date()))
+})
 </script>
 
 <template>
@@ -63,7 +58,6 @@ function changeMonth (modifier: 1 | -1) {
   <div class="payments" v-if="sortedPayments.length">
     <PaymentInfo v-for="payment of sortedPayments" :key="payment.id" :payment="payment" />
   </div>
-
 </template>
 
 <style scoped lang="scss">
