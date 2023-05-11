@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
+// @ts-ignore
 import VgButton, { type VgButtonProps } from '../VgButton.vue'
 
 function generateWrapper (props: VgButtonProps = {}): VueWrapper {

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
+// @ts-ignore
 import VgInputSwitch, { type VgInputSwitchProps} from '../VgInputSwitch.vue'
 
 function generateWrapper (props: Partial<VgInputSwitchProps> = {}): VueWrapper {

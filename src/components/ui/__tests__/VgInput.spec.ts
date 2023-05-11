@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
+// @ts-ignore
 import VgInput, {type VgInputProps} from '../VgInput.vue'
 
 function generateWrapper (props: VgInputProps = {}): VueWrapper {
