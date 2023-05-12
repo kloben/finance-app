@@ -38,9 +38,9 @@ export function parseBarChartData (inputData: BarChartData): BarParsedData {
   for (const input of inputData) {
     parsed.labels.push(input.label)
     parsed.datasets[0].data.push(input.up)
-    parsed.datasets[0].backgroundColor.push(AppColor.chartPositive)
+    parsed.datasets[0].backgroundColor.push(input.predicted ? AppColor.chartPositivePredicted : AppColor.chartPositive)
     parsed.datasets[1].data.push(-input.down)
-    parsed.datasets[1].backgroundColor.push(AppColor.chartNegative)
+    parsed.datasets[1].backgroundColor.push(input.predicted ? AppColor.chartNegativePredicted : AppColor.chartNegative)
   }
   return parsed
 }
