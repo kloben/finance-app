@@ -14,7 +14,7 @@ import BarItem from "@/components/BarItem.vue";
 const route = useRoute()
 const popup = usePopupStore()
 
-const currentRoute = computed<string>(() => <string>route.name ?? '')
+const currentRoute = computed<string>(() => route.name as string ?? '')
 
 function openPaymentPopup () {
   popup.openPopup(NewPaymentView)
@@ -43,17 +43,19 @@ function openPaymentPopup () {
 
 <style scoped lang="scss">
 @import "src/styles/colors";
+@import "src/styles/breakpoints";
 
 $big: 41px;
 $small: 33px;
 $offset: 26px;
 
 .tab-bar-container {
+  position: sticky;
   width: 100%;
   height: 82px;
-  position: fixed;
   bottom: 0;
   left: 0;
+  margin-top: 26px;
   display: grid;
   grid-template-columns: 56px 56px auto 56px 56px;
   align-items: center;
@@ -96,4 +98,9 @@ $offset: 26px;
   cursor: pointer;
 }
 
+@media screen and (min-width: $breakpoint-s) {
+  .tab-bar-container {
+    display: none;
+  }
+}
 </style>

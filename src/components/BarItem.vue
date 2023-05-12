@@ -1,14 +1,19 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from "vue";
+
+const props = defineProps<{
   label: string
   route: string
   current: string
+  theme?: 'light' | 'dark' // Defaults light
 }>()
+
+const classes = computed<string[]>(() => [props.theme ?? 'light', props.route === props.current ? 'active' : ''])
 </script>
 
 <template>
   <router-link :to="{name: route}">
-    <div class="bar-item" :class="{active: route === current}">
+    <div class="bar-item" :class="classes">
       <slot/>
       <div class="bar-label">{{ label }}</div>
     </div>
@@ -23,12 +28,25 @@ defineProps<{
   padding: 3px 6px 0 6px;
   overflow: hidden;
   cursor: pointer;
-  color: $grey;
-  --icon-fill: #{$grey};
 
-  &.active {
-    color: $primary;
-    --icon-fill: #{$primary};
+  &.light {
+    color: $grey;
+    --icon-fill: #{$grey};
+
+    &.active {
+      color: $primary;
+      --icon-fill: #{$primary};
+    }
+  }
+
+  &.dark {
+    opacity: 0.7;
+    color: $light-grey;
+    --icon-fill: #{$light-grey};
+
+    &.active {
+      opacity: 1;
+    }
   }
 }
 
