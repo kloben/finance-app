@@ -7,6 +7,7 @@ import VgIconStatus from "@/components/ui/icons/VgIconStatus.vue";
 import BarItem from "@/components/BarItem.vue";
 import VgIconFuture from "@/components/ui/icons/VgIconFuture.vue";
 import VgIconSettings from "@/components/ui/icons/VgIconSettings.vue";
+import VgIconHome from "@/components/ui/icons/VgIconHome.vue";
 
 const route = useRoute()
 
@@ -22,6 +23,9 @@ const currentRoute = computed<string>(() => route.name as string ?? '')
         <VgAppLogo/>
       </router-link>
       <div class="navigation" v-if="currentRoute !== AppRoute.welcome">
+        <BarItem :current="currentRoute" :route="AppRoute.home" label="Home" theme="dark">
+          <VgIconHome/>
+        </BarItem>
         <BarItem :current="currentRoute" :route="AppRoute.status" label="Status" theme="dark">
           <VgIconStatus/>
         </BarItem>

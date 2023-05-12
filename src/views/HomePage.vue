@@ -10,9 +10,13 @@ import VgChartPie from '@/components/ui/VgChartPie.vue'
 import { PaymentType } from '@/models/payment.interface'
 import VgCard from '@/components/ui/VgCard.vue'
 import type { BarChartData, PieChartData } from '@/helpers/chart.helper'
+import VgButton from "@/components/ui/VgButton.vue";
+import { usePopupStore } from "@/stores/popup.store";
+import NewPaymentView from "@/views/NewPaymentView.vue";
 
 const globalStore = useGlobalStore()
 const store = useHomeStore()
+const popup = usePopupStore()
 
 const barData = computed<BarChartData>(() => store.lastMonths.map((data: IMonth) => ({
   up: data.income,
@@ -61,6 +65,9 @@ onMounted(() => {
       <VgChartPie :data="pieData" position="bottom"/>
     </VgCard>
   </div>
+  <div class="cta-container">
+    <VgButton @click="popup.openPopup(NewPaymentView)">Add payment</VgButton>
+  </div>
 </template>
 
 <style lang="scss">
@@ -88,6 +95,14 @@ onMounted(() => {
   margin-top: 19px;
 }
 
+.cta-container {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  max-width: $breakpoint-xs;
+  margin: 0 auto;
+}
+
 @media screen and (min-width: $breakpoint-m) {
   .page-wrapper {
     display: grid;
@@ -105,6 +120,10 @@ onMounted(() => {
 
   .vg-card + .vg-card {
     margin-top: 0;
+  }
+
+  .cta-container {
+    display: flex;
   }
 }
 
