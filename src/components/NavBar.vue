@@ -21,7 +21,7 @@ const currentRoute = computed<string>(() => route.name as string ?? '')
       <router-link :to="{name: AppRoute.home}">
         <VgAppLogo/>
       </router-link>
-      <div class="navigation">
+      <div class="navigation" v-if="currentRoute !== AppRoute.welcome">
         <BarItem :current="currentRoute" :route="AppRoute.status" label="Status" theme="dark">
           <VgIconStatus/>
         </BarItem>
