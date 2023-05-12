@@ -39,14 +39,11 @@ watch(() => props.data, (newData: BarChartData) => {
 </script>
 
 <template>
-  <canvas ref="canvasRef"></canvas>
+  <div class="chart-container bar-chart">
+    <canvas ref="canvasRef"></canvas>
+  </div>
 </template>
 
 <style scoped lang="scss">
-@import "src/styles/colors";
-
-canvas {
-  max-height: 30vh;
-}
-
+@import "VgChart";
 </style>

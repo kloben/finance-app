@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import VgBarChart from '@/components/ui/VgBarChart.vue'
+import VgChartBar from '@/components/ui/VgChartBar.vue'
 import { computed, onMounted } from 'vue'
 import { toMonthLabel } from '@/helpers/date.helper'
 import type { IMonth } from '@/models/month.interface'
@@ -33,7 +33,7 @@ onMounted(() => {
 <template>
   <div class="page-wrapper">
     <VgCard>
-      <VgBarChart :data="chartData" />
+      <VgChartBar :data="chartData" />
     </VgCard>
   </div>
 </template>

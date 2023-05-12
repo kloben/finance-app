@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import VgBarChart from '@/components/ui/VgBarChart.vue'
+import VgChartBar from '@/components/ui/VgChartBar.vue'
 import { useGlobalStore } from '@/stores/global.store'
 import { computed, onMounted } from 'vue'
 import type { IMonth } from '@/models/month.interface'
 import { toMonthLabel } from '@/helpers/date.helper'
 import { toCurrency } from '@/helpers/number.helper'
 import { useHomeStore } from '@/stores/home.store'
-import VgPieChart from '@/components/ui/VgPieChart.vue'
+import VgChartPie from '@/components/ui/VgChartPie.vue'
 import { PaymentType } from '@/models/payment.interface'
 import VgCard from '@/components/ui/VgCard.vue'
 import type { BarChartData, PieChartData } from '@/helpers/chart.helper'
@@ -49,20 +49,21 @@ onMounted(() => {
         <div class="label">My Savings ✌️</div>
         <div class="value">{{ savings }}</div>
       </div>
-      <VgBarChart :data="barData" />
+      <VgChartBar :data="barData"/>
     </VgCard>
     <VgCard>
       <div class="home-summary outcomes">
         <div class="label">This month</div>
         <div class="value">{{ savings }}</div>
       </div>
-      <VgPieChart :data="pieData" />
+      <VgChartPie :data="pieData"/>
     </VgCard>
   </div>
 </template>
 
 <style lang="scss">
 @import "src/styles/colors";
+@import "src/styles/breakpoints";
 
 .home-summary {
   .label {
@@ -83,6 +84,27 @@ onMounted(() => {
 
 .vg-card + .vg-card {
   margin-top: 19px;
+}
+
+@media screen and (min-width: $breakpoint-m) {
+  .page-wrapper {
+    display: flex;
+    gap: 40px;
+    max-width: $breakpoint-l;
+    margin: 0 auto;
+  }
+
+  .vg-card {
+    flex: 1;
+
+    &:first-child {
+      flex: 2;
+    }
+  }
+
+  .vg-card + .vg-card {
+    margin-top: 0;
+  }
 }
 
 </style>

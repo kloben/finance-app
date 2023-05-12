@@ -59,9 +59,14 @@ export function parsePieChartData (inputData: PieChartData): PieParsedData {
   return parsed
 }
 
-export const barChartOptions: ChartOptions = {
+const commonChartOptions: ChartOptions = {
   responsive: true,
   animation: false,
+  maintainAspectRatio: true
+}
+
+export const barChartOptions: ChartOptions = {
+  ...commonChartOptions,
   plugins: {
     legend: {
       display: false
@@ -106,9 +111,7 @@ export const barChartOptions: ChartOptions = {
 }
 
 export const pieChartOptions = (position?: LayoutPosition): ChartOptions => ({
-  responsive: true,
-  parsing: false,
-  animation: false,
+  ...commonChartOptions,
   plugins: {
     legend: {
       position: position ?? 'right',

@@ -4,7 +4,7 @@ import { useDetailStore } from '@/stores/detail.store'
 import { modifyMonthId, toMonthId, toMonthLabel } from '@/helpers/date.helper'
 import PaymentInfo from '@/components/PaymentInfo.vue'
 import type { IPayment } from '@/models/payment.interface'
-import VgPieChart from '@/components/ui/VgPieChart.vue'
+import VgChartPie from '@/components/ui/VgChartPie.vue'
 import { useGlobalStore } from '@/stores/global.store'
 import VgIconBack from '@/components/ui/icons/VgIconBack.vue'
 import VgIconNext from '@/components/ui/icons/VgIconNext.vue'
@@ -52,7 +52,7 @@ onMounted(() => {
       {{ cleanDate }}
       <VgIconNext v-show="canGoNext" @click="changeMonth(1)" />
     </div>
-    <VgPieChart :data="pieData" position="bottom"/>
+    <VgChartPie :data="pieData" position="bottom"/>
   </div>
 
   <div class="payments" v-if="sortedPayments.length">

@@ -1,0 +1,11 @@
+.chart-container {
+  position: relative;
+  width: 100%;
+
+  &.pie-chart {
+    aspect-ratio: 1;
+  }
+  &.bar-chart {
+    aspect-ratio: 2;
+  }
+}
