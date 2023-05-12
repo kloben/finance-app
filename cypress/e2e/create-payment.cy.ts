@@ -1,6 +1,5 @@
 describe('Create Payment Test', () => {
   beforeEach(() => {
-    cy.viewport(400, 654)
     cy.resetApp()
     cy.initApp()
   })
