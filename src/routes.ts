@@ -14,30 +14,41 @@ async function isInitialized (from: RouteLocationNormalized): Promise<boolean> {
   return store.savings !== null
 }
 
+export enum AppRoute {
+  welcome = 'welcome ',
+  home = 'home',
+  status = 'status',
+  future = 'future',
+  settings = 'settings'
+}
+
 export const appRouter = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: '/welcome',
-      name: 'welcome',
+      name: AppRoute.welcome,
       component: WelcomePage,
-      beforeEnter: async (_, from) => await isInitialized(from) ? { path: '/' } : true
+      beforeEnter: async (_, from) => await isInitialized(from) ? { name: AppRoute.home } : true
     },
     {
       path: '/',
       component: BasePage,
-      beforeEnter: async (_, from) => await isInitialized(from) ? true : { name: 'welcome' },
+      beforeEnter: async (_, from) => await isInitialized(from) ? true : { name: AppRoute.welcome },
       children: [
         {
           path: 'future',
+          name: AppRoute.future,
           component: FuturePage
         },
         {
           path: 'status',
+          name: AppRoute.status,
           component: DetailPage
         },
         {
           path: '',
+          name: AppRoute.home,
           component: HomePage
         }
       ]
