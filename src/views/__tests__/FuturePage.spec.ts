@@ -2,13 +2,12 @@ import { describe, it, afterAll, beforeAll, beforeEach, vi, expect } from 'vites
 import { createPinia, setActivePinia } from 'pinia';
 import { flushPromises, mount, VueWrapper } from '@vue/test-utils';
 import { useGlobalStore } from '../../stores/global.store';
-import { TestPayments } from "../../services/__mocks__/test-data";
 import FuturePage from "../FuturePage.vue";
 
 function generateWrapper (): VueWrapper<FuturePage> {
   return mount(FuturePage, {
     global: {
-      stubs: ['VgBarChart', 'VgPieChart']
+      stubs: ['VgChartBar', 'VgChartPie']
     }
   })
 }

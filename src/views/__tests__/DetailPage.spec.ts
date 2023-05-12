@@ -8,7 +8,7 @@ import { TestPayments } from "../../services/__mocks__/test-data";
 function generateWrapper (): VueWrapper<StatusPage> {
   return mount(StatusPage, {
     global: {
-      stubs: ['VgBarChart', 'VgPieChart']
+      stubs: ['VgChartBar', 'VgChartPie']
     }
   })
 }

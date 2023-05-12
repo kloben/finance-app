@@ -42,7 +42,7 @@ onMounted(() => {
 @import "src/styles/breakpoints";
 
 .page-wrapper {
-  max-width: $breakpoint-m;
+  max-width: $breakpoint-s;
   margin: 0 auto;
 }
 </style>

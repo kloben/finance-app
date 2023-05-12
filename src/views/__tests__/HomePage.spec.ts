@@ -8,7 +8,7 @@ import { useHomeStore } from '../../stores/home.store';
 function generateWrapper (): VueWrapper<HomePage> {
   return mount(HomePage, {
     global: {
-      stubs: ['VgBarChart', 'VgPieChart']
+      stubs: ['VgChartBar', 'VgChartPie']
     }
   })
 }
