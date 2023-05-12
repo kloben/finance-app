@@ -37,13 +37,15 @@ const savings = computed(() => {
   return toCurrency(globalStore.savings ?? 0)
 })
 
+const spent = computed<string>(() => toCurrency(pieData.value.reduce((carry, data) => carry + data.value, 0)))
+
 onMounted(() => {
   store.init()
 })
 </script>
 
 <template>
-  <div class="page-wrapper">
+  <div class="page-wrapper" :class="{single: !pieData.length}">
     <VgCard>
       <div class="home-summary savings">
         <div class="label">My Savings ✌️</div>
@@ -51,12 +53,12 @@ onMounted(() => {
       </div>
       <VgChartBar :data="barData"/>
     </VgCard>
-    <VgCard>
+    <VgCard v-if="pieData.length">
       <div class="home-summary outcomes">
         <div class="label">This month</div>
-        <div class="value">{{ savings }}</div>
+        <div class="value">{{ spent }}</div>
       </div>
-      <VgChartPie :data="pieData"/>
+      <VgChartPie :data="pieData" position="bottom"/>
     </VgCard>
   </div>
 </template>
@@ -88,17 +90,16 @@ onMounted(() => {
 
 @media screen and (min-width: $breakpoint-m) {
   .page-wrapper {
-    display: flex;
+    display: grid;
     gap: 40px;
     max-width: $breakpoint-l;
     margin: 0 auto;
-  }
+    justify-content: center;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
 
-  .vg-card {
-    flex: 1;
-
-    &:first-child {
-      flex: 2;
+    &.single {
+      grid-template-columns: minmax(0, $breakpoint-s);
     }
   }
 

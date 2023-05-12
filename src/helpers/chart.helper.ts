@@ -62,7 +62,7 @@ export function parsePieChartData (inputData: PieChartData): PieParsedData {
 const commonChartOptions: ChartOptions = {
   responsive: true,
   animation: false,
-  maintainAspectRatio: true
+  maintainAspectRatio: false
 }
 
 export const barChartOptions: ChartOptions = {
