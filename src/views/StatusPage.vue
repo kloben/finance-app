@@ -9,9 +9,13 @@ import { useGlobalStore } from '@/stores/global.store'
 import VgIconBack from '@/components/ui/icons/VgIconBack.vue'
 import VgIconNext from '@/components/ui/icons/VgIconNext.vue'
 import type { PieChartData } from '@/helpers/chart.helper'
+import NewPaymentView from "@/views/NewPaymentView.vue";
+import VgButton from "@/components/ui/VgButton.vue";
+import { usePopupStore } from "@/stores/popup.store";
 
 const store = useDetailStore()
 const globalStore = useGlobalStore()
+const popup = usePopupStore()
 
 const cleanDate = computed<string>(() => store.monthId ? toMonthLabel(store.monthId) : '')
 
@@ -56,6 +60,9 @@ onMounted(() => {
       <div class="chart-container">
         <VgChartPie :data="pieData" position="bottom"/>
       </div>
+      <div class="cta-container">
+        <VgButton @click="popup.openPopup(NewPaymentView)">Add payment</VgButton>
+      </div>
     </div>
     <div class="payments" v-if="sortedPayments.length">
       <PaymentInfo v-for="payment of sortedPayments" :key="payment.id" :payment="payment" />
@@ -96,7 +103,32 @@ onMounted(() => {
   margin: 0 auto;
 }
 
+.cta-container {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  max-width: $breakpoint-xs;
+  margin: 0 auto;
+  padding-top: 32px;
+}
+
 .payments {
-  padding-top: 12px;
+  margin-top: 16px;
+}
+
+@media screen and (min-width: $breakpoint-s) {
+  .cta-container {
+    display: flex;
+  }
+
+  .page-header {
+    margin-top: 16px;
+  }
+
+  .payments, .page-header {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
 }
 </style>

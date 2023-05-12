@@ -103,7 +103,7 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-@media screen and (min-width: $breakpoint-m) {
+@media screen and (min-width: $breakpoint-s) {
   .page-wrapper {
     display: grid;
     gap: 40px;
