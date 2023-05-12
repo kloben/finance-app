@@ -28,6 +28,10 @@ export function toMonthLabel (date: Date | string): string {
   return new Date(date).toLocaleString('default', { month: 'short' })
 }
 
+export function toDayLabel (dayId: string): string {
+  return new Date(dayId).toLocaleString('default', { month: 'short', day: 'numeric' })
+}
+
 export function modifyMonthId (monthId: string, modifier: 1 | -1): string {
   const date = new Date(monthId)
   date.setDate(15)

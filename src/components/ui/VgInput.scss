@@ -1,0 +1,60 @@
+@import "src/styles/colors";
+
+.vg-input {
+  input, select {
+    background: transparent;
+    padding: 15px;
+    border-radius: 12px;
+    width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+
+    &:focus-visible, &:focus, &:hover {
+      outline: none;
+      padding: 14px;
+    }
+  }
+
+  select option.default {
+    color: $grey;
+  }
+
+  &.light {
+    input, select {
+      border: 1px solid $primary;
+      color: $black;
+
+      &:focus-visible, &:focus, &:hover {
+        border: 2px solid $primary;
+      }
+
+      option:not(.default) {
+        color: $black;
+      }
+
+      &::placeholder, &.clean {
+        color: $grey;
+      }
+    }
+  }
+
+  &.dark {
+    input, select {
+      border: 1px solid $secondary;
+      color: $white;
+
+      &:focus-visible, &:focus, &:hover {
+        border: 2px solid $white;
+      }
+
+      option:not(.default) {
+        color: $white;
+      }
+
+      &::placeholder, &.clean {
+        color: $secondary;
+      }
+    }
+  }
+}

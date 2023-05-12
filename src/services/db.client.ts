@@ -41,6 +41,16 @@ class AppDexie extends Dexie {
       }
     })
 
+    this.version(3).stores({
+      [DB_TABLE.months]: '&monthId',
+      [DB_TABLE.payments]: '++id, monthId',
+      [DB_TABLE.categories]: '&id'
+    }).upgrade(async (tx: Transaction) => {
+      for (const category of categoriesV1) {
+        await tx.table(DB_TABLE.categories).update(category.id, { icon: category.icon })
+      }
+    })
+
     this.on('populate', (tx: Transaction) => {
       return tx.table(DB_TABLE.categories).bulkAdd(categoriesV1)
     })

@@ -4,6 +4,7 @@ import { useGlobalStore } from '../global.store'
 import { PaymentType } from '../../models/payment.interface'
 import { fetchMonths, fetchPayments } from '../../services/__mocks__/db.service'
 import { getEmptyMonth } from '../../helpers/data.helper'
+import { TestCategories } from "../../services/__mocks__/test-data";
 
 describe('GlobalStore', () => {
   beforeAll(() => {
@@ -41,21 +42,21 @@ describe('GlobalStore', () => {
     const store = useGlobalStore()
     await store.init()
 
-    expect(store.getCategories(PaymentType.in)).toEqual([{ id: 'inCat', label: 'First category', type: 'income' }])
+    expect(store.getCategories(PaymentType.in)).toEqual([TestCategories.inCat])
   })
 
   it('gets existing category ', async () => {
     const store = useGlobalStore()
     await store.init()
 
-    expect(store.getCategory('inCat')).toEqual({ id: 'inCat', label: 'First category', type: 'income' })
+    expect(store.getCategory('inCat')).toEqual(TestCategories.inCat)
   })
 
   it('gets non existing category ', async () => {
     const store = useGlobalStore()
     await store.init()
 
-    expect(store.getCategory('new')).toEqual({ id: '', label: 'Other' })
+    expect(store.getCategory('new')).toEqual(undefined)
   })
 
   it('inits new months', async () => {

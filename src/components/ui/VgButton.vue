@@ -1,31 +1,55 @@
 <script lang="ts" setup>
-const props = defineProps<{
-  type?: 'clear'
-  size?: 'big' | 'small'
+export interface VgButtonProps {
+  type?: 'button' | 'submit' // Defaults button
+  mode?: 'light' | 'dark'  // Defaults light
   disabled?: boolean
-}>()
-const emit = defineEmits<{
-  (e: 'clicked'): void
-}>()
-
-function tryClick () {
-  if (!props.disabled) {
-    emit('clicked')
-  }
 }
+
+defineProps<VgButtonProps>()
+
 </script>
 
 <template>
-  <div class="vg-button"
-       :class="[type, size, disabled ? 'disabled': '']"
-       @click="tryClick"
+  <button class="vg-button"
+          :class="mode ?? 'light'"
+          :disabled="disabled"
+          :type="type ?? 'button'"
   >
-    <div class="text-button">
-      <slot />
-    </div>
-  </div>
+    <slot />
+  </button>
 </template>
 
 <style scoped lang="scss">
-@import "./VgButton.scss";
+@import "src/styles/colors";
+
+button.vg-button {
+  appearance: none;
+  padding: 16px;
+  border-radius: 44px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  border: none;
+  outline: none;
+  display: block;
+  width: 100%;
+  user-select: none;
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &.light {
+    background: $primary;
+    color: $white;
+  }
+
+  &.dark {
+    background: $white;
+    color: $primary;
+  }
+}
 </style>

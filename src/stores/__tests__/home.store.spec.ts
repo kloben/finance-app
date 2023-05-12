@@ -2,7 +2,7 @@ import { describe, afterAll, beforeAll, beforeEach, vi, expect, it } from 'vites
 import { createPinia, setActivePinia } from 'pinia'
 import { useHomeStore } from '../home.store'
 import { getEmptyMonth } from '../../helpers/data.helper'
-import { TestMonths } from '../../services/__mocks__/data'
+import { TestMonths } from '../../services/__mocks__/test-data'
 import { fetchMonths } from '../../services/__mocks__/db.service'
 
 describe('HomeStore', () => {

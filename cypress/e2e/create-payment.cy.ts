@@ -4,46 +4,32 @@ describe('Create Payment Test', () => {
     cy.initApp()
   })
 
-  it('redirects to payment', () => {
-    cy.visit('/')
-
-    cy.get('.footer-bar').find('[data-test-id="new-link"]').click()
-
-    cy.location().should((location) => {
-      expect(location.pathname).to.eq('/new')
-    })
-  })
-
   it('creates new outcome', () => {
-    cy.visit('/new')
+    cy.visit('/')
+    cy.get('.home-summary.savings .value').invoke('text').should('contain', '15.000')
+    cy.get('.floating-item').click()
 
-    cy.get('.vg-input').contains('Amount').type('123')
-    cy.get('.vg-input').contains('Category').get('select').select(1)
-    cy.get('.vg-input').contains('Description').type('Some description')
+    cy.get('.vg-input input[placeholder*="Amount"]').type('123')
+    cy.get('.vg-input select').select(1)
+    cy.get('.vg-input input[placeholder*="Add description"]').type('Some description')
 
-    cy.get('.vg-button').contains('Create').click()
+    cy.get('.vg-button').contains('Add Payment').click()
 
-    cy.location().should((location) => {
-      expect(location.pathname).to.eq('/')
-    })
-
-    cy.get('.text-title-4').invoke('text').should('contain', 'Total savings: €14,877')
+    cy.get('.home-summary.savings .value').invoke('text').should('contain', '14.877')
   })
 
-  it('creates new income', () => {
-    cy.visit('/new')
+  it.only('creates new income', () => {
+    cy.visit('/')
+    cy.get('.home-summary.savings .value').invoke('text').should('contain', '15.000')
+    cy.get('.floating-item').click()
 
-    cy.get('.vg-button').contains('income', { matchCase: false }).click()
-    cy.get('.vg-input').contains('amount', { matchCase: false }).type('321')
-    cy.get('.vg-input').contains('category', { matchCase: false }).get('select').select(1)
-    cy.get('.vg-input').contains('description', { matchCase: false }).type('Another description')
+    cy.get('.vg-switch').contains('income', { matchCase: false }).click()
+    cy.get('.vg-input input[placeholder*="Amount"]').type('321')
+    cy.get('.vg-input select').select(1)
+    cy.get('.vg-input input[placeholder*="Add description"]').type('Some description')
 
-    cy.get('.vg-button').contains('create', { matchCase: false }).click()
+    cy.get('.vg-button').contains('Add Payment').click()
 
-    cy.location().should((location) => {
-      expect(location.pathname).to.eq('/')
-    })
-
-    cy.get('.text-title-4').invoke('text').should('contain', 'Total savings: €15,321')
+    cy.get('.home-summary.savings .value').invoke('text').should('contain', '15.321')
   })
 })

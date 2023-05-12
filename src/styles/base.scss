@@ -1,10 +1,11 @@
 @import "colors";
 @import "typography";
 @import "layouts";
+@import "forms";
 
 html, body {
-  font-family: SansSerif, sans-serif;
-  background: $base;
+  font-family: Rubik, sans-serif;
+  background: $secondary;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;

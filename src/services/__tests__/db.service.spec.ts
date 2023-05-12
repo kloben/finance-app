@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, vi } from 'vitest'
 import { fetchCategories, fetchMonth, fetchMonths, fetchPayments } from '../db.service'
-import { TestCategories, TestMonths, TestPayments } from '../__mocks__/data'
+import { TestCategories, TestMonths, TestPayments } from '../__mocks__/test-data'
 
 describe('DB Service', () => {
   beforeAll(async () => {

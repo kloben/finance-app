@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { router } from '@/routes'
+import { appRouter } from '@/routes'
 import { createPinia } from 'pinia'
 import { makeRandomPayment } from '@/services/dev.service'
 import {
@@ -12,17 +12,17 @@ import {
   CategoryScale,
   LinearScale,
   Tooltip,
-  Colors
+  Legend
 } from 'chart.js'
 
 import './styles/base.scss'
 
 createApp(App)
-  .use(router)
+  .use(appRouter)
   .use(createPinia())
   .mount('#app')
 
-Chart.register(PieController, ArcElement, BarController, BarElement, CategoryScale, LinearScale, Tooltip, Colors)
+Chart.register(PieController, ArcElement, BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend)
 
 // @ts-ignore
 window.randomPayment = makeRandomPayment

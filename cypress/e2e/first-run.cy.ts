@@ -6,22 +6,22 @@ describe('First Run Test', () => {
     cy.visit('/')
 
     cy.location().should((location) => {
-      expect(location.pathname).to.eq('/init')
+      expect(location.pathname).to.eq('/welcome')
     })
   })
 
   it('completes form and redirects', () => {
     cy.visit('/')
 
-    cy.get('.vg-button').should('have.class', 'disabled')
+    cy.get('.vg-button').should('have.attr', 'disabled')
     cy.get('input').type('15000')
-    cy.get('.vg-button').should('not.have.class', 'disabled')
+    cy.get('.vg-button').should('not.have.attr', 'disabled')
     cy.get('.vg-button').click()
 
     cy.location().should((location) => {
       expect(location.pathname).to.eq('/')
     })
 
-    cy.get('.text-title-4').invoke('text').should('contain', 'Total savings: €15,000')
+    cy.get('.home-summary.savings .value').invoke('text').should('contain', '15.000')
   })
 })
