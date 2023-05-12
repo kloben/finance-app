@@ -1,5 +1,6 @@
 describe('First Run Test', () => {
   beforeEach(() => {
+    cy.viewport(400, 654)
     cy.resetApp()
   })
   it('redirects to init', () => {
