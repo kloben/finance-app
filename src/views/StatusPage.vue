@@ -46,22 +46,32 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="page-header">
-    <div class="selector">
-      <VgIconBack v-show="canGoBack" @click="changeMonth(-1)" />
-      {{ cleanDate }}
-      <VgIconNext v-show="canGoNext" @click="changeMonth(1)" />
+  <div class="page-container">
+    <div class="page-header">
+      <div class="selector">
+        <VgIconBack v-show="canGoBack" @click="changeMonth(-1)" />
+        {{ cleanDate }}
+        <VgIconNext v-show="canGoNext" @click="changeMonth(1)" />
+      </div>
+      <div class="chart-container">
+        <VgChartPie :data="pieData" position="bottom"/>
+      </div>
     </div>
-    <VgChartPie :data="pieData" position="bottom"/>
-  </div>
-
-  <div class="payments" v-if="sortedPayments.length">
-    <PaymentInfo v-for="payment of sortedPayments" :key="payment.id" :payment="payment" />
+    <div class="payments" v-if="sortedPayments.length">
+      <PaymentInfo v-for="payment of sortedPayments" :key="payment.id" :payment="payment" />
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 @import "src/styles/colors";
+@import "src/styles/breakpoints";
+
+.page-container {
+  max-width: $breakpoint-s;
+  margin: 0 auto;
+  padding-bottom: 32px;
+}
 
 .page-header {
   background: $white;
@@ -79,6 +89,11 @@ onMounted(() => {
       cursor: pointer;
     }
   }
+}
+
+.chart-container {
+  max-width: $breakpoint-xs;
+  margin: 0 auto;
 }
 
 .payments {

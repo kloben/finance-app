@@ -4,7 +4,7 @@ import HomePage from '@/views/HomePage.vue'
 import WelcomePage from '@/views/WelcomePage.vue'
 import FuturePage from '@/views/FuturePage.vue'
 import { useGlobalStore } from '@/stores/global.store'
-import DetailPage from '@/views/DetailPage.vue'
+import StatusPage from '@/views/StatusPage.vue'
 
 async function isInitialized (from: RouteLocationNormalized): Promise<boolean> {
   const store = useGlobalStore()
@@ -44,7 +44,7 @@ export const appRouter = createRouter({
         {
           path: 'status',
           name: AppRoute.status,
-          component: DetailPage
+          component: StatusPage
         },
         {
           path: 'settings',

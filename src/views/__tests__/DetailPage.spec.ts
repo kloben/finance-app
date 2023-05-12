@@ -1,19 +1,19 @@
 import { describe, it, afterAll, beforeAll, beforeEach, vi, expect } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import { flushPromises, mount, VueWrapper } from '@vue/test-utils';
-import DetailPage from '../DetailPage.vue';
+import StatusPage from '../StatusPage.vue';
 import { useGlobalStore } from '../../stores/global.store';
 import { TestPayments } from "../../services/__mocks__/test-data";
 
-function generateWrapper (): VueWrapper<DetailPage> {
-  return mount(DetailPage, {
+function generateWrapper (): VueWrapper<StatusPage> {
+  return mount(StatusPage, {
     global: {
       stubs: ['VgBarChart', 'VgPieChart']
     }
   })
 }
 
-describe('DetailPage', () => {
+describe('StatusPage', () => {
   beforeAll(() => {
     vi.useFakeTimers()
     vi.setSystemTime(new Date(2023, 3, 30))

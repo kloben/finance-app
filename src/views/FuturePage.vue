@@ -37,3 +37,11 @@ onMounted(() => {
     </VgCard>
   </div>
 </template>
+
+<style scoped lang="scss">
+@import "src/styles/breakpoints";
+
+.page-wrapper {
+  max-width: $breakpoint-s;
+}
+</style>

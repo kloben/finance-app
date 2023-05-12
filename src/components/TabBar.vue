@@ -50,12 +50,11 @@ $small: 33px;
 $offset: 26px;
 
 .tab-bar-container {
-  position: sticky;
+  position: fixed;
   width: 100%;
   height: 82px;
   bottom: 0;
   left: 0;
-  margin-top: 26px;
   display: grid;
   grid-template-columns: 56px 56px auto 56px 56px;
   align-items: center;
