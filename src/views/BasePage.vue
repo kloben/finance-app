@@ -16,7 +16,7 @@ const store = usePopupStore()
   </VgPopup>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "src/styles/breakpoints";
 
 .base-container {

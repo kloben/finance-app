@@ -20,6 +20,6 @@ const emit = defineEmits<{
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "./VgInput";
 </style>

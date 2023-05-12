@@ -70,7 +70,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "src/styles/colors";
 @import "src/styles/breakpoints";
 

@@ -70,7 +70,7 @@ async function createTransaction (event?: SubmitEvent) {
   </form>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .title {
   font-weight: 500;
   font-size: 21px;
