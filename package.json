@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "serve": "vite",
+    "serve": "vite --host 0.0.0.0",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -11,10 +11,12 @@
     "test:unit": "LC_ALL=en_US vitest run",
     "test:unit:watch": "LC_ALL=en_US vitest",
     "test:unit:coverage": "LC_ALL=en_US vitest run --coverage",
-    "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
+    "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e --headless'",
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'"
   },
   "dependencies": {
+    "awesome-toast-component": "^2.0.6",
+    "chart.js": "^4.3.0",
     "dexie": "^3.2.3",
     "pinia": "^2.0.35",
     "simple-statistics": "^7.8.3",

@@ -1,11 +1,13 @@
-export type PaymentType = 'income' | 'outcome'
+export enum PaymentType {
+  in = 'income',
+  out = 'outcome'
+}
 
 export interface IPaymentData {
   type: PaymentType
   amount: number
-  category: string
+  category?: string
   description?: string
-  recurrent?: boolean
 }
 
 export interface IPayment extends IPaymentData {
