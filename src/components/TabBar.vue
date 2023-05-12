@@ -5,52 +5,39 @@ import VgIconFuture from '@/components/ui/icons/VgIconFuture.vue'
 import VgIconSettings from '@/components/ui/icons/VgIconSettings.vue'
 import VgIconAdd from '@/components/ui/icons/VgIconAdd.vue'
 import { computed } from 'vue'
-import { RouteRecordName, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { usePopupStore } from '@/stores/popup.store'
 import NewPaymentView from '@/views/NewPaymentView.vue'
 import { AppRoute } from "@/routes";
+import BarItem from "@/components/BarItem.vue";
 
 const route = useRoute()
 const popup = usePopupStore()
 
-const current = computed<RouteRecordName>(() => route.name ?? '')
+const currentRoute = computed<string>(() => <string>route.name ?? '')
 
 function openPaymentPopup () {
   popup.openPopup(NewPaymentView)
-}
-
-function isActive (route: AppRoute): boolean {
-  return current.value === route
 }
 </script>
 
 <template>
   <div class="tab-bar-container">
-    <router-link to="/">
-      <div class="bar-item" :class="{active: isActive(AppRoute.home)}">
-        <VgIconHome :active="isActive(AppRoute.home)"/>
-        <div class="bar-label">Home</div>
-      </div>
-    </router-link>
-    <router-link to="/status">
-      <div class="bar-item" :class="{active: isActive(AppRoute.status)}">
-        <VgIconStatus :active="isActive(AppRoute.status)"/>
-        <div class="bar-label">Status</div>
-      </div>
-    </router-link>
+    <BarItem :current="currentRoute" :route="AppRoute.home" label="Home">
+      <VgIconHome/>
+    </BarItem>
+    <BarItem :current="currentRoute" :route="AppRoute.status" label="Status">
+      <VgIconStatus/>
+    </BarItem>
     <div class="floating-item" @click="openPaymentPopup()">
       <VgIconAdd/>
     </div>
-    <router-link to="/future">
-      <div class="bar-item" :class="{active: isActive(AppRoute.future)}">
-        <VgIconFuture :active="isActive(AppRoute.future)"/>
-        <div class="bar-label">Future</div>
-      </div>
-    </router-link>
-    <div class="bar-item" :class="{active: isActive(AppRoute.settings)}">
-      <VgIconSettings :active="isActive(AppRoute.settings)"/>
-      <div class="bar-label">Settings</div>
-    </div>
+    <BarItem :current="currentRoute" :route="AppRoute.future" label="Future">
+      <VgIconFuture/>
+    </BarItem>
+    <BarItem :current="currentRoute" :route="AppRoute.settings" label="Settings">
+      <VgIconSettings/>
+    </BarItem>
   </div>
 </template>
 
@@ -67,7 +54,8 @@ $offset: 26px;
   position: fixed;
   bottom: 0;
   left: 0;
-  display: flex;
+  display: grid;
+  grid-template-columns: 56px 56px auto 56px 56px;
   align-items: center;
   justify-content: center;
   gap: 16px;
@@ -94,29 +82,6 @@ $offset: 26px;
                   transparent calc(50% + #{$big} + #{$offset} - 1px),
                   #fff calc(50% + #{$big} + #{$offset})
   ) 0 0 / 100% 100% no-repeat no-repeat;
-}
-
-a {
-  flex: 0 1 56px;
-}
-
-.bar-item {
-  text-align: center;
-  padding: 3px 6px 0 6px;
-  color: $grey;
-  overflow: hidden;
-  cursor: pointer;
-
-  &.active {
-    color: $primary;
-  }
-}
-
-.bar-label {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  padding-top: 6px;
 }
 
 .floating-item {

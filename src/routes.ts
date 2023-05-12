@@ -47,6 +47,11 @@ export const appRouter = createRouter({
           component: DetailPage
         },
         {
+          path: 'settings',
+          name: AppRoute.settings,
+          component: HomePage
+        },
+        {
           path: '',
           name: AppRoute.home,
           component: HomePage
