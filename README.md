@@ -1,40 +1,54 @@
-# finance-app
+<p align="center">
+ <img width="300px" height="70px" src="docs/images/logo.png">
+</p>
 
-This template should help get you started developing with Vue 3 in Vite.
+Fictional finance APP using Vue 3 and Typescript. All data is persisted in the Client using IndexedDB & LocalStorage
 
-## Recommended IDE Setup
+[LIVE DEMO](https://pocket-planner.netlify.app/)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Features
 
-## Type Support for `.vue` Imports in TS
+- 💰 Keep track of your current savings
+- 🆕 Add new income / expenses
+- 📊 Review your historic balances
+- 💸 Get detailed monthly info of your expenses
+- 🔮 View the future with predictions based on your last income/expenses
+- 📱 Responsive design
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## Screenshots
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+|   |   |   |   |
+|---|---|---|---|
+|<img width="150px" src="docs/images/home.png">|<img width="150px" src="docs/images/new.png">|<img width="150px" src="docs/images/status.png">|<img width="150px" src="docs/images/future.png">|
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
-## Customize configuration
+|   |   |
+|---|---|
+|<img width="300px" src="docs/images/home-desktop.png">|<img width="300px" src="docs/images/new-desktop.png">|
+|<img width="300px" src="docs/images/status-desktop.png">|<img width="300px" src="docs/images/future-desktop.png">|
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## Dependencies
 
-```sh
-npm install
-```
+- Vue 3
+- Vue-router (SPA routing)
+- Sass (Css extension)
+- Pinia (State manager)
+- Dexie (IndexedDB wrapper)
+- Chart.js (Charts rendering)
+- Awesome-toast-component (Toast)
+- Simple-statistics (Linear regression calculation for predictions)
 
-### Compile and Hot-Reload for Development
+## Dev Dependencies
 
-```sh
-npm run dev
-```
+- Vite (Tooling)
+- Eslint (Code style & syntax errors)
+- Vitest, test-utils, jsdom, c8 (Unit testing & coverage)
+- Cypress (e2e testing)
 
-### Type-Check, Compile and Minify for Production
+## Possible improvements
 
-```sh
-npm run build
-```
+- Allow current savings edit
+- Allow to edit payments
+- Add more categories
+- Allow to add / edit categories
