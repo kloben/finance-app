@@ -6,8 +6,6 @@ Fictional finance APP using Vue 3 and Typescript. All data is persisted in the C
 
 [LIVE DEMO](https://pocket-planner.netlify.app/)
 
-***
-
 ## Features
 
 - 💰 Keep track of your current savings
