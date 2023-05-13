@@ -1,4 +1,4 @@
-<p style="text-align: center">
+<p align="center">
  <img width="300px" height="70px" src="docs/images/logo.png">
 </p>
 
@@ -19,18 +19,16 @@ Fictional finance APP using Vue 3 and Typescript. All data is persisted in the C
 
 ## Screenshots
 
-<div style="display:grid;grid-template-columns: 150px 150px 150px 150px;gap: 8px; align-items: center; padding-bottom: 8px">
-    <img src="docs/images/home.png">
-    <img src="docs/images/new.png">
-    <img src="docs/images/status.png">
-    <img src="docs/images/future.png">
-</div>
-<div style="display:grid;grid-template-columns: 300px 300px;column-gap: 24px;row-gap: 8px; align-items: center">
-    <img src="docs/images/home-desktop.png">
-    <img src="docs/images/new-desktop.png">
-    <img src="docs/images/status-desktop.png">
-    <img src="docs/images/future-desktop.png">
-</div>
+|   |   |   |   |
+|---|---|---|---|
+|<img width="150px" src="docs/images/home.png">|<img width="150px" src="docs/images/new.png">|<img width="150px" src="docs/images/status.png">|<img width="150px" src="docs/images/future.png">|
+
+
+|   |   |
+|---|---|
+|<img width="300px" src="docs/images/home-desktop.png">|<img width="300px" src="docs/images/new-desktop.png">|
+|<img width="300px" src="docs/images/status-desktop.png">|<img width="300px" src="docs/images/future-desktop.png">|
+
 
 ## Dependencies
 
